@@ -1,0 +1,44 @@
+.userTblWrap {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE 10+ */
+}
+.userTblWrap::-webkit-scrollbar {
+  display: none !important;
+}
+.datagrid {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE 10+ */
+}
+.datagrid::-webkit-scrollbar {
+  display: none !important;
+}
+
+#PlantNameId,
+#PlantCodeId,
+#PlantDescId {
+  height: 20px;
+  width: 300px;
+}
+#demo-select-small {
+  height: 20px;
+  width: 320px;
+  margin-bottom: 15px;
+  /*  padding: 5px; */
+  /* &::placeholder {
+    font-size: 12px;
+  } */
+}
+#demo-simple-select-label {
+  font-size: 12px;
+  margin-top: -5px;
+  color: #cbcbcb;
+}
+#inside-search-select {
+  width: 250px;
+  height: 20px;
+}
+#PlantNameId,
+#PlantCodeId,
+#PlantDescId::placeholder {
+  font-size: 12px;
+}

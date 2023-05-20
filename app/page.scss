@@ -1,0 +1,54 @@
+// @import "colors";
+// .main-div {
+//   height: calc(50px - $height-full) h1 {
+//     color: $heading;
+//   }
+// }
+.main-wrapper {
+  height: 100%;
+  width: 100%;
+  // overflow-y: hidden;
+  position: relative;
+  .search-bar-wrapper {
+    position: absolute;
+    height: 30px;
+    top: 5px;
+    right: 4px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    .Plant-Add-New-Btn,
+    .Grid-Export-btn {
+      height: 30px;
+    }
+    #SearchInputId {
+      height: 20px;
+      padding: 5px 10px;
+      margin: 0;
+
+      /* color: #949fb1; */
+      &::placeholder {
+        font-size: 14px;
+      }
+    }
+  }
+  .userTblWrapper {
+    position: absolute;
+    top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - 105px);
+    // overflow-y: scroll;
+  }
+  .userTblWrapper {
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE 10+ */
+  }
+  .userTblWrapper::-webkit-scrollbar {
+    display: none !important;
+  }
+}
