@@ -4,6 +4,7 @@ import Header from "./components/Header/Page";
 import SideBar from "./components/Nav/SideBar";
 import "./globals.css";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { ThemeProvider, createTheme } from "@mui/material";
 // import { Inter } from "next/font/google";
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -32,28 +33,59 @@ export default function RootLayout({
     flexGrow: " 1",
     padding: "5px 15px",
   };
+
+  const theme = createTheme({
+    components: {
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            fontSize: "12px",
+            "& input::placeholder": {
+              color: "#8B4513",
+              opacity: ".8",
+            },
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            color: "#8B4513", // Brown color
+          },
+        },
+      },
+    },
+    typography: {
+      button: {
+        fontWeight: "bold", // Set the button text to bold
+        textTransform: "none", // Disable the uppercase transformation
+      },
+    },
+  });
   return (
     <html lang="en">
       <body>
-        <Header />
-        <div style={{ display: "flex" }}>
-          <SideBar OpenSideBar={OpenSideBar} />
-          <div
-            className={OpenSideBar ? "icon-wrapper" : "close-icon-wrapper"}
-            onClick={OpenHandler}
-          >
-            <ArrowForwardIosIcon
-              style={iconRotateHandler}
-              sx={{
-                color: "blue",
-                fontSize: "14px",
-              }}
-            />
+        <ThemeProvider theme={theme}>
+          <Header />
+          <div style={{ display: "flex" }}>
+            <SideBar OpenSideBar={OpenSideBar} />
+            <div
+              className={OpenSideBar ? "icon-wrapper" : "close-icon-wrapper"}
+              onClick={OpenHandler}
+            >
+              <ArrowForwardIosIcon
+                style={iconRotateHandler}
+                sx={{
+                  color: "blue",
+                  fontSize: "14px",
+                }}
+              />
+            </div>
+            <div className="children-wrapper" style={WidthStyle}>
+              {children}
+            </div>
           </div>
-          <div className="children-wrapper" style={WidthStyle}>
-            {children}
-          </div>
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   );

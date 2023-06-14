@@ -17,6 +17,18 @@ a {
   color: inherit;
   text-decoration: none;
 }
+li {
+  list-style: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+label {
+  color: #573e2d;
+  font-weight: 500;
+}
 .icon-wrapper {
   height: 34px;
   width: 34px;

@@ -11,7 +11,7 @@ export default function Header() {
   const currentRoute = usePathname();
   console.log(currentRoute);
   return (
-    <nav>
+    <nav className="main-header">
       <Image
         src="/images/prosol-logo.svg"
         className="Logo-img"

@@ -1,0 +1,1002 @@
+[
+  {
+    "item_code": 1,
+    "material_code": "12-365-2925",
+    "legacy": "pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet",
+    "short_discription": "tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris eget",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Granite",
+    "modifier": "Grass-roots",
+    "status": false
+  },
+  {
+    "item_code": 2,
+    "material_code": "84-916-1114",
+    "legacy": "in felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non",
+    "short_discription": "sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plexiglass",
+    "modifier": "encryption",
+    "status": true
+  },
+  {
+    "item_code": 3,
+    "material_code": "10-852-6290",
+    "legacy": "lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus",
+    "short_discription": "in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Stone",
+    "modifier": "flexibility",
+    "status": true
+  },
+  {
+    "item_code": 4,
+    "material_code": "41-899-6477",
+    "legacy": "vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra",
+    "short_discription": "turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Stone",
+    "modifier": "Inverse",
+    "status": true
+  },
+  {
+    "item_code": 5,
+    "material_code": "26-876-7518",
+    "legacy": "dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id",
+    "short_discription": "quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Brass",
+    "modifier": "Pre-emptive",
+    "status": false
+  },
+  {
+    "item_code": 6,
+    "material_code": "82-783-5357",
+    "legacy": "nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit",
+    "short_discription": "cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Rubber",
+    "modifier": "real-time",
+    "status": false
+  },
+  {
+    "item_code": 7,
+    "material_code": "88-466-7303",
+    "legacy": "ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci pede venenatis non sodales",
+    "short_discription": "fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plastic",
+    "modifier": "Function-based",
+    "status": true
+  },
+  {
+    "item_code": 8,
+    "material_code": "79-267-2515",
+    "legacy": "tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget",
+    "short_discription": "vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor sed tristique",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Granite",
+    "modifier": "holistic",
+    "status": true
+  },
+  {
+    "item_code": 9,
+    "material_code": "87-610-6599",
+    "legacy": "nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor",
+    "short_discription": "varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Aluminum",
+    "modifier": "instruction set",
+    "status": false
+  },
+  {
+    "item_code": 10,
+    "material_code": "46-494-5079",
+    "legacy": "et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo",
+    "short_discription": "odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor quis odio consequat",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Glass",
+    "modifier": "Integrated",
+    "status": true
+  },
+  {
+    "item_code": 11,
+    "material_code": "57-739-0164",
+    "legacy": "sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus",
+    "short_discription": "quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plastic",
+    "modifier": "workforce",
+    "status": true
+  },
+  {
+    "item_code": 12,
+    "material_code": "31-321-5074",
+    "legacy": "natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo",
+    "short_discription": "blandit non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae duis",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "Reduced",
+    "status": true
+  },
+  {
+    "item_code": 13,
+    "material_code": "65-586-3818",
+    "legacy": "ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed",
+    "short_discription": "magna bibendum imperdiet nullam orci pede venenatis non sodales sed",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "Switchable",
+    "status": false
+  },
+  {
+    "item_code": 14,
+    "material_code": "49-186-9683",
+    "legacy": "amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum",
+    "short_discription": "elementum ligula vehicula consequat morbi a ipsum integer a nibh",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "Enhanced",
+    "status": true
+  },
+  {
+    "item_code": 15,
+    "material_code": "20-975-4427",
+    "legacy": "duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus",
+    "short_discription": "pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "Persistent",
+    "status": true
+  },
+  {
+    "item_code": 16,
+    "material_code": "88-426-1858",
+    "legacy": "ipsum dolor sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat",
+    "short_discription": "quam sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis in",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "Profit-focused",
+    "status": true
+  },
+  {
+    "item_code": 17,
+    "material_code": "26-686-1669",
+    "legacy": "ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros",
+    "short_discription": "sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "capacity",
+    "status": false
+  },
+  {
+    "item_code": 18,
+    "material_code": "05-385-4821",
+    "legacy": "ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia",
+    "short_discription": "id ligula suspendisse ornare consequat lectus in est risus auctor sed tristique in tempus sit amet sem",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Steel",
+    "modifier": "24 hour",
+    "status": true
+  },
+  {
+    "item_code": 19,
+    "material_code": "14-112-7582",
+    "legacy": "ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris vulputate elementum nullam varius nulla facilisi cras",
+    "short_discription": "nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "Multi-layered",
+    "status": true
+  },
+  {
+    "item_code": 20,
+    "material_code": "94-343-1630",
+    "legacy": "tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec",
+    "short_discription": "blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "Advanced",
+    "status": true
+  },
+  {
+    "item_code": 21,
+    "material_code": "69-919-1719",
+    "legacy": "pretium quis lectus suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at",
+    "short_discription": "tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plexiglass",
+    "modifier": "Triple-buffered",
+    "status": false
+  },
+  {
+    "item_code": 22,
+    "material_code": "34-849-8921",
+    "legacy": "tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus",
+    "short_discription": "nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "extranet",
+    "status": true
+  },
+  {
+    "item_code": 23,
+    "material_code": "29-340-1852",
+    "legacy": "tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor sed tristique in tempus sit amet sem",
+    "short_discription": "cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Rubber",
+    "modifier": "web-enabled",
+    "status": false
+  },
+  {
+    "item_code": 24,
+    "material_code": "49-676-0903",
+    "legacy": "ut tellus nulla ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque porta volutpat",
+    "short_discription": "in congue etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Glass",
+    "modifier": "analyzing",
+    "status": false
+  },
+  {
+    "item_code": 25,
+    "material_code": "51-460-7259",
+    "legacy": "sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor",
+    "short_discription": "pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plexiglass",
+    "modifier": "analyzing",
+    "status": false
+  },
+  {
+    "item_code": 26,
+    "material_code": "37-705-2938",
+    "legacy": "orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu",
+    "short_discription": "et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Steel",
+    "modifier": "Multi-tiered",
+    "status": true
+  },
+  {
+    "item_code": 27,
+    "material_code": "22-456-0505",
+    "legacy": "felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut",
+    "short_discription": "odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor quis odio consequat varius integer ac",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "database",
+    "status": true
+  },
+  {
+    "item_code": 28,
+    "material_code": "70-012-1011",
+    "legacy": "lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa",
+    "short_discription": "ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "interface",
+    "status": true
+  },
+  {
+    "item_code": 29,
+    "material_code": "86-908-5133",
+    "legacy": "phasellus in felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper",
+    "short_discription": "faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Stone",
+    "modifier": "dedicated",
+    "status": false
+  },
+  {
+    "item_code": 30,
+    "material_code": "59-551-8997",
+    "legacy": "sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis",
+    "short_discription": "metus aenean fermentum donec ut mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Aluminum",
+    "modifier": "hardware",
+    "status": true
+  },
+  {
+    "item_code": 31,
+    "material_code": "14-841-3325",
+    "legacy": "blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in",
+    "short_discription": "ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Glass",
+    "modifier": "client-server",
+    "status": true
+  },
+  {
+    "item_code": 32,
+    "material_code": "10-467-7950",
+    "legacy": "tristique est et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere metus vitae",
+    "short_discription": "molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "support",
+    "status": false
+  },
+  {
+    "item_code": 33,
+    "material_code": "98-576-8363",
+    "legacy": "non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet nulla quisque",
+    "short_discription": "dui nec nisi volutpat eleifend donec ut dolor morbi vel",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Glass",
+    "modifier": "Devolved",
+    "status": true
+  },
+  {
+    "item_code": 34,
+    "material_code": "20-448-1744",
+    "legacy": "nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia",
+    "short_discription": "vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "Switchable",
+    "status": true
+  },
+  {
+    "item_code": 35,
+    "material_code": "47-250-8554",
+    "legacy": "egestas metus aenean fermentum donec ut mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et",
+    "short_discription": "nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plastic",
+    "modifier": "Distributed",
+    "status": true
+  },
+  {
+    "item_code": 36,
+    "material_code": "77-446-1543",
+    "legacy": "sit amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet",
+    "short_discription": "semper interdum mauris ullamcorper purus sit amet nulla quisque arcu",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Granite",
+    "modifier": "Secured",
+    "status": true
+  },
+  {
+    "item_code": 37,
+    "material_code": "80-942-6007",
+    "legacy": "dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor",
+    "short_discription": "lectus suspendisse potenti in eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa quis augue",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "complexity",
+    "status": false
+  },
+  {
+    "item_code": 38,
+    "material_code": "49-207-2700",
+    "legacy": "habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia",
+    "short_discription": "praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Aluminum",
+    "modifier": "coherent",
+    "status": true
+  },
+  {
+    "item_code": 39,
+    "material_code": "33-424-5587",
+    "legacy": "sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec",
+    "short_discription": "a suscipit nulla elit ac nulla sed vel enim sit",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Stone",
+    "modifier": "Extended",
+    "status": true
+  },
+  {
+    "item_code": 40,
+    "material_code": "26-695-2263",
+    "legacy": "odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in congue",
+    "short_discription": "semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Steel",
+    "modifier": "regional",
+    "status": false
+  },
+  {
+    "item_code": 41,
+    "material_code": "50-330-6737",
+    "legacy": "morbi odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis",
+    "short_discription": "mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plexiglass",
+    "modifier": "Focused",
+    "status": false
+  },
+  {
+    "item_code": 42,
+    "material_code": "53-799-3984",
+    "legacy": "justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla",
+    "short_discription": "vel nulla eget eros elementum pellentesque quisque porta volutpat erat quisque erat",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plexiglass",
+    "modifier": "Optimized",
+    "status": false
+  },
+  {
+    "item_code": 43,
+    "material_code": "02-912-9909",
+    "legacy": "sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat",
+    "short_discription": "diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Steel",
+    "modifier": "user-facing",
+    "status": true
+  },
+  {
+    "item_code": 44,
+    "material_code": "11-914-1243",
+    "legacy": "justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper",
+    "short_discription": "sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plexiglass",
+    "modifier": "core",
+    "status": false
+  },
+  {
+    "item_code": 45,
+    "material_code": "87-257-6477",
+    "legacy": "sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis",
+    "short_discription": "natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "Right-sized",
+    "status": true
+  },
+  {
+    "item_code": 46,
+    "material_code": "75-230-3694",
+    "legacy": "rhoncus dui vel sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque penatibus",
+    "short_discription": "cras in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plexiglass",
+    "modifier": "collaboration",
+    "status": false
+  },
+  {
+    "item_code": 47,
+    "material_code": "16-135-3931",
+    "legacy": "penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo",
+    "short_discription": "sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "client-driven",
+    "status": false
+  },
+  {
+    "item_code": 48,
+    "material_code": "17-033-8914",
+    "legacy": "maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante",
+    "short_discription": "donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Granite",
+    "modifier": "Reverse-engineered",
+    "status": true
+  },
+  {
+    "item_code": 49,
+    "material_code": "02-031-0038",
+    "legacy": "blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus",
+    "short_discription": "congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "non-volatile",
+    "status": false
+  },
+  {
+    "item_code": 50,
+    "material_code": "36-286-0135",
+    "legacy": "hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus",
+    "short_discription": "potenti nullam porttitor lacus at turpis donec posuere metus vitae",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plexiglass",
+    "modifier": "stable",
+    "status": false
+  },
+  {
+    "item_code": 51,
+    "material_code": "93-345-8703",
+    "legacy": "non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi",
+    "short_discription": "nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Steel",
+    "modifier": "analyzing",
+    "status": false
+  },
+  {
+    "item_code": 52,
+    "material_code": "40-424-9866",
+    "legacy": "morbi ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at",
+    "short_discription": "nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "success",
+    "status": false
+  },
+  {
+    "item_code": 53,
+    "material_code": "73-789-6039",
+    "legacy": "pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in",
+    "short_discription": "luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Stone",
+    "modifier": "mobile",
+    "status": true
+  },
+  {
+    "item_code": 54,
+    "material_code": "26-531-1032",
+    "legacy": "vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede",
+    "short_discription": "lobortis vel dapibus at diam nam tristique tortor eu pede",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Rubber",
+    "modifier": "Upgradable",
+    "status": true
+  },
+  {
+    "item_code": 55,
+    "material_code": "07-737-3966",
+    "legacy": "luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet",
+    "short_discription": "et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Glass",
+    "modifier": "project",
+    "status": true
+  },
+  {
+    "item_code": 56,
+    "material_code": "69-251-5860",
+    "legacy": "vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus",
+    "short_discription": "a suscipit nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "attitude",
+    "status": true
+  },
+  {
+    "item_code": 57,
+    "material_code": "30-671-5748",
+    "legacy": "porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat",
+    "short_discription": "ante vel ipsum praesent blandit lacinia erat vestibulum sed magna",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Stone",
+    "modifier": "conglomeration",
+    "status": true
+  },
+  {
+    "item_code": 58,
+    "material_code": "82-930-7184",
+    "legacy": "donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula",
+    "short_discription": "vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Stone",
+    "modifier": "Quality-focused",
+    "status": true
+  },
+  {
+    "item_code": 59,
+    "material_code": "98-340-6859",
+    "legacy": "phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec",
+    "short_discription": "ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "Cross-group",
+    "status": true
+  },
+  {
+    "item_code": 60,
+    "material_code": "25-400-5296",
+    "legacy": "amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus",
+    "short_discription": "dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "superstructure",
+    "status": false
+  },
+  {
+    "item_code": 61,
+    "material_code": "19-388-2042",
+    "legacy": "donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo in",
+    "short_discription": "nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis parturient montes nascetur",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plexiglass",
+    "modifier": "zero defect",
+    "status": false
+  },
+  {
+    "item_code": 62,
+    "material_code": "99-354-9090",
+    "legacy": "felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend",
+    "short_discription": "leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Rubber",
+    "modifier": "infrastructure",
+    "status": false
+  },
+  {
+    "item_code": 63,
+    "material_code": "41-420-0063",
+    "legacy": "hac habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis",
+    "short_discription": "habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "collaboration",
+    "status": false
+  },
+  {
+    "item_code": 64,
+    "material_code": "88-545-1062",
+    "legacy": "aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac",
+    "short_discription": "vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum eu",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Brass",
+    "modifier": "zero defect",
+    "status": true
+  },
+  {
+    "item_code": 65,
+    "material_code": "40-896-5697",
+    "legacy": "sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio",
+    "short_discription": "lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Stone",
+    "modifier": "utilisation",
+    "status": true
+  },
+  {
+    "item_code": 66,
+    "material_code": "58-610-9169",
+    "legacy": "sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec",
+    "short_discription": "morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Brass",
+    "modifier": "intangible",
+    "status": true
+  },
+  {
+    "item_code": 67,
+    "material_code": "34-098-1636",
+    "legacy": "cursus urna ut tellus nulla ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque porta volutpat erat quisque erat eros",
+    "short_discription": "ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Stone",
+    "modifier": "Assimilated",
+    "status": false
+  },
+  {
+    "item_code": 68,
+    "material_code": "00-354-5808",
+    "legacy": "primis in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis",
+    "short_discription": "massa donec dapibus duis at velit eu est congue elementum in hac habitasse platea dictumst morbi",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Brass",
+    "modifier": "Re-contextualized",
+    "status": true
+  },
+  {
+    "item_code": 69,
+    "material_code": "06-873-7454",
+    "legacy": "nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus nulla ut",
+    "short_discription": "elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Brass",
+    "modifier": "disintermediate",
+    "status": true
+  },
+  {
+    "item_code": 70,
+    "material_code": "29-721-2521",
+    "legacy": "dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere",
+    "short_discription": "venenatis non sodales sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Granite",
+    "modifier": "Ameliorated",
+    "status": false
+  },
+  {
+    "item_code": 71,
+    "material_code": "70-746-6342",
+    "legacy": "odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim",
+    "short_discription": "est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien urna pretium nisl",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plastic",
+    "modifier": "Front-line",
+    "status": false
+  },
+  {
+    "item_code": 72,
+    "material_code": "11-793-5847",
+    "legacy": "vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo vulputate",
+    "short_discription": "dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Granite",
+    "modifier": "intermediate",
+    "status": false
+  },
+  {
+    "item_code": 73,
+    "material_code": "71-046-4652",
+    "legacy": "in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie",
+    "short_discription": "sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plastic",
+    "modifier": "Phased",
+    "status": true
+  },
+  {
+    "item_code": 74,
+    "material_code": "73-835-6486",
+    "legacy": "nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus",
+    "short_discription": "vel nulla eget eros elementum pellentesque quisque porta volutpat erat",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Rubber",
+    "modifier": "Configurable",
+    "status": false
+  },
+  {
+    "item_code": 75,
+    "material_code": "67-370-0835",
+    "legacy": "consequat ut nulla sed accumsan felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit ac nulla sed",
+    "short_discription": "pede justo eu massa donec dapibus duis at velit eu est congue elementum in hac",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Steel",
+    "modifier": "Assimilated",
+    "status": true
+  },
+  {
+    "item_code": 76,
+    "material_code": "68-013-9241",
+    "legacy": "eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in",
+    "short_discription": "pede justo eu massa donec dapibus duis at velit eu est congue elementum in hac",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plastic",
+    "modifier": "Profit-focused",
+    "status": false
+  },
+  {
+    "item_code": 77,
+    "material_code": "82-863-4032",
+    "legacy": "quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum",
+    "short_discription": "magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "De-engineered",
+    "status": false
+  },
+  {
+    "item_code": 78,
+    "material_code": "41-093-2415",
+    "legacy": "lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu",
+    "short_discription": "non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit ac nulla sed vel enim sit amet nunc viverra",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Rubber",
+    "modifier": "stable",
+    "status": false
+  },
+  {
+    "item_code": 79,
+    "material_code": "19-369-3060",
+    "legacy": "mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum",
+    "short_discription": "est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc nisl duis",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "product",
+    "status": false
+  },
+  {
+    "item_code": 80,
+    "material_code": "09-984-8375",
+    "legacy": "lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien",
+    "short_discription": "erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Brass",
+    "modifier": "project",
+    "status": true
+  },
+  {
+    "item_code": 81,
+    "material_code": "13-660-1668",
+    "legacy": "tristique in tempus sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit eu",
+    "short_discription": "ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "Managed",
+    "status": true
+  },
+  {
+    "item_code": 82,
+    "material_code": "75-997-6501",
+    "legacy": "tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere",
+    "short_discription": "tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plexiglass",
+    "modifier": "Programmable",
+    "status": true
+  },
+  {
+    "item_code": 83,
+    "material_code": "75-459-7966",
+    "legacy": "lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla",
+    "short_discription": "sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Aluminum",
+    "modifier": "adapter",
+    "status": true
+  },
+  {
+    "item_code": 84,
+    "material_code": "43-293-9815",
+    "legacy": "hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla",
+    "short_discription": "et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plastic",
+    "modifier": "non-volatile",
+    "status": false
+  },
+  {
+    "item_code": 85,
+    "material_code": "32-565-2060",
+    "legacy": "risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas",
+    "short_discription": "posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "zero tolerance",
+    "status": true
+  },
+  {
+    "item_code": 86,
+    "material_code": "80-105-6801",
+    "legacy": "metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit amet diam in magna bibendum imperdiet nullam orci pede venenatis non sodales sed tincidunt eu felis fusce posuere felis sed",
+    "short_discription": "proin leo odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Brass",
+    "modifier": "scalable",
+    "status": true
+  },
+  {
+    "item_code": 87,
+    "material_code": "94-053-8245",
+    "legacy": "sapien non mi integer ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis lectus",
+    "short_discription": "consequat in consequat ut nulla sed accumsan felis ut at dolor",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Rubber",
+    "modifier": "Inverse",
+    "status": true
+  },
+  {
+    "item_code": 88,
+    "material_code": "64-931-2124",
+    "legacy": "nam dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper",
+    "short_discription": "id ligula suspendisse ornare consequat lectus in est risus auctor sed",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Vinyl",
+    "modifier": "transitional",
+    "status": true
+  },
+  {
+    "item_code": 89,
+    "material_code": "82-952-9272",
+    "legacy": "in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis",
+    "short_discription": "sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Brass",
+    "modifier": "Multi-layered",
+    "status": false
+  },
+  {
+    "item_code": 90,
+    "material_code": "16-489-8517",
+    "legacy": "eu massa donec dapibus duis at velit eu est congue elementum in hac habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget elit",
+    "short_discription": "enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "mission-critical",
+    "status": false
+  },
+  {
+    "item_code": 91,
+    "material_code": "00-681-9845",
+    "legacy": "vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla",
+    "short_discription": "eget massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Stone",
+    "modifier": "synergy",
+    "status": true
+  },
+  {
+    "item_code": 92,
+    "material_code": "07-124-3635",
+    "legacy": "nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac",
+    "short_discription": "erat fermentum justo nec condimentum neque sapien placerat ante nulla justo",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Aluminum",
+    "modifier": "Extended",
+    "status": true
+  },
+  {
+    "item_code": 93,
+    "material_code": "67-298-7193",
+    "legacy": "semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum",
+    "short_discription": "sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Steel",
+    "modifier": "composite",
+    "status": false
+  },
+  {
+    "item_code": 94,
+    "material_code": "28-619-1253",
+    "legacy": "id luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis in",
+    "short_discription": "sagittis sapien cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plastic",
+    "modifier": "Stand-alone",
+    "status": false
+  },
+  {
+    "item_code": 95,
+    "material_code": "10-383-9669",
+    "legacy": "sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti",
+    "short_discription": "vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Rubber",
+    "modifier": "Intuitive",
+    "status": false
+  },
+  {
+    "item_code": 96,
+    "material_code": "02-732-8315",
+    "legacy": "enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum primis",
+    "short_discription": "lacus at turpis donec posuere metus vitae ipsum aliquam non",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Granite",
+    "modifier": "flexibility",
+    "status": false
+  },
+  {
+    "item_code": 97,
+    "material_code": "06-834-6130",
+    "legacy": "sit amet diam in magna bibendum imperdiet nullam orci pede venenatis non sodales sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula",
+    "short_discription": "augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Wood",
+    "modifier": "Virtual",
+    "status": false
+  },
+  {
+    "item_code": 98,
+    "material_code": "64-978-8824",
+    "legacy": "nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus",
+    "short_discription": "tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plastic",
+    "modifier": "circuit",
+    "status": true
+  },
+  {
+    "item_code": 99,
+    "material_code": "14-565-5106",
+    "legacy": "mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo",
+    "short_discription": "augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Granite",
+    "modifier": "interactive",
+    "status": false
+  },
+  {
+    "item_code": 100,
+    "material_code": "41-419-5096",
+    "legacy": "vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla",
+    "short_discription": "sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam",
+    "long_discription": "error: undefined method `/' for nil:NilClass",
+    "noun": "Plastic",
+    "modifier": "moderator",
+    "status": true
+  }
+]
