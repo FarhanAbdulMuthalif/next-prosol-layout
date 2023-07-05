@@ -18,7 +18,6 @@ export default function Header() {
         alt="Loading...."
         width={120}
         height={45}
-        priority
       />
       <Image
         src="/images/Group.png"
@@ -26,7 +25,6 @@ export default function Header() {
         width={20}
         className="GroupPng-img"
         alt="Loading...."
-        priority
       />
       <ul>
         <li>
@@ -86,13 +84,7 @@ export default function Header() {
         </div>
         <div className="Header-Last-Side-Text-img">
           <span>Super Admin</span>
-          <Image
-            src="/images/AdminSvg.svg"
-            height={40}
-            width={40}
-            alt="Img"
-            priority
-          />
+          <Image src="/images/AdminSvg.svg" height={40} width={40} alt="Img" />
         </div>
       </div>
     </nav>
