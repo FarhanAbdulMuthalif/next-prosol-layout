@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+/* import { useEffect, useRef } from "react";
 
 function DynamicIframeComponent() {
   const iframeRef = useRef(null);
@@ -32,3 +32,4 @@ function DynamicIframeComponent() {
 }
 
 export default DynamicIframeComponent;
+ */
