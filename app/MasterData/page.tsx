@@ -17,27 +17,27 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { DataGrid } from "@mui/x-data-grid";
 import data from "../../MOCK_DATA.json";
 import { CatalogeColumns } from "../components/TableSource";
-export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-  "& .MuiDataGrid-main": {
-    // remove overflow hidden overwise sticky does not work
-    overflow: "unset",
-  },
-  "& .MuiDataGrid-columnHeaders": {
-    position: "sticky",
-
-    zIndex: 1,
-    top: 0,
-  },
-  "& .MuiDataGrid-virtualScroller": {
-    // remove the space left for the header
-    marginTop: "0!important",
-  },
-  "& .super-app-theme--header": {
-    backgroundColor: "white",
-    color: "253858 ",
-  },
-}));
 export default function MasterData() {
+  const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+    "& .MuiDataGrid-main": {
+      // remove overflow hidden overwise sticky does not work
+      overflow: "unset",
+    },
+    "& .MuiDataGrid-columnHeaders": {
+      position: "sticky",
+
+      zIndex: 1,
+      top: 0,
+    },
+    "& .MuiDataGrid-virtualScroller": {
+      // remove the space left for the header
+      marginTop: "0!important",
+    },
+    "& .super-app-theme--header": {
+      backgroundColor: "white",
+      color: "253858 ",
+    },
+  }));
   const currentRoute = usePathname();
   console.log(currentRoute.split("/"));
   console.log(currentRoute.split("/").slice(1));
@@ -119,10 +119,10 @@ export default function MasterData() {
             columns={CatalogeColumns}
             autoHeight
             checkboxSelection
-            onSelectionModelChange={(itm: any) => {
+            /*  onSelectionModelChange={(itm: any) => {
               console.log(itm);
             }}
-            disableSelectionOnClick
+            */
             getRowId={(row) => row.item_code}
             sx={{
               "&  .MuiDataGrid-columnSeparator": {
