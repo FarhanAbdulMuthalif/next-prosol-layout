@@ -13,14 +13,14 @@ export default function Header() {
   return (
     <nav className="main-header">
       <Image
-        src="/images/prosol-logo.svg"
+        src="/Images/prosol-logo.svg"
         className="Logo-img"
         alt="Loading...."
         width={120}
         height={45}
       />
       <Image
-        src="/images/Group.png"
+        src="/Images/Group.png"
         height={20}
         width={20}
         className="GroupPng-img"
@@ -84,7 +84,7 @@ export default function Header() {
         </div>
         <div className="Header-Last-Side-Text-img">
           <span>Super Admin</span>
-          <Image src="/images/AdminSvg.svg" height={40} width={40} alt="Img" />
+          <Image src="/Images/AdminSvg.svg" height={40} width={40} alt="Img" />
         </div>
       </div>
     </nav>
