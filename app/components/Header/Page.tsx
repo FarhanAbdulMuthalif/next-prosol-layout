@@ -13,18 +13,20 @@ export default function Header() {
   return (
     <nav className="main-header">
       <Image
-        src="/Images/prosol-logo.svg"
+        src="/images/prosol-logo.svg"
         className="Logo-img"
         alt="Loading...."
         width={120}
         height={45}
+        priority
       />
       <Image
-        src="/Images/Group.png"
+        src="/images/Group.png"
         height={20}
         width={20}
         className="GroupPng-img"
         alt="Loading...."
+        priority
       />
       <ul>
         <li>
@@ -84,7 +86,13 @@ export default function Header() {
         </div>
         <div className="Header-Last-Side-Text-img">
           <span>Super Admin</span>
-          <Image src="/Images/AdminSvg.svg" height={40} width={40} alt="Img" />
+          <Image
+            src="/images/AdminSvg.svg"
+            height={40}
+            width={40}
+            alt="Img"
+            priority
+          />
         </div>
       </div>
     </nav>
