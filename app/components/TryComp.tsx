@@ -1,105 +1,34 @@
-import React, { useState } from "react";
-import {
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  FormHelperText,
-} from "@mui/material";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useEffect, useRef } from "react";
 
-interface Option {
-  name: string;
-  value: string;
-}
+function DynamicIframeComponent() {
+  const iframeRef = useRef(null);
 
-interface DropdownData {
-  id: string; // Add an id property for unique identification
-  name: string;
-  placeholder: string;
-  type: "single" | "multiple";
-  required: boolean;
-  options: Option[];
-}
+  useEffect(() => {
+    // Handle iframe load event
+    const handleLoad = () => {
+      console.log("Iframe loaded");
+    };
 
-const jsonData: DropdownData[] = [
-  // JSON data remains the same as before
-];
+    // Add event listener for iframe load event
+    iframeRef?.current.addEventListener("load", handleLoad);
 
-const SelectDropdown: React.FC<DropdownData & { index: number }> = ({
-  id,
-  name,
-  placeholder,
-  type,
-  required,
-  options,
-  index,
-}) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelectedOptions(
-      Array.isArray(event.target.value) ? event.target.value : []
-    );
-  };
+    // Clean up event listener on component unmount
+    return () => {
+      iframeRef?.current.removeEventListener("load", handleLoad);
+    };
+  }, []);
 
   return (
-    <Draggable draggableId={id} index={index}>
-      {(provided) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <FormControl variant="outlined" required={required}>
-            <InputLabel>{placeholder}</InputLabel>
-            <Select
-              multiple={type === "multiple"}
-              value={selectedOptions}
-              onChange={handleChange}
-              label={placeholder}
-            >
-              {options.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.name}
-                </MenuItem>
-              ))}
-            </Select>
-            <FormHelperText>{placeholder}</FormHelperText>
-          </FormControl>
-        </div>
-      )}
-    </Draggable>
+    <iframe
+      ref={iframeRef}
+      src="https://www.youtube.com/embed/YHfPOKx_wU0"
+      title="Embedded YouTube Video"
+      width="560"
+      height="315"
+      frameBorder="0"
+      allowFullScreen
+    />
   );
-};
+}
 
-const App: React.FC = () => {
-  const [dropdownData, setDropdownData] = useState<DropdownData[]>(jsonData);
-
-  const handleDragEnd = (result: any) => {
-    if (!result.destination) return;
-
-    const items = Array.from(dropdownData);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setDropdownData(items);
-  };
-
-  return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="dropdowns">
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {dropdownData.map((data, index) => (
-              <SelectDropdown key={data.id} {...data} index={index} />
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
-  );
-};
-
-export default App;
+export default DynamicIframeComponent;

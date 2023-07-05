@@ -29,7 +29,7 @@ const SelectMulti: React.FC<DropdownData> = ({
 
   return (
     <Select
-      value={selectedOptions}
+      value={selectedOptions as any}
       onChange={handleChange}
       sx={{ fontSize: "12px", color: "brown" }}
       name={name}
@@ -40,6 +40,11 @@ const SelectMulti: React.FC<DropdownData> = ({
 
         alignSelf: "flex-start",
       }}
+      renderValue={(value) =>
+        Array.isArray(value) && value.length > 0
+          ? value.join(", ")
+          : "Select Field"
+      }
     >
       {options.map((option) => (
         <MenuItem
