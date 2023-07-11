@@ -11,7 +11,7 @@ const SelectMulti: React.FC<DropdownData> = ({
   options,
   name,
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<unknown[]>([]);
 
   const handleChange = (event: SelectChangeEvent<{ value: unknown }>) => {
     setSelectedOptions(
@@ -35,16 +35,23 @@ const SelectMulti: React.FC<DropdownData> = ({
       name={name}
       multiple
       fullWidth
+      displayEmpty
       style={{
         height: 40,
 
         alignSelf: "flex-start",
       }}
-      renderValue={(value) =>
-        Array.isArray(value) && value.length > 0
-          ? value.join(", ")
-          : "Select Field"
-      }
+      renderValue={(selected) => {
+        if (selectedOptions.length === 0) {
+          return "Select an option";
+        }
+        return Array.isArray(selected) ? (selected as string[]).join(", ") : [];
+      }}
+      // renderValue={(value) =>
+      //   Array.isArray(value) && value.length > 0
+      //     ? value.join(", ")
+      //     : "Select Field"
+      // }
     >
       {options.map((option) => (
         <MenuItem
