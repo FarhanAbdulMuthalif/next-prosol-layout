@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, FormEvent, ChangeEvent } from "react";
+import React, { useState, FormEvent, ChangeEvent, useMemo } from "react";
 import "./style.scss";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
@@ -54,7 +54,6 @@ export default function Tenant() {
       options: [],
       min: "3",
       max: "18",
-      rules: ["spl", "alp"],
     },
     {
       id: 2,
@@ -67,7 +66,6 @@ export default function Tenant() {
       options: [],
       min: "1",
       max: "3",
-      rules: ["num"],
     },
     {
       id: 3,
@@ -142,6 +140,18 @@ export default function Tenant() {
       max: "100",
     },
   ]);
+  const calculation = useMemo(() => {
+    let valGetFieldSet: { [key: string]: boolean } = {};
+
+    inputData.forEach((item: any) => {
+      if (item.field === "textbox") {
+        valGetFieldSet[item.name] = false;
+      }
+    });
+    return valGetFieldSet;
+  }, [inputData]);
+
+  const [SeparateErrorMainForm, setSeparateErrorMainForm] = useState<any>({});
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>, data: any) => {
@@ -188,7 +198,6 @@ export default function Tenant() {
   };
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
-    console.log(SplRulArr);
     if (checked) {
       return setSplRulArr((prev: any) => {
         return [...prev, value];
@@ -275,6 +284,7 @@ export default function Tenant() {
 
       const regex = new RegExp(`${validationRegex}.+$`);
       // console.log(validationRegex.toString());
+      calculation[val] = regex.test(dynFldData[val]);
 
       return regex.test(dynFldData[val]);
     }
@@ -295,7 +305,9 @@ export default function Tenant() {
         max: minMaxValue.max,
         rules: SplRulArr,
       };
-      if (minMaxValue.min > minMaxValue.max)
+      console.log(Number(minMaxValue.max) + "  " + Number(minMaxValue.min));
+      console.log(Number(minMaxValue.max) < Number(minMaxValue.min));
+      if (Number(minMaxValue.max) < Number(minMaxValue.min))
         return alert("minimum value should be lesser than maximum value");
 
       if (
@@ -380,6 +392,7 @@ export default function Tenant() {
     // });
 
     console.log(dynFldData);
+    console.log(SeparateErrorMainForm);
     const reqdFilterAr = inputData.filter((dta: any) => dta.required === true);
     console.log(reqdFilterAr);
 
@@ -462,12 +475,15 @@ export default function Tenant() {
   const SelectChipOptionsHandler = (
     e: React.KeyboardEvent<HTMLInputElement>
   ) => {
-    if (["Enter"].includes(e.key)) {
+    if (["Enter"].includes(e.key) && ChipOptions.length !== 0) {
       e.preventDefault();
       console.log(SelectChipOptions.includes(ChipOptions));
       console.log(SelectChipOptions);
       setSelectChipOptions((prev: any) => {
-        if (SelectChipOptions.includes(ChipOptions)) {
+        if (
+          SelectChipOptions.includes(ChipOptions) &&
+          ChipOptions.length === 0
+        ) {
           return [...prev];
         }
         return [...prev, ChipOptions];
@@ -478,14 +494,17 @@ export default function Tenant() {
   const SelectRadioButtonChipOptionsHandler = (
     e: React.KeyboardEvent<HTMLInputElement>
   ) => {
-    if (["Enter"].includes(e.key)) {
+    if (["Enter"].includes(e.key) && RadioButtonChipOptions.length !== 0) {
       e.preventDefault();
       console.log(
         SelectRadioButtonChipOptions.includes(RadioButtonChipOptions)
       );
       console.log(SelectRadioButtonChipOptions);
       setSelectRadioButtonChipOptions((prev: any) => {
-        if (SelectRadioButtonChipOptions.includes(RadioButtonChipOptions)) {
+        if (
+          SelectRadioButtonChipOptions.includes(RadioButtonChipOptions) &&
+          RadioButtonChipOptions.length !== 0
+        ) {
           return [...prev];
         }
         return [...prev, RadioButtonChipOptions];
@@ -1293,16 +1312,19 @@ export default function Tenant() {
                             error={
                               UsrIntraction &&
                               !validateInput(dta?.rules, dta?.name)
+                              /* !calculation[dta?.name] === true */
                             }
                             helperText={
                               UsrIntraction &&
                               !validateInput(dta?.rules, dta?.name)
-                                ? "Invalid input"
+                                ? /* !calculation[dta?.name] === true */
+                                  "Invalid input"
                                 : ""
                             }
 
                             //   maxLength: 20,
                             //   minLength: 10,
+
                             // }}
                             // onInvalid={handleInvalidEmail}
                             // required={dta.required === true ? true : false}
