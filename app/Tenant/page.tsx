@@ -413,22 +413,6 @@ export default function Tenant() {
         );
       }
     });
-    // if (
-    //   isObject(LogicFieldSelectValidate) &&
-    //   Object.keys(LogicFieldSelectValidate).length > 0
-
-    // ) {
-    //   const LogicDtaArr = Object.keys(
-    //     LogicFieldSelectValidate[EditStateData.name]
-    //   );
-    //   console.log(LogicDtaArr);
-    //   console.log(dynFldData[LogicDtaArr[0]] === dynFldData[LogicDtaArr[1]]);
-    //   if (dynFldData[LogicDtaArr[0]] !== dynFldData[LogicDtaArr[1]]) {
-    //     return alert(
-    //       `${LogicDtaArr[0]} and ${LogicDtaArr[1]} both should be same`
-    //     );
-    //   }
-    // }
 
     if (Object.keys(dynFldData).length !== inputData.length) {
       return setmainFormError(true);
@@ -443,8 +427,7 @@ export default function Tenant() {
     });
     console.log(dynFldData);
   };
-  // const [selectedSingleOptions, setSelectedSingleOptions] =
-  //   useState<string>("");
+
   const DynamicDropdownHandler = (e: SelectChangeEvent) => {
     console.log(e.target);
     // setSelectedSingleOptions(e.target.value as string);
@@ -1317,8 +1300,7 @@ export default function Tenant() {
                             helperText={
                               UsrIntraction &&
                               !validateInput(dta?.rules, dta?.name)
-                                ? /* !calculation[dta?.name] === true */
-                                  "Invalid input"
+                                ? "Invalid input"
                                 : ""
                             }
 
@@ -1482,7 +1464,7 @@ export default function Tenant() {
             </span>
           </label>
           <label htmlFor="dynLogic">
-            Select :{" "}
+            Select :
             <Select
               labelId="DrawerInputIdSelect"
               id="DrawerInputIdSelect"

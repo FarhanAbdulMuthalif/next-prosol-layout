@@ -38,6 +38,7 @@
   width: 21rem;
   height: 100%;
   display: flex;
+  z-index: 1;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -49,7 +50,7 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #00000029;
-    padding: 10px 10px;
+    padding: 10px;
     span {
       font-size: 1rem;
       color: #464545;

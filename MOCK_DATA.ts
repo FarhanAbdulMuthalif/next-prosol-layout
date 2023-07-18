@@ -19,10 +19,10 @@ export enum LongDiscription {
 
 export interface PostCreateFieldData {
   id: string;
-  type: string;
+  dataType: string;
   identity?: string;
-  name: string;
-  pattern?: string;
+  fieldName: string;
+  pattern?: string[];
   min?: number;
   max?: number;
   minLength?: number;
@@ -31,10 +31,10 @@ export interface PostCreateFieldData {
   readable?: boolean;
   writable?: boolean;
   showAsColumn?: boolean;
-  enumValues?: string[];
+  enums?: string[];
   fieldLabel?: FieldLabel;
   required: boolean;
-  options?: Option[];
+  dropDownValues?: Option[];
   value?: string;
 }
 
@@ -46,3 +46,9 @@ export interface Option {
   id?: string;
   value: string;
 }
+
+export type LogicStateObjFld = {
+  name: string;
+  selectField: string;
+  logic: string;
+};

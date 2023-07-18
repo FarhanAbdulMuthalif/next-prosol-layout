@@ -54,6 +54,14 @@ export default function RootLayout({
           },
         },
       },
+      // MuiDialog: {
+      //   styleOverrides: {
+      //     root: {
+      //       backdropFilter: "blur(4px)",
+      //       backgroundColor: "rgba(0, 0, 0, 0.2)",
+      //     },
+      //   },
+      // },
     },
     typography: {
       button: {
