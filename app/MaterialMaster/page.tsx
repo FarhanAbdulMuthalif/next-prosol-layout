@@ -35,32 +35,34 @@ import {
   Radio,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { PostCreateFieldData } from "@/MOCK_DATA";
+import { LogicStateObjFld, PostCreateFieldData } from "@/MOCK_DATA";
 import axios from "axios";
 import SnackBarSuccess from "../components/Snackbar/SnackBarSuccess";
 import ConfirmDialog from "../components/Dialog/ConfirmDialog";
+import LogicDialog from "../components/Dialog/LogicDialog";
 
 export default function MaterialMaster() {
   const initialStateField = {
     id: "",
-    name: "",
-    type: "",
+    fieldName: "",
+    dataType: "",
     identity: "",
     min: 2,
     max: 20,
     required: false,
-    pattern: "",
+    pattern: [],
     minLength: 0,
     maxLength: 0,
     extraField: true,
     readable: true,
     writable: true,
     showAsColumn: true,
-    enumValues: [],
+    enums: [],
     fieldLabel: {},
-    options: [],
+    dropDownValues: [],
     value: "",
   };
+  const [DynamicFieldData, setDynamicFieldData] = useState<any>({});
   const [FieldTypeSelect, setFieldTypeSelect] = useState("");
   const [MultiSelectedOptions, setMultiSelectedOptions] = useState<string[]>(
     []
@@ -77,6 +79,21 @@ export default function MaterialMaster() {
     useState<PostCreateFieldData>(initialStateField);
   const [ChipTextIndiual, setChipTextIndiual] = useState("");
   const [ChipArrayList, setChipArrayList] = useState<string[]>([]);
+  const [LogicDialogOpen, setLogicDialogOpen] = useState(false);
+  const [LogicFieldArray, setLogicFieldArray] = useState<LogicStateObjFld[]>(
+    []
+  );
+  const LogicDialogOpenHandler = () => {
+    setLogicDialogOpen(!LogicDialogOpen);
+  };
+  const LogicDialogSubmitHandler = (data: LogicStateObjFld) => {
+    console.log(data);
+    setLogicFieldArray((prev: LogicStateObjFld[]) => {
+      return [...prev, data];
+    });
+    LogicDialogOpenHandler();
+    handleCloseMenu();
+  };
   const setChipIntoDivHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setChipTextIndiual(e.target.value);
   };
@@ -97,17 +114,64 @@ export default function MaterialMaster() {
     if (["Enter"].includes(e.key)) {
       e.preventDefault();
       setSelectedFieldSingle((prev: PostCreateFieldData) => {
-        const dataTemp = { ...prev };
-        if (prev?.enumValues?.includes(ChipTextIndiual)) {
-          console.log(dataTemp);
+        if (prev?.enums?.includes(ChipTextIndiual)) {
           return { ...prev };
         }
         return {
           ...prev,
-          enumValues: [...(prev?.enumValues as any), ChipTextIndiual],
+          enums: [...(prev?.enums as any), ChipTextIndiual],
         };
       });
       setChipTextIndiual("");
+    }
+  };
+  const DynamicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsrIntraction(true);
+    setDynamicFieldData((prev: any) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+    console.log(DynamicFieldData);
+  };
+
+  const DynamicDropdownHandler = (e: SelectChangeEvent) => {
+    console.log(e.target);
+    // setSelectedSingleOptions(e.target.value as string);
+    setDynamicFieldData((prev: any) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+
+    console.log(DynamicFieldData);
+  };
+  const [UsrIntraction, setUsrIntraction] = useState(false);
+
+  const validateInput = (arr: any, val: any) => {
+    if (UsrIntraction) {
+      let validationRegex = "";
+
+      if (arr?.includes("spl")) {
+        validationRegex += "(?=.*[@#$%^&+=])";
+      }
+      if (arr?.includes("num")) {
+        validationRegex += "(?=.*\\d)";
+      }
+      if (arr?.includes("alp")) {
+        validationRegex += "(?=.*[a-zA-Z])";
+      }
+      if (arr?.includes("cap")) {
+        validationRegex += "(?=.*[A-Z])";
+      }
+
+      // validationRegex += "^(?!.*\\s)"; // No space validation
+
+      if (validationRegex === "^(?!.*\\s)") {
+        // No validation rules selected, return true
+        return true;
+      }
+
+      const regex = new RegExp(`${validationRegex}.+$`);
+      // console.log(validationRegex.toString());
+
+      return regex.test(DynamicFieldData[val]);
     }
   };
 
@@ -124,6 +188,7 @@ export default function MaterialMaster() {
     event: React.MouseEvent<HTMLButtonElement>,
     data: PostCreateFieldData
   ) => {
+    console.log(data);
     setSelectedFieldSingle(data);
     setAnchorEl(event.currentTarget);
   };
@@ -141,7 +206,7 @@ export default function MaterialMaster() {
   const DeleteFieldHandler = async () => {
     try {
       const response = await axios.delete(
-        `http://192.168.1.143:8080/removeField/${SelectedFieldSingle.id}`
+        `http://192.168.1.67:9090/removeField/${SelectedFieldSingle.id}`
       );
       const data = response.data;
       if (response.status === 200) {
@@ -157,9 +222,7 @@ export default function MaterialMaster() {
   };
   const getFields = async () => {
     try {
-      const response = await axios.get(
-        "http://192.168.1.143:8080/getAllFields"
-      );
+      const response = await axios.get("http://192.168.1.67:9090/getAllFields");
       const data = await response.data;
       if (response.status === 200) {
         setInputData(data);
@@ -184,7 +247,7 @@ export default function MaterialMaster() {
   const handleFieldTypeChangeSelect = (e: SelectChangeEvent) => {
     setFieldTypeSelect(e.target.value as string);
     setCreateFieldSetObj((prev: PostCreateFieldData) => {
-      return { ...prev, type: e.target.value as string };
+      return { ...prev, dataType: e.target.value as string };
     });
   };
   const handlerSelectInputType = (e: SelectChangeEvent) => {
@@ -221,58 +284,31 @@ export default function MaterialMaster() {
   };
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-
-    if (checked) {
-      return setCreateFieldSetObj((prev: PostCreateFieldData) => {
-        const updatedObj = {
+    setCreateFieldSetObj((prev: PostCreateFieldData) => {
+      const dataTemp = { ...prev };
+      if (checked) {
+        return { ...prev, pattern: [...(prev?.pattern as any), value] };
+      } else {
+        return {
           ...prev,
-          pattern: [
-            ...[prev?.pattern?.split(", ").filter((n) => n)],
-            value,
-          ].toString(),
+          pattern: dataTemp?.pattern?.filter((option) => option !== value),
         };
-        console.log(updatedObj);
-        return updatedObj;
-      });
-    } else {
-      return setCreateFieldSetObj((prev: PostCreateFieldData) => {
-        const updatedObj = {
-          ...prev,
-          pattern: [
-            prev?.pattern?.split(", ").filter((option) => option !== value),
-          ].toString(),
-        };
-        console.log(updatedObj);
-        return updatedObj;
-      });
-    }
+      }
+    });
   };
   const handleEditCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    if (checked) {
-      return setSelectedFieldSingle((prev: PostCreateFieldData) => {
-        const updatedObj = {
+    setSelectedFieldSingle((prev: PostCreateFieldData) => {
+      const dataTemp = { ...prev };
+      if (checked) {
+        return { ...prev, pattern: [...(prev?.pattern as any), value] };
+      } else {
+        return {
           ...prev,
-          pattern: [
-            ...[prev?.pattern?.split(", ").filter((n) => n)],
-            value,
-          ].toString(),
+          pattern: dataTemp?.pattern?.filter((option) => option !== value),
         };
-
-        return updatedObj;
-      });
-    } else {
-      return setSelectedFieldSingle((prev: PostCreateFieldData) => {
-        const updatedObj = {
-          ...prev,
-          pattern: [
-            prev?.pattern?.split(",").filter((option) => option !== value),
-          ].toString(),
-        };
-
-        return updatedObj;
-      });
-    }
+      }
+    });
   };
 
   const menuItemStyle = {
@@ -295,29 +331,30 @@ export default function MaterialMaster() {
   };
   let AnotherInitialState = {
     id: "",
-    name: "",
-    type: FieldTypeSelect,
+    fieldName: "",
+    dataType: FieldTypeSelect,
     identity: "",
     min: 2,
     max: 20,
     required: false,
-    pattern: "",
+    pattern: [],
     minLength: 0,
     maxLength: 0,
     extraField: true,
     readable: true,
     writable: true,
     showAsColumn: true,
-    enumValues: [],
+    enums: [],
     fieldLabel: {},
-    options: [],
+    dropDownValues: [],
     value: "",
   };
   const DrawerSubmitHandlet = async (e: FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     if (FieldTypeSelect === "textField" || FieldTypeSelect === "textArea") {
       if (
-        CreateFieldSetObj.name.length < 1 ||
+        CreateFieldSetObj.fieldName.length < 1 ||
         CreateFieldSetObj.identity?.length === 0
       ) {
         return alert("required field should not be empty");
@@ -330,7 +367,7 @@ export default function MaterialMaster() {
       console.log(CreateFieldSetObj);
       try {
         const response = await axios.post(
-          "http://192.168.1.143:8080/addFields",
+          "http://192.168.1.67:9090/saveField",
           CreateFieldSetObj
         );
         const data = response?.data;
@@ -352,34 +389,35 @@ export default function MaterialMaster() {
     if (FieldTypeSelect === "dropDown") {
       const dataSet = {
         id: "",
-        name: CreateFieldSetObj.name,
-        type: CreateFieldSetObj.type,
+        fieldName: CreateFieldSetObj.fieldName,
+        dataType: CreateFieldSetObj.dataType,
         identity: CreateFieldSetObj.identity,
         min: 2,
         max: 20,
         required: CreateFieldSetObj.required,
-        pattern: "",
+        pattern: [],
         minLength: 0,
         maxLength: 0,
         extraField: true,
         readable: true,
         writable: true,
         showAsColumn: true,
-        enumValues: ChipArrayList,
+        enums: ChipArrayList,
         fieldLabel: {},
-        options: [],
+        dropDownValues: [],
         value: "",
       };
+      console.log(dataSet);
       if (
-        CreateFieldSetObj.name.length < 1 ||
+        CreateFieldSetObj.fieldName.length < 1 ||
         CreateFieldSetObj.identity?.length === 0 ||
-        CreateFieldSetObj.type?.length < 1
+        CreateFieldSetObj.dataType?.length < 1
       ) {
         return alert("required field should not be empty");
       }
       try {
         const response = await axios.post(
-          "http://192.168.1.143:8080/addFields",
+          "http://192.168.1.67:9090/saveField",
           dataSet
         );
         const data = await response?.data;
@@ -401,33 +439,33 @@ export default function MaterialMaster() {
     if (FieldTypeSelect === "radioButton") {
       const dataSet = {
         id: "",
-        name: CreateFieldSetObj.name,
-        type: CreateFieldSetObj.type,
+        fieldName: CreateFieldSetObj.fieldName,
+        dataType: CreateFieldSetObj.dataType,
         identity: "",
         min: 2,
         max: 20,
         required: true,
-        pattern: "",
+        pattern: [],
         minLength: 0,
         maxLength: 0,
         extraField: true,
         readable: true,
         writable: true,
         showAsColumn: true,
-        enumValues: ChipArrayList,
+        enums: ChipArrayList,
         fieldLabel: {},
-        options: [],
+        dropDownValues: [],
         value: "",
       };
       if (
-        CreateFieldSetObj.name.length < 1 ||
-        dataSet?.enumValues?.length === 0
+        CreateFieldSetObj.fieldName.length < 1 ||
+        dataSet?.enums?.length === 0
       ) {
         return alert("required field should not be empty");
       }
       try {
         const response = await axios.post(
-          "http://192.168.1.143:8080/addFields",
+          "http://192.168.1.67:9090/saveField",
           dataSet
         );
         const data = await response?.data;
@@ -456,7 +494,7 @@ export default function MaterialMaster() {
 
     try {
       const response = await axios.put(
-        `http://192.168.1.143:8080/updateField/${SelectedFieldSingle.id}`,
+        `http://192.168.1.67:9090/updateFieldById/${SelectedFieldSingle.id}`,
         SelectedFieldSingle
       );
       const data = response?.data;
@@ -470,8 +508,86 @@ export default function MaterialMaster() {
       alert(e);
     }
   };
+  const [MainFormError, setMainFormError] = useState(false);
+  const ValidateDynamic = () => {
+    const reqdFilterAr = InputData?.filter((dta: any) => dta.required === true);
+
+    const keyObj = Object.keys(DynamicFieldData);
+    reqdFilterAr.forEach((val) => {
+      if (keyObj.includes(val.fieldName)) {
+        console.log(DynamicFieldData[val.fieldName]);
+        console.log(DynamicFieldData[val.fieldName].length === 0);
+        console.log(DynamicFieldData[val.fieldName].length);
+        if (DynamicFieldData[val.fieldName].length === 0) {
+          console.log("inside...");
+          alert("please fill the mandatory field");
+          setMainFormError(true);
+        }
+      } else {
+        // alert("please fill the mandatory field");
+        setMainFormError(true);
+      }
+    });
+  };
+  const DynamicFormSubmitHandler = async (e: FormEvent) => {
+    e.preventDefault();
+    console.log(DynamicFieldData);
+    console.log(LogicFieldArray);
+
+    // const checkObj = ObjArryKeys.includes("");
+    // console.log(checkObj);
+
+    ValidateDynamic();
+
+    if (Object.keys(DynamicFieldData).length === 0) {
+      return setMainFormError(true);
+    }
+    LogicFieldArray.forEach((element) => {
+      if (element.logic === "equal") {
+        let tryCon =
+          DynamicFieldData[element.name] ===
+          DynamicFieldData[element.selectField];
+        tryCon === false
+          ? alert(`${element.name} and ${element.selectField} should be shame`)
+          : "";
+      } else if (element.logic === "add") {
+        setDynamicFieldData((prev: any) => {
+          return {
+            ...prev,
+            [element.name + element.selectField]:
+              DynamicFieldData[element.name] +
+              DynamicFieldData[element.selectField],
+          };
+        });
+      } else if (element.logic === "multiple") {
+        setDynamicFieldData((prev: any) => {
+          return {
+            ...prev,
+            [element.name + element.selectField]:
+              Number(DynamicFieldData[element.name]) *
+              Number(DynamicFieldData[element.selectField]),
+          };
+        });
+      } else if (element.logic === "divide") {
+        console.log("inside.....");
+        setDynamicFieldData((prev: any) => {
+          return {
+            ...prev,
+            [element.name + element.selectField]:
+              Number(DynamicFieldData[element.name]) /
+              Number(DynamicFieldData[element.selectField]),
+          };
+        });
+      }
+    });
+
+    setMainFormError(false);
+  };
   return (
-    <form className="main-material-master-wrapper">
+    <form
+      className="main-material-master-wrapper"
+      onSubmit={DynamicFormSubmitHandler}
+    >
       <Button
         className="addNewMaterial-btn"
         variant="contained"
@@ -523,10 +639,10 @@ export default function MaterialMaster() {
                 <TextField
                   size="small"
                   id="DrawerInputFieldCrtId"
-                  name="name"
+                  name="fieldName"
                   placeholder="Enter Name"
                   autoComplete="off"
-                  value={CreateFieldSetObj?.name}
+                  value={CreateFieldSetObj?.fieldName}
                   onChange={HandletInputCreateName}
                 />
 
@@ -556,6 +672,7 @@ export default function MaterialMaster() {
                   <TextField
                     size="small"
                     id="minMaxId"
+                    type="number"
                     sx={{
                       fontSize: "12px",
                     }}
@@ -569,6 +686,7 @@ export default function MaterialMaster() {
                   <TextField
                     size="small"
                     id="minMaxId"
+                    type="number"
                     placeholder="Enter No"
                     name="max"
                     autoComplete="off"
@@ -687,7 +805,7 @@ export default function MaterialMaster() {
                   name="name"
                   placeholder="Enter Name"
                   autoComplete="off"
-                  value={CreateFieldSetObj?.name}
+                  value={CreateFieldSetObj?.fieldName}
                   onChange={HandletInputCreateName}
                 />
 
@@ -767,7 +885,7 @@ export default function MaterialMaster() {
                   name="name"
                   placeholder="Enter Name"
                   autoComplete="off"
-                  value={CreateFieldSetObj?.name}
+                  value={CreateFieldSetObj?.fieldName}
                   onChange={HandletInputCreateName}
                 />
                 <label id="DrawerInputIdSelect">Dropdown Type *</label>
@@ -782,10 +900,10 @@ export default function MaterialMaster() {
                     Select Field
                   </MenuItem>
                   <MenuItem sx={menuItemStyle} value={"single"}>
-                    Single
+                    Single Select
                   </MenuItem>
                   <MenuItem sx={menuItemStyle} value={"multiple"}>
-                    Multiple
+                    Multiple Select
                   </MenuItem>
                 </Select>
                 <label id="DrawerInputIdSelect">Enter Options *</label>
@@ -846,7 +964,7 @@ export default function MaterialMaster() {
                   name="name"
                   placeholder="Enter Name"
                   autoComplete="off"
-                  value={CreateFieldSetObj?.name}
+                  value={CreateFieldSetObj?.fieldName}
                   onChange={HandletInputCreateName}
                 />
 
@@ -915,16 +1033,16 @@ export default function MaterialMaster() {
             </IconButton>
           </header>
           <section className="drawer-Center-Part">
-            {SelectedFieldSingle?.type === "textField" ? (
+            {SelectedFieldSingle?.dataType === "textField" ? (
               <div className="render-fields-namess">
                 <label htmlFor="DrawerInputFieldCrtId">Enter Name *</label>
                 <TextField
                   size="small"
                   id="DrawerInputFieldCrtId"
-                  name="name"
+                  name="fieldName"
                   placeholder="Enter Name"
                   autoComplete="off"
-                  value={SelectedFieldSingle?.name}
+                  value={SelectedFieldSingle?.fieldName}
                   onChange={HandletInputEditFunc}
                 />
 
@@ -1080,7 +1198,7 @@ export default function MaterialMaster() {
             ) : (
               " "
             )}
-            {SelectedFieldSingle?.type === "textArea" ? (
+            {SelectedFieldSingle?.dataType === "textArea" ? (
               <div className="render-fields-namess">
                 <label htmlFor="DrawerInputFieldCrtId">Enter Name *</label>
                 <TextField
@@ -1089,7 +1207,7 @@ export default function MaterialMaster() {
                   name="name"
                   placeholder="Enter Name"
                   autoComplete="off"
-                  value={SelectedFieldSingle?.name}
+                  value={SelectedFieldSingle?.fieldName}
                   onChange={HandletInputEditFunc}
                 />
 
@@ -1160,7 +1278,7 @@ export default function MaterialMaster() {
             ) : (
               " "
             )}
-            {SelectedFieldSingle?.type === "dropDown" ? (
+            {SelectedFieldSingle?.dataType === "dropDown" ? (
               <div className="render-fields-namess">
                 <label htmlFor="DrawerInputFieldCrtId">Enter Name *</label>
                 <TextField
@@ -1169,7 +1287,7 @@ export default function MaterialMaster() {
                   name="name"
                   placeholder="Enter Name"
                   autoComplete="off"
-                  value={SelectedFieldSingle?.name}
+                  value={SelectedFieldSingle?.fieldName}
                   onChange={HandletInputEditFunc}
                 />
 
@@ -1204,7 +1322,7 @@ export default function MaterialMaster() {
                 />
 
                 <div className="api-chip-wrapper-div">
-                  {SelectedFieldSingle?.enumValues?.map((data: string) => {
+                  {SelectedFieldSingle?.enums?.map((data: string) => {
                     return (
                       <Chip
                         key={data}
@@ -1215,7 +1333,7 @@ export default function MaterialMaster() {
                               const dataTemp = { ...prev };
                               return {
                                 ...prev,
-                                enumValues: dataTemp?.enumValues?.filter(
+                                enums: dataTemp?.enums?.filter(
                                   (chip: string) => chip !== data
                                 ),
                               };
@@ -1225,7 +1343,7 @@ export default function MaterialMaster() {
                       />
                     );
                   })}
-                  {SelectedFieldSingle?.enumValues?.length === 0 ? (
+                  {SelectedFieldSingle?.enums?.length === 0 ? (
                     <p style={{ fontSize: "12px" }}>options listed here</p>
                   ) : (
                     ""
@@ -1248,7 +1366,7 @@ export default function MaterialMaster() {
             ) : (
               ""
             )}
-            {SelectedFieldSingle?.type === "radioButton" ? (
+            {SelectedFieldSingle?.dataType === "radioButton" ? (
               <div className="render-fields-namess">
                 <label htmlFor="DrawerInputFieldCrtId">Enter Name *</label>
                 <TextField
@@ -1257,7 +1375,7 @@ export default function MaterialMaster() {
                   name="name"
                   placeholder="Enter Name"
                   autoComplete="off"
-                  value={SelectedFieldSingle?.name}
+                  value={SelectedFieldSingle?.fieldName}
                   onChange={HandletInputEditFunc}
                 />
                 <label id="DrawerInputIdSelect">Enter Options *</label>
@@ -1273,7 +1391,7 @@ export default function MaterialMaster() {
                 />
 
                 <div className="api-chip-wrapper-div">
-                  {SelectedFieldSingle?.enumValues?.map((data: string) => {
+                  {SelectedFieldSingle?.enums?.map((data: string) => {
                     return (
                       <Chip
                         key={data}
@@ -1284,7 +1402,7 @@ export default function MaterialMaster() {
                               const dataTemp = { ...prev };
                               return {
                                 ...prev,
-                                enumValues: dataTemp?.enumValues?.filter(
+                                enums: dataTemp?.enums?.filter(
                                   (chip: string) => chip !== data
                                 ),
                               };
@@ -1294,7 +1412,7 @@ export default function MaterialMaster() {
                       />
                     );
                   })}
-                  {SelectedFieldSingle?.enumValues?.length === 0 ? (
+                  {SelectedFieldSingle?.enums?.length === 0 ? (
                     <p style={{ fontSize: "12px" }}>options listed here</p>
                   ) : (
                     ""
@@ -1320,12 +1438,16 @@ export default function MaterialMaster() {
         </form>
       </Drawer>
       <div className="inputs-form-group-div">
-        {InputData.length === 0 ? <h3>No Data Fields</h3> : ""}
+        {InputData.length === 0 ? (
+          <h3 style={{ textAlign: "center" }}>No Data Fields</h3>
+        ) : (
+          ""
+        )}
         {InputData?.map((data: PostCreateFieldData) => {
           return (
-            <div className="singnle-form-input-div" key={data.name}>
+            <div className="singnle-form-input-div" key={data.fieldName}>
               <InputLabel
-                title={data.name}
+                title={data.fieldName}
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
@@ -1334,7 +1456,7 @@ export default function MaterialMaster() {
                 }}
                 id="select-field-label"
               >
-                {data.name} {data.required === true ? "*" : ""}
+                {data.fieldName} {data.required === true ? "*" : ""}
                 <IconButton
                   sx={{ fontSize: "20px" }}
                   onClick={(e) => {
@@ -1344,27 +1466,40 @@ export default function MaterialMaster() {
                   <MoreVertIcon sx={{ fontSize: "12px" }} />
                 </IconButton>
               </InputLabel>
-              {data.type === "textField" ? (
+              {data.dataType === "textField" ? (
                 <TextField
                   id="input-sin-field"
-                  placeholder={`Enter ${data.name}`}
+                  placeholder={`Enter ${data.fieldName}`}
                   type={data.identity}
-                  name={data.name}
+                  name={data.fieldName}
+                  onChange={DynamicInputHandler}
                   autoComplete="off"
                   inputProps={{
                     autoComplete: "new-password",
                     maxLength: data.max,
                     minLength: data.min,
                   }}
+                  error={
+                    UsrIntraction &&
+                    !validateInput(data?.pattern, data?.fieldName)
+                    /* !calculation[data?.name] === true */
+                  }
+                  helperText={
+                    UsrIntraction &&
+                    !validateInput(data?.pattern, data?.fieldName)
+                      ? "Invalid input"
+                      : ""
+                  }
                 />
               ) : (
                 ""
               )}
-              {data.type === "textArea" ? (
+              {data.dataType === "textArea" ? (
                 <TextField
                   id="textarea-api"
-                  placeholder={`Enter ${data.name}`}
-                  name={data.name}
+                  placeholder={`Enter ${data.fieldName}`}
+                  name={data.fieldName}
+                  onChange={DynamicInputHandler}
                   autoComplete="off"
                   inputProps={{
                     autoComplete: "new-password",
@@ -1377,12 +1512,12 @@ export default function MaterialMaster() {
               ) : (
                 ""
               )}
-              {data.type === "dropDown" && data.identity === "multiple" ? (
+              {data.dataType === "dropDown" && data.identity === "multiple" ? (
                 <Select
                   labelId="DrawerInputIdSelect"
                   id="DrawerInputIdSelect"
                   value={MultiSelectedOptions as any}
-                  name={data.name}
+                  name={data.fieldName}
                   placeholder="select"
                   sx={{ fontSize: "12px", color: "brown" }}
                   displayEmpty
@@ -1403,7 +1538,7 @@ export default function MaterialMaster() {
                       : [];
                   }}
                 >
-                  {data?.enumValues?.map((dta: any) => {
+                  {data?.enums?.map((dta: any) => {
                     return (
                       <MenuItem
                         sx={{ fontSize: "12px", color: "#5E5873" }}
@@ -1418,14 +1553,15 @@ export default function MaterialMaster() {
               ) : (
                 ""
               )}
-              {data.type === "dropDown" && data.identity === "single" ? (
+              {data.dataType === "dropDown" && data.identity === "single" ? (
                 <Select
                   labelId="DrawerInputIdSelect"
                   id="DrawerInputIdSelect"
-                  name={data.name}
+                  name={data.fieldName}
                   placeholder="select"
                   sx={{ fontSize: "12px", color: "brown" }}
                   displayEmpty
+                  onChange={DynamicDropdownHandler}
                   fullWidth
                   style={{
                     height: 40,
@@ -1436,7 +1572,7 @@ export default function MaterialMaster() {
                     value ? value.toString() : "Select Field"
                   }
                 >
-                  {data?.enumValues?.map((dta: any) => {
+                  {data?.enums?.map((dta: any) => {
                     return (
                       <MenuItem
                         sx={{ fontSize: "12px", color: "#5E5873" }}
@@ -1451,14 +1587,15 @@ export default function MaterialMaster() {
               ) : (
                 ""
               )}
-              {data.type === "radioButton" ? (
+              {data.dataType === "radioButton" ? (
                 <FormControl>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
                     row
-                    name={data.name}
+                    onChange={DynamicInputHandler}
+                    name={data.fieldName}
                   >
-                    {data?.enumValues?.map((data: any) => {
+                    {data?.enums?.map((data: any) => {
                       return (
                         <FormControlLabel
                           key={data}
@@ -1483,16 +1620,15 @@ export default function MaterialMaster() {
               ) : (
                 ""
               )}
-              <ConfirmDialog
-                open={OpenDeleteDialog}
-                handleClose={DeleteDialogHandler}
-                content="Are you sure want to delete this"
-                handleOk={DeleteFieldHandler}
-              />
             </div>
           );
         })}
       </div>
+      {MainFormError && (
+        <p style={{ color: "red", fontWeight: "600" }}>
+          Please fill the mandatory fields
+        </p>
+      )}
       <div className="btn-submit-wrapper">
         <Button
           type="reset"
@@ -1537,10 +1673,23 @@ export default function MaterialMaster() {
         <MenuItem sx={menuItemStyleTwo} onClick={DeleteDialogHandler}>
           Delete <DeleteIcon sx={{ fontSize: "14px" }} />
         </MenuItem>
-        <MenuItem sx={menuItemStyleTwo} onClick={handleCloseMenu}>
+        <MenuItem sx={menuItemStyleTwo} onClick={LogicDialogOpenHandler}>
           Logic <MergeTypeIcon sx={{ fontSize: "14px" }} />
         </MenuItem>
       </Menu>
+      <ConfirmDialog
+        open={OpenDeleteDialog}
+        handleClose={DeleteDialogHandler}
+        content="Are you sure want to delete this"
+        handleOk={DeleteFieldHandler}
+      />
+      <LogicDialog
+        open={LogicDialogOpen}
+        onClose={LogicDialogOpenHandler}
+        wholeForm={InputData}
+        selectedData={SelectedFieldSingle}
+        SubmitHandler={LogicDialogSubmitHandler}
+      />
     </form>
   );
 }
