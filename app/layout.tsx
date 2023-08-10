@@ -29,7 +29,6 @@ export default function RootLayout({
   const WidthStyle = {
     // height: "calc(100vh - 60px)",
     width: OpenSideBar ? `calc(100vw - 180px)` : `calc(100vw - 40px)`,
-
     flexGrow: " 1",
     padding: "5px 15px",
   };

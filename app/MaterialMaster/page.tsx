@@ -35,11 +35,11 @@ import {
   Radio,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { LogicStateObjFld, PostCreateFieldData } from "@/MOCK_DATA";
-import axios from "axios";
+import { LogicStateObjFld, Option, PostCreateFieldData } from "@/MOCK_DATA";
 import SnackBarSuccess from "../components/Snackbar/SnackBarSuccess";
 import ConfirmDialog from "../components/Dialog/ConfirmDialog";
 import LogicDialog from "../components/Dialog/LogicDialog";
+import api from "../components/api";
 
 export default function MaterialMaster() {
   const initialStateField = {
@@ -79,6 +79,9 @@ export default function MaterialMaster() {
     useState<PostCreateFieldData>(initialStateField);
   const [ChipTextIndiual, setChipTextIndiual] = useState("");
   const [ChipArrayList, setChipArrayList] = useState<string[]>([]);
+  const [DropDownChipArrayList, setDropDownChipArrayList] = useState<Option[]>(
+    []
+  );
   const [LogicDialogOpen, setLogicDialogOpen] = useState(false);
   const [LogicFieldArray, setLogicFieldArray] = useState<LogicStateObjFld[]>(
     []
@@ -105,6 +108,53 @@ export default function MaterialMaster() {
           return [...prev];
         } else {
           return [...prev, ChipTextIndiual];
+        }
+      });
+      setChipTextIndiual("");
+    }
+  };
+  const DropDownChipEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (["Enter"].includes(e.key)) {
+      e.preventDefault();
+      setDropDownChipArrayList((prev: Option[]) => {
+        if (
+          DropDownChipArrayList.find((data) => data.value === ChipTextIndiual)
+        ) {
+          return [...prev];
+        } else {
+          return [...prev, { id: "", value: ChipTextIndiual }];
+        }
+      });
+      setChipTextIndiual("");
+    }
+  };
+  const DropDownChipEnterHandlerEdit = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (["Enter"].includes(e.key)) {
+      e.preventDefault();
+      // setDropDownChipArrayList((prev: Option[]) => {
+      //   if (
+      //     DropDownChipArrayList.find((data) => data.value === ChipTextIndiual)
+      //   ) {
+      //     return [...prev];
+      //   } else {
+      //     return [...prev, { id: "", value: ChipTextIndiual }];
+      //   }
+      // });
+      setSelectedFieldSingle((prev: PostCreateFieldData) => {
+        if (
+          prev?.dropDownValues?.find(
+            (dta: Option) => dta.value === ChipTextIndiual
+          )
+        ) {
+          return { ...prev };
+        } else {
+          return {
+            ...prev,
+            dropDownValues: [
+              ...(prev.dropDownValues as Option[]),
+              { id: "", value: ChipTextIndiual },
+            ],
+          };
         }
       });
       setChipTextIndiual("");
@@ -205,8 +255,8 @@ export default function MaterialMaster() {
 
   const DeleteFieldHandler = async () => {
     try {
-      const response = await axios.delete(
-        `http://192.168.1.67:9090/removeField/${SelectedFieldSingle.id}`
+      const response = await api.delete(
+        `/removeField/${SelectedFieldSingle.id}`
       );
       const data = response.data;
       if (response.status === 200) {
@@ -222,7 +272,7 @@ export default function MaterialMaster() {
   };
   const getFields = async () => {
     try {
-      const response = await axios.get("http://192.168.1.67:9090/getAllFields");
+      const response = await api.get("/getAllFields");
       const data = await response.data;
       if (response.status === 200) {
         setInputData(data);
@@ -366,10 +416,7 @@ export default function MaterialMaster() {
       console.log(e);
       console.log(CreateFieldSetObj);
       try {
-        const response = await axios.post(
-          "http://192.168.1.67:9090/saveField",
-          CreateFieldSetObj
-        );
+        const response = await api.post("/saveField", CreateFieldSetObj);
         const data = response?.data;
         console.log(response);
         console.log(data);
@@ -402,9 +449,9 @@ export default function MaterialMaster() {
         readable: true,
         writable: true,
         showAsColumn: true,
-        enums: ChipArrayList,
+        enums: [],
         fieldLabel: {},
-        dropDownValues: [],
+        dropDownValues: DropDownChipArrayList,
         value: "",
       };
       console.log(dataSet);
@@ -416,10 +463,7 @@ export default function MaterialMaster() {
         return alert("required field should not be empty");
       }
       try {
-        const response = await axios.post(
-          "http://192.168.1.67:9090/saveField",
-          dataSet
-        );
+        const response = await api.post("/saveField", dataSet);
         const data = await response?.data;
         console.log(response);
         console.log(data);
@@ -428,7 +472,7 @@ export default function MaterialMaster() {
           getFields();
           HandlerCreateToggleDrawer();
 
-          setChipArrayList([]);
+          setDropDownChipArrayList([]);
           setCreateFieldSetObj(AnotherInitialState);
         }
       } catch (error) {
@@ -464,10 +508,7 @@ export default function MaterialMaster() {
         return alert("required field should not be empty");
       }
       try {
-        const response = await axios.post(
-          "http://192.168.1.67:9090/saveField",
-          dataSet
-        );
+        const response = await api.post("/saveField", dataSet);
         const data = await response?.data;
         console.log(response);
         console.log(data);
@@ -493,8 +534,8 @@ export default function MaterialMaster() {
     console.log(SelectedFieldSingle);
 
     try {
-      const response = await axios.put(
-        `http://192.168.1.67:9090/updateFieldById/${SelectedFieldSingle.id}`,
+      const response = await api.put(
+        `/updateFieldById/${SelectedFieldSingle.id}`,
         SelectedFieldSingle
       );
       const data = response?.data;
@@ -631,6 +672,9 @@ export default function MaterialMaster() {
               </MenuItem>
               <MenuItem sx={menuItemStyle} value={"radioButton"}>
                 Radiobutton
+              </MenuItem>
+              <MenuItem sx={menuItemStyle} value={"fileUpload"}>
+                FileUpload
               </MenuItem>
             </Select>
             {FieldTypeSelect === "textField" ? (
@@ -802,7 +846,7 @@ export default function MaterialMaster() {
                 <TextField
                   size="small"
                   id="DrawerInputFieldCrtId"
-                  name="name"
+                  name="fieldName"
                   placeholder="Enter Name"
                   autoComplete="off"
                   value={CreateFieldSetObj?.fieldName}
@@ -882,7 +926,7 @@ export default function MaterialMaster() {
                 <TextField
                   size="small"
                   id="DrawerInputFieldCrtId"
-                  name="name"
+                  name="fieldName"
                   placeholder="Enter Name"
                   autoComplete="off"
                   value={CreateFieldSetObj?.fieldName}
@@ -914,25 +958,27 @@ export default function MaterialMaster() {
                   placeholder="Enter Options"
                   onChange={setChipIntoDivHandler}
                   value={ChipTextIndiual}
-                  onKeyDown={ChipEnterHandler}
+                  onKeyDown={DropDownChipEnterHandler}
                   autoComplete="off"
                 />
 
                 <div className="api-chip-wrapper-div">
-                  {ChipArrayList?.map((data: string) => {
+                  {DropDownChipArrayList?.map((data: Option) => {
                     return (
                       <Chip
-                        key={data}
-                        label={data}
+                        key={data.value}
+                        label={data.value}
                         onDelete={() => {
-                          setChipArrayList((prev: string[]) =>
-                            prev.filter((chip: string) => chip !== data)
+                          setDropDownChipArrayList((prev: Option[]) =>
+                            prev.filter(
+                              (chip: Option) => chip.value !== data.value
+                            )
                           );
                         }}
                       />
                     );
                   })}
-                  {ChipArrayList?.length < 1 ? (
+                  {DropDownChipArrayList?.length < 1 ? (
                     <p style={{ fontSize: "12px" }}>options listed here</p>
                   ) : (
                     ""
@@ -961,7 +1007,7 @@ export default function MaterialMaster() {
                 <TextField
                   size="small"
                   id="DrawerInputFieldCrtId"
-                  name="name"
+                  name="fieldName"
                   placeholder="Enter Name"
                   autoComplete="off"
                   value={CreateFieldSetObj?.fieldName}
@@ -1000,6 +1046,55 @@ export default function MaterialMaster() {
                     ""
                   )}
                 </div>
+              </div>
+            ) : (
+              ""
+            )}
+            {FieldTypeSelect === "fileUpload" ? (
+              <div className="render-fields-namess">
+                <label htmlFor="DrawerInputFieldCrtId">Enter Name *</label>
+                <TextField
+                  size="small"
+                  id="DrawerInputFieldCrtId"
+                  name="fieldName"
+                  placeholder="Enter Name"
+                  autoComplete="off"
+                  value={CreateFieldSetObj?.fieldName}
+                  onChange={HandletInputCreateName}
+                />
+                <label id="DrawerInputIdSelect">Upload Type *</label>
+                <Select
+                  id="DrawerCrtInputId"
+                  value={CreateFieldSetObj.identity}
+                  onChange={handlerSelectInputType}
+                  sx={SelectStyle}
+                  displayEmpty
+                >
+                  <MenuItem sx={menuItemStyle} value="" disabled>
+                    Select Field
+                  </MenuItem>
+                  <MenuItem sx={menuItemStyle} value={"single"}>
+                    Single Upload
+                  </MenuItem>
+                  <MenuItem sx={menuItemStyle} value={"multiple"}>
+                    Multiple Upload
+                  </MenuItem>
+                </Select>
+                <label htmlFor="DrawerInputFieldCrtId">Enter Max size *</label>
+                <TextField
+                  size="small"
+                  id="DrawerInputFieldCrtId"
+                  name="max"
+                  placeholder="Enter Max size "
+                  autoComplete="off"
+                  inputProps={{
+                    autoComplete: "new-password",
+                    maxLength: 1,
+                  }}
+                  value={CreateFieldSetObj?.max}
+                  onChange={HandletInputCreateName}
+                  helperText="maxium file size 5mb"
+                />
               </div>
             ) : (
               ""
@@ -1204,7 +1299,7 @@ export default function MaterialMaster() {
                 <TextField
                   size="small"
                   id="DrawerInputFieldCrtId"
-                  name="name"
+                  name="fieldName"
                   placeholder="Enter Name"
                   autoComplete="off"
                   value={SelectedFieldSingle?.fieldName}
@@ -1284,7 +1379,7 @@ export default function MaterialMaster() {
                 <TextField
                   size="small"
                   id="DrawerInputFieldCrtId"
-                  name="name"
+                  name="fieldName"
                   placeholder="Enter Name"
                   autoComplete="off"
                   value={SelectedFieldSingle?.fieldName}
@@ -1317,25 +1412,26 @@ export default function MaterialMaster() {
                   placeholder="Enter Options"
                   onChange={setChipIntoDivHandler}
                   value={ChipTextIndiual}
-                  onKeyDown={ChipEditEnterHandler}
+                  onKeyDown={DropDownChipEnterHandlerEdit}
                   autoComplete="off"
                 />
 
                 <div className="api-chip-wrapper-div">
-                  {SelectedFieldSingle?.enums?.map((data: string) => {
+                  {SelectedFieldSingle?.dropDownValues?.map((data: Option) => {
                     return (
                       <Chip
-                        key={data}
-                        label={data}
+                        key={data.value}
+                        label={data.value}
                         onDelete={() => {
                           setSelectedFieldSingle(
                             (prev: PostCreateFieldData) => {
                               const dataTemp = { ...prev };
                               return {
                                 ...prev,
-                                enums: dataTemp?.enums?.filter(
-                                  (chip: string) => chip !== data
-                                ),
+                                dropDownValues:
+                                  dataTemp?.dropDownValues?.filter(
+                                    (chip: Option) => chip.value !== data.value
+                                  ),
                               };
                             }
                           );
@@ -1343,7 +1439,7 @@ export default function MaterialMaster() {
                       />
                     );
                   })}
-                  {SelectedFieldSingle?.enums?.length === 0 ? (
+                  {SelectedFieldSingle?.dropDownValues?.length === 0 ? (
                     <p style={{ fontSize: "12px" }}>options listed here</p>
                   ) : (
                     ""
@@ -1372,7 +1468,7 @@ export default function MaterialMaster() {
                 <TextField
                   size="small"
                   id="DrawerInputFieldCrtId"
-                  name="name"
+                  name="fieldName"
                   placeholder="Enter Name"
                   autoComplete="off"
                   value={SelectedFieldSingle?.fieldName}
@@ -1538,14 +1634,14 @@ export default function MaterialMaster() {
                       : [];
                   }}
                 >
-                  {data?.enums?.map((dta: any) => {
+                  {data?.dropDownValues?.map((dta: Option) => {
                     return (
                       <MenuItem
                         sx={{ fontSize: "12px", color: "#5E5873" }}
-                        value={dta}
-                        key={dta}
+                        value={dta.value}
+                        key={dta.value}
                       >
-                        {dta}
+                        {dta.value}
                       </MenuItem>
                     );
                   })}
@@ -1572,14 +1668,14 @@ export default function MaterialMaster() {
                     value ? value.toString() : "Select Field"
                   }
                 >
-                  {data?.enums?.map((dta: any) => {
+                  {data?.dropDownValues?.map((dta: Option) => {
                     return (
                       <MenuItem
                         sx={{ fontSize: "12px", color: "#5E5873" }}
-                        value={dta}
-                        key={dta}
+                        value={dta.value}
+                        key={dta.value}
                       >
-                        {dta}
+                        {dta.value}
                       </MenuItem>
                     );
                   })}
