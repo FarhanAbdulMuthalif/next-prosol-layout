@@ -40,6 +40,7 @@ import SnackBarSuccess from "../components/Snackbar/SnackBarSuccess";
 import ConfirmDialog from "../components/Dialog/ConfirmDialog";
 import LogicDialog from "../components/Dialog/LogicDialog";
 import api from "../components/api";
+import SingleFileUpload from "../components/SingleFileUpload/SingleFileUpload";
 
 export default function MaterialMaster() {
   const initialStateField = {
@@ -47,8 +48,8 @@ export default function MaterialMaster() {
     fieldName: "",
     dataType: "",
     identity: "",
-    min: 2,
-    max: 20,
+    min: 0,
+    max: 0,
     required: false,
     pattern: [],
     minLength: 0,
@@ -180,7 +181,7 @@ export default function MaterialMaster() {
     setDynamicFieldData((prev: any) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
-    console.log(DynamicFieldData);
+    // console.log(DynamicFieldData);
   };
 
   const DynamicDropdownHandler = (e: SelectChangeEvent) => {
@@ -305,6 +306,14 @@ export default function MaterialMaster() {
       return { ...prev, identity: e.target.value as string };
     });
   };
+  const handlerMultiSelectInputType = (e: SelectChangeEvent) => {
+    setCreateFieldSetObj((prev: PostCreateFieldData) => {
+      return {
+        ...prev,
+        pattern: Array.isArray(e.target.value) ? e.target.value : [],
+      };
+    });
+  };
   const handlerEditSelectInputType = (e: SelectChangeEvent) => {
     setSelectedFieldSingle((prev: PostCreateFieldData) => {
       return { ...prev, identity: e.target.value as string };
@@ -402,7 +411,11 @@ export default function MaterialMaster() {
   const DrawerSubmitHandlet = async (e: FormEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (FieldTypeSelect === "textField" || FieldTypeSelect === "textArea") {
+    if (
+      FieldTypeSelect === "textField" ||
+      FieldTypeSelect === "textArea" ||
+      FieldTypeSelect === "fileUpload"
+    ) {
       if (
         CreateFieldSetObj.fieldName.length < 1 ||
         CreateFieldSetObj.identity?.length === 0
@@ -584,41 +597,78 @@ export default function MaterialMaster() {
       return setMainFormError(true);
     }
     LogicFieldArray.forEach((element) => {
-      if (element.logic === "equal") {
-        let tryCon =
-          DynamicFieldData[element.name] ===
-          DynamicFieldData[element.selectField];
-        tryCon === false
-          ? alert(`${element.name} and ${element.selectField} should be shame`)
-          : "";
-      } else if (element.logic === "add") {
+      if (element.formulea) {
+        const regex = /\${([^}]+)}/g;
+
+        const replacedString = element.logic.replace(
+          regex,
+          (match, keyword) => {
+            return DynamicFieldData[keyword] || match;
+          }
+        );
+        console.log(replacedString);
+        console.log(eval(replacedString));
+        const FormuleaValue = eval(replacedString);
         setDynamicFieldData((prev: any) => {
-          return {
-            ...prev,
-            [element.name + element.selectField]:
-              DynamicFieldData[element.name] +
-              DynamicFieldData[element.selectField],
-          };
+          return { ...prev, [element.fieldName as string]: FormuleaValue };
         });
-      } else if (element.logic === "multiple") {
-        setDynamicFieldData((prev: any) => {
-          return {
-            ...prev,
-            [element.name + element.selectField]:
-              Number(DynamicFieldData[element.name]) *
-              Number(DynamicFieldData[element.selectField]),
-          };
-        });
-      } else if (element.logic === "divide") {
-        console.log("inside.....");
-        setDynamicFieldData((prev: any) => {
-          return {
-            ...prev,
-            [element.name + element.selectField]:
-              Number(DynamicFieldData[element.name]) /
-              Number(DynamicFieldData[element.selectField]),
-          };
-        });
+      } else {
+        if (element.logic === "equal") {
+          let tryCon =
+            DynamicFieldData[element.name] ===
+            DynamicFieldData[element.selectField];
+          tryCon === false
+            ? alert(
+                `${element.name} and ${element.selectField} should be shame`
+              )
+            : "";
+        } else if (element.logic === "add") {
+          setDynamicFieldData((prev: any) => {
+            return {
+              ...prev,
+              [element.name + element.selectField]:
+                DynamicFieldData[element.name] +
+                DynamicFieldData[element.selectField],
+            };
+          });
+        } else if (element.logic === "multiple") {
+          setDynamicFieldData((prev: any) => {
+            return {
+              ...prev,
+              [element.name + element.selectField]:
+                Number(DynamicFieldData[element.name]) *
+                Number(DynamicFieldData[element.selectField]),
+            };
+          });
+        } else if (element.logic === "divide") {
+          setDynamicFieldData((prev: any) => {
+            return {
+              ...prev,
+              [element.name + element.selectField]:
+                Number(DynamicFieldData[element.name]) /
+                Number(DynamicFieldData[element.selectField]),
+            };
+          });
+        } else if (element.logic === "greater") {
+          console.log("greater ... in");
+          console.log(element.name > element.selectField);
+          if (element.name > element.selectField) {
+            console.log("greater ... inin");
+            return alert(
+              `${element.name} is greater than ${element.selectField}`
+            );
+          }
+        } else if (element.logic === "lesser") {
+          console.log("lesser ... in");
+          console.log(element.name < element.selectField);
+
+          if (element.name < element.selectField) {
+            console.log("lesser ... inin");
+            return alert(
+              `${element.name} is lesser than ${element.selectField}`
+            );
+          }
+        }
       }
     });
 
@@ -1062,6 +1112,44 @@ export default function MaterialMaster() {
                   value={CreateFieldSetObj?.fieldName}
                   onChange={HandletInputCreateName}
                 />
+                <label id="DrawerInputIdSelect">Filetype Accept *</label>
+                <Select
+                  id="DrawerCrtInputId"
+                  value={CreateFieldSetObj.pattern as any}
+                  onChange={handlerMultiSelectInputType}
+                  multiple
+                  renderValue={(selected) => {
+                    if (CreateFieldSetObj?.pattern?.length === 0) {
+                      return "Select Filetype";
+                    }
+                    return Array.isArray(selected)
+                      ? (selected as string[]).join(", ")
+                      : [];
+                  }}
+                  sx={SelectStyle}
+                  displayEmpty
+                >
+                  <MenuItem sx={menuItemStyle} value="" disabled>
+                    Select Field
+                  </MenuItem>
+                  <MenuItem sx={menuItemStyle} value={"image/*"}>
+                    Image
+                  </MenuItem>
+                  <MenuItem sx={menuItemStyle} value={".pdf"}>
+                    PDF
+                  </MenuItem>
+                  <MenuItem sx={menuItemStyle} value={".csv"}>
+                    CSV
+                  </MenuItem>
+                  <MenuItem
+                    sx={menuItemStyle}
+                    value={
+                      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    }
+                  >
+                    Excel
+                  </MenuItem>
+                </Select>
                 <label id="DrawerInputIdSelect">Upload Type *</label>
                 <Select
                   id="DrawerCrtInputId"
@@ -1683,6 +1771,7 @@ export default function MaterialMaster() {
               ) : (
                 ""
               )}
+              {data.dataType === "fileUpload" ? <SingleFileUpload /> : ""}
               {data.dataType === "radioButton" ? (
                 <FormControl>
                   <RadioGroup

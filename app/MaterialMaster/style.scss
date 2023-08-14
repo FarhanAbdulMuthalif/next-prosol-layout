@@ -13,6 +13,7 @@
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    overflow-y: scroll;
     .singnle-form-input-div {
       display: flex;
       flex-direction: column;

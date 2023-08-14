@@ -47,4 +47,6 @@ export type LogicStateObjFld = {
   name: string;
   selectField: string;
   logic: string;
+  formulea: boolean;
+  fieldName?: string;
 };
