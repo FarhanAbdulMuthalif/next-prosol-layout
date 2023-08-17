@@ -41,6 +41,7 @@ import ConfirmDialog from "../components/Dialog/ConfirmDialog";
 import LogicDialog from "../components/Dialog/LogicDialog";
 import api from "../components/api";
 import SingleFileUpload from "../components/SingleFileUpload/SingleFileUpload";
+import MultiFileUpload from "../components/MultipleFileUpload/MultipleFileUpload";
 
 export default function MaterialMaster() {
   const initialStateField = {
@@ -63,6 +64,10 @@ export default function MaterialMaster() {
     dropDownValues: [],
     value: "",
   };
+  // navigator.getBattery().then((battery) => {
+  //   console.log(battery);
+  // });
+
   const [DynamicFieldData, setDynamicFieldData] = useState<any>({});
   const [FieldTypeSelect, setFieldTypeSelect] = useState("");
   const [MultiSelectedOptions, setMultiSelectedOptions] = useState<string[]>(
@@ -1771,7 +1776,17 @@ export default function MaterialMaster() {
               ) : (
                 ""
               )}
-              {data.dataType === "fileUpload" ? <SingleFileUpload /> : ""}
+              {data.dataType === "fileUpload" && data.identity === "single" ? (
+                <SingleFileUpload />
+              ) : (
+                ""
+              )}
+              {data.dataType === "fileUpload" &&
+              data.identity === "multiple" ? (
+                <MultiFileUpload />
+              ) : (
+                ""
+              )}
               {data.dataType === "radioButton" ? (
                 <FormControl>
                   <RadioGroup
@@ -1814,6 +1829,7 @@ export default function MaterialMaster() {
           Please fill the mandatory fields
         </p>
       )}
+
       <div className="btn-submit-wrapper">
         <Button
           type="reset"
@@ -1858,7 +1874,11 @@ export default function MaterialMaster() {
         <MenuItem sx={menuItemStyleTwo} onClick={DeleteDialogHandler}>
           Delete <DeleteIcon sx={{ fontSize: "14px" }} />
         </MenuItem>
-        <MenuItem sx={menuItemStyleTwo} onClick={LogicDialogOpenHandler}>
+        <MenuItem
+          sx={menuItemStyleTwo}
+          onClick={LogicDialogOpenHandler}
+          disabled={SelectedFieldSingle.dataType === "textField" ? false : true}
+        >
           Logic <MergeTypeIcon sx={{ fontSize: "14px" }} />
         </MenuItem>
       </Menu>

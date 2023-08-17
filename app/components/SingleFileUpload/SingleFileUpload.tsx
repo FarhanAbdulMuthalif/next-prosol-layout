@@ -22,13 +22,6 @@ const SingleFileUpload: React.FC = () => {
     }
   };
 
-  const handleDragOver = useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      event.preventDefault();
-    },
-    []
-  );
-
   const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
 
@@ -46,7 +39,7 @@ const SingleFileUpload: React.FC = () => {
   return (
     <div
       className="file-upload"
-      onDragOver={handleDragOver}
+      onDragOver={(event) => event.preventDefault()}
       onDrop={handleDrop}
     >
       <label htmlFor="file-input" className="upload-label">
@@ -68,7 +61,6 @@ const SingleFileUpload: React.FC = () => {
               top: "-10px",
               right: "-10px",
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-              zIndex: 999,
             }}
             onClick={() => {
               setPreviewURL(null);
@@ -77,13 +69,36 @@ const SingleFileUpload: React.FC = () => {
           >
             <CloseIcon sx={{ color: "blue", fontSize: "10px" }} />
           </IconButton>
-          <Image
-            src={previewURL as string}
-            alt="Preview"
-            height={100}
-            width={100}
-            objectFit="cover"
-          />
+          {selectedFile.type === "application/pdf" ? (
+            <Image
+              className="sinImg"
+              src={"/Images/pdf-icon.webp"}
+              alt="Preview"
+              height={100}
+              width={100}
+            />
+          ) : selectedFile.type === "image/jpeg" ||
+            selectedFile.type === "image/png" ||
+            selectedFile.type === "image/svg+xml" ? (
+            <Image
+              className="sinImg"
+              src={previewURL as string}
+              alt="Preview"
+              height={100}
+              width={100}
+            />
+          ) : selectedFile.type ===
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ? (
+            <Image
+              className="sinImg"
+              src={"/Images/excelImage.jfif"}
+              alt="Preview"
+              height={100}
+              width={100}
+            />
+          ) : (
+            ""
+          )}
         </div>
       )}
     </div>

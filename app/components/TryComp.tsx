@@ -1,89 +1,99 @@
-// /* import { useEffect, useRef } from "react";
+// import React, { useCallback, useState } from "react";
+// import UploadIcon from "@mui/icons-material/Upload";
+// import CloseIcon from "@mui/icons-material/Close";
+// import { IconButton } from "@mui/material";
+// import "./CompressFileUpload.scss";
 
-// function DynamicIframeComponent() {
-//   const iframeRef = useRef(null);
+// const CompressFileUpload: React.FC = () => {
+//   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+//   const [previewURL, setPreviewURL] = useState<string | null>(null);
 
-//   useEffect(() => {
-//     // Handle iframe load event
-//     const handleLoad = () => {
-//       console.log("Iframe loaded");
-//     };
-
-//     // Add event listener for iframe load event
-//     iframeRef?.current.addEventListener("load", handleLoad);
-
-//     // Clean up event listener on component unmount
-//     return () => {
-//       iframeRef?.current.removeEventListener("load", handleLoad);
-//     };
-//   }, []);
-
-//   return (
-//     <iframe
-//       ref={iframeRef}
-//       src="https://www.youtube.com/embed/YHfPOKx_wU0"
-//       title="Embedded YouTube Video"
-//       width="560"
-//       height="315"
-//       frameBorder="0"
-//       allowFullScreen
-//     />
-//   );
-// }
-
-// export default DynamicIframeComponent;
-//  */
-// "use client";
-// import React, { useState } from "react";
-// import axios from "axios";
-
-// const UploadForm: React.FC = () => {
-//   const [file, setFile] = useState<File | null>(null);
-
-//   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     const selectedFile = event.target.files && event.target.files[0];
-//     console.log(" event.target.files && event.target.files[0] below");
-//     console.log(event.target.files && event.target.files[0]);
-//     console.log(" event.target.files[0] below");
-//     console.log(event.target.files[0]);
-//     console.log(" event.target.files below");
-//     console.log(event.target.files);
-//     if (selectedFile) {
-//       console.log("selected file below");
-//       console.log(selectedFile);
-//       console.table(selectedFile);
-//       setFile(selectedFile);
+//   const handleFileChange = async (
+//     event: React.ChangeEvent<HTMLInputElement>
+//   ) => {
+//     const file = event.target.files && event.target.files[0];
+//     if (file) {
+//       const resizedImage = await resizeImage(file);
+//       setSelectedFile(resizedImage);
+//       console.log(resizedImage);
+//       setPreviewURL(URL.createObjectURL(resizedImage));
 //     }
 //   };
 
-//   const handleSubmit = async (event: React.FormEvent) => {
-//     event.preventDefault();
+//   const resizeImage = (file: File): Promise<File> => {
+//     return new Promise((resolve) => {
+//       const reader = new FileReader();
+//       reader.onload = (event) => {
+//         const img = new Image();
+//         img.src = event.target.result as string;
 
-//     if (!file) {
-//       return;
-//     }
+//         img.onload = () => {
+//           const MAX_WIDTH = 800; // Set the maximum width you want for the image
+//           const scale = MAX_WIDTH / img.width;
+//           const height = img.height * scale;
 
-//     const formData = new FormData();
-//     formData.append("uploadedFile", file);
+//           const canvas = document.createElement("canvas");
+//           canvas.width = MAX_WIDTH;
+//           canvas.height = height;
 
-//     try {
-//       await axios.post("/api/upload", formData, {
-//         headers: {
-//           "Content-Type": "multipart/form-data",
-//         },
-//       });
-//       console.log("File uploaded successfully");
-//     } catch (error) {
-//       console.error("Error uploading file:", error);
-//     }
+//           const ctx = canvas.getContext("2d");
+//           ctx?.drawImage(img, 0, 0, MAX_WIDTH, height);
+
+//           canvas.toBlob(
+//             (blob) => {
+//               const resizedFile = new File([blob as Blob], file.name, {
+//                 type: "image/jpeg", // Change the type if needed
+//               });
+//               resolve(resizedFile);
+//             },
+//             "image/jpeg",
+//             0.7
+//           ); // Adjust the compression quality as needed
+//         };
+//       };
+//       reader.readAsDataURL(file);
+//     });
 //   };
 
 //   return (
-//     <form onSubmit={handleSubmit}>
-//       <input type="file" onChange={handleFileChange} />
-//       <button type="submit">Upload File</button>
-//     </form>
+//     <div className="file-upload">
+//       <label htmlFor="file-input" className="upload-label">
+//         {selectedFile ? selectedFile.name : "Choose a file"}
+//         {selectedFile ? "" : <UploadIcon />}
+//       </label>
+//       <input
+//         id="file-input"
+//         type="file"
+//         onChange={handleFileChange}
+//         style={{ display: "none" }}
+//       />
+
+//       {selectedFile && (
+//         <div className="preview-container">
+//           <IconButton
+//             sx={{
+//               position: "absolute",
+//               top: "-10px",
+//               right: "-10px",
+//               boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+//               zIndex: 999,
+//             }}
+//             onClick={() => {
+//               setPreviewURL(null);
+//               setSelectedFile(null);
+//             }}
+//           >
+//             <CloseIcon sx={{ color: "blue", fontSize: "10px" }} />
+//           </IconButton>
+//           <img
+//             src={previewURL as string}
+//             alt="Preview"
+//             style={{ height: 100, width: 100, objectFit: "cover" }}
+//           />
+//         </div>
+//       )}
+//     </div>
 //   );
 // };
 
-// export default UploadForm;
+// export default CompressFileUpload;
