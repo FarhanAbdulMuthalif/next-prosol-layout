@@ -543,6 +543,107 @@ export default function MaterialMaster() {
       }
     }
   };
+  // const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewURL, setPreviewURL] = useState<any>({});
+  const convertBase64 = (file: any) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+  const handleFileChange = async (
+    singleData: PostCreateFieldData,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const { fieldName: name, max } = singleData;
+    console.log(name);
+    const file = event.target.files && event.target.files[0];
+
+    if (file) {
+      console.log(event.target.files);
+      console.table(event.target.files);
+      console.log(file);
+      // const base64 = await convertBase64(file);
+      // console.log(base64);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const base64String = e.target?.result as string;
+        // Use the base64String in your API call or store it as needed
+        console.log("Base64 encoded file:", base64String);
+      };
+      reader.readAsDataURL(file);
+      //   console.log(event.target.files[0]);
+      //   console.table(event.target.files[0]);
+      const fileSizeMB = file?.size / (1024 * 1024); // Convert to MB
+      const maxSizeMB = max ? max : 10; // Set your desired max size in MB
+      console.log(fileSizeMB);
+      if (fileSizeMB > maxSizeMB) {
+        event.target.value = ""; // Clear the input value
+        return alert(`File size exceeds ${maxSizeMB} MB`);
+      }
+      setPreviewURL((prev: any) => {
+        return { ...prev, [name]: URL.createObjectURL(file) };
+      });
+      // setPreviewURL(URL.createObjectURL(file));
+      setDynamicFieldData((prev: any) => {
+        return { ...prev, [name]: file };
+      });
+    }
+  };
+  // const handleFileChange = (
+  //   name: string,
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   console.log(name);
+  //   console.log(event);
+  // };
+  const handleDrop = useCallback(
+    (
+      singleData: PostCreateFieldData,
+      event: React.DragEvent<HTMLDivElement>
+    ) => {
+      event.preventDefault();
+      event.stopPropagation();
+      // const divElement = event.currentTarget;
+      const { fieldName: name, pattern } = singleData;
+      console.log(name);
+      console.log(pattern);
+
+      const file = event.dataTransfer.files && event.dataTransfer.files[0];
+
+      if (file) {
+        console.log(event.dataTransfer.files);
+        console.table(event.dataTransfer.files);
+        console.log(event.dataTransfer.files[0]);
+        console.table(event.dataTransfer.files[0]);
+        console.log(file.type.startsWith("image"));
+        if (pattern?.includes(file.type) || file.type.startsWith("image")) {
+          // return alert("please select the valid filetype");
+
+          setDynamicFieldData((prev: any) => {
+            return { ...prev, [name]: file };
+          });
+          setPreviewURL((prev: any) => {
+            return {
+              ...prev,
+              [name]: URL.createObjectURL(file),
+            };
+          });
+        } else {
+          return alert("please select the valid filetype");
+        }
+      }
+    },
+    []
+  );
   const [FieldUpdateSuccess, setFieldUpdateSuccess] = useState<boolean>(false);
   const UpdateSuccessHandler = () => {
     setFieldUpdateSuccess(!FieldUpdateSuccess);
@@ -591,6 +692,10 @@ export default function MaterialMaster() {
   const DynamicFormSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
     console.log(DynamicFieldData);
+    const ApiSubmitHandler = {
+      dynamicFields: DynamicFieldData,
+    };
+    console.log(ApiSubmitHandler);
     console.log(LogicFieldArray);
 
     // const checkObj = ObjArryKeys.includes("");
@@ -676,6 +781,18 @@ export default function MaterialMaster() {
         }
       }
     });
+    try {
+      const response = await api.post("/saveUser", ApiSubmitHandler);
+      const data = await response?.data;
+      console.log(response);
+      console.log(data);
+      if (response.status === 200) {
+        SnackBarHandler();
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
 
     setMainFormError(false);
   };
@@ -1140,10 +1257,10 @@ export default function MaterialMaster() {
                   <MenuItem sx={menuItemStyle} value={"image/*"}>
                     Image
                   </MenuItem>
-                  <MenuItem sx={menuItemStyle} value={".pdf"}>
+                  <MenuItem sx={menuItemStyle} value={"application/pdf"}>
                     PDF
                   </MenuItem>
-                  <MenuItem sx={menuItemStyle} value={".csv"}>
+                  <MenuItem sx={menuItemStyle} value={"text/csv"}>
                     CSV
                   </MenuItem>
                   <MenuItem
@@ -1777,7 +1894,16 @@ export default function MaterialMaster() {
                 ""
               )}
               {data.dataType === "fileUpload" && data.identity === "single" ? (
-                <SingleFileUpload />
+                <SingleFileUpload
+                  setPreviewURL={setPreviewURL}
+                  setSelectedFile={setDynamicFieldData}
+                  handleDropHandler={(e) => handleDrop(data, e)}
+                  handleFileChange={(e) => handleFileChange(data, e)}
+                  previewURL={previewURL}
+                  selectedFile={DynamicFieldData[data.fieldName]}
+                  DynamicFieldData={DynamicFieldData}
+                  singleData={data}
+                />
               ) : (
                 ""
               )}

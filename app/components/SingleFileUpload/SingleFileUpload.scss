@@ -1,16 +1,21 @@
 // components/FileUpload.module.scss
 .file-upload {
   border: 1px dashed rgb(128, 128, 255);
+  width: 100%;
   border-radius: 8px;
   padding: 20px;
   text-align: center;
   cursor: pointer;
   transition: border-color 0.3s;
+  position: relative;
 
   &:hover {
     border-color: #444;
   }
-  #file-input {
+  .Sin-file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
     width: 100%;
     display: none;

@@ -34,6 +34,13 @@ export interface PostCreateFieldData {
   value?: string;
 }
 
+export interface usestatemailTemplateProps {
+  ccText: string;
+  toText: string;
+  subject: string;
+  body: string;
+}
+
 export interface FieldLabel {
   label?: string;
 }
