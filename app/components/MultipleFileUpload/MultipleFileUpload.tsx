@@ -5,60 +5,35 @@ import "./MultipleFileUpload.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
-const MultiFileUpload: React.FC = () => {
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [previewURLs, setPreviewURLs] = useState<string[]>([]);
+import { PostCreateFieldData, PreviewFileUploadProps } from "@/MOCK_DATA";
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files) {
-      console.log(event.target.files);
-      console.table(event.target.files);
-
-      const filesArray = Array.from(files);
-      setSelectedFiles(filesArray);
-      console.log(filesArray);
-      // Create an array of preview URLs using FileReader
-      const previewURLsArray = filesArray.map((file) => {
-        console.log(URL.createObjectURL(file));
-        return URL.createObjectURL(file);
-      });
-      console.log(previewURLsArray);
-      setPreviewURLs(previewURLsArray);
-    }
-  };
-
-  const handleDragOver = useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      event.preventDefault();
-    },
-    []
-  );
-
-  const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const files = event.dataTransfer.files;
-    if (files) {
-      console.log(event.dataTransfer.files);
-      console.table(event.dataTransfer.files);
-      console.log(event.dataTransfer.files[0]);
-      console.table(event.dataTransfer.files[0]);
-      const filesArray = Array.from(files);
-      setSelectedFiles(filesArray);
-
-      // Create an array of preview URLs using FileReader
-      const previewURLsArray = filesArray.map((file) =>
-        URL.createObjectURL(file)
-      );
-      setPreviewURLs(previewURLsArray);
-    }
-  }, []);
+type MultiFileUploadProps = {
+  setPreviewURLs: (data: PreviewFileUploadProps[]) => void;
+  previewURLs: PreviewFileUploadProps[];
+  selectedFiles: File[] | null;
+  setSelectedFiles: any;
+  singleData: PostCreateFieldData;
+  handleDropHandler: (event: React.DragEvent<HTMLDivElement>) => void;
+  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  DynamicFieldData: any;
+};
+const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
+  setPreviewURLs,
+  previewURLs,
+  setSelectedFiles,
+  selectedFiles,
+  handleDropHandler,
+  handleFileChange,
+  singleData,
+  DynamicFieldData,
+}: MultiFileUploadProps) => {
+  const { fieldName: name, pattern } = singleData;
 
   return (
     <div
       className="file-upload"
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
+      onDragOver={(event) => event.preventDefault()}
+      onDrop={handleDropHandler}
     >
       <label htmlFor="file-input" className="upload-label">
         {previewURLs.length > 0
@@ -84,21 +59,70 @@ const MultiFileUpload: React.FC = () => {
                 boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
               onClick={() => {
-                setPreviewURLs((prev: string[]) => {
-                  return prev.filter((dta) => dta !== url);
+                // setPreviewURLs((prev: PreviewFileUploadProps[]) => {
+                //   return prev.filter((dta) => dta.url !== url.url);
+                // });
+                const ArrUrls = previewURLs.filter(
+                  (data) => data.name !== url.name
+                );
+                console.log(ArrUrls);
+                setPreviewURLs(ArrUrls);
+                console.log(selectedFiles);
+                const updatedObj = selectedFiles?.filter(
+                  (data) => data.name !== url.name
+                );
+                console.log(updatedObj);
+                console.log(DynamicFieldData);
+                console.log(name);
+
+                setSelectedFiles((prev: any) => {
+                  return { ...prev, [name]: updatedObj };
                 });
               }}
             >
               <CloseIcon sx={{ color: "blue", fontSize: "10px" }} />
             </IconButton>
-
-            <Image
-              src={url}
-              alt={`Preview ${index}`}
-              height={100}
-              width={100}
-              objectFit="cover"
-            />
+            {url.type.startsWith("image/") ? (
+              <Image
+                src={url.url}
+                alt={`Preview ${index}`}
+                height={100}
+                width={90}
+              />
+            ) : (
+              ""
+            )}
+            {url.type === "application/pdf" ? (
+              <Image
+                src={"/Images/pdf-icon.webp"}
+                alt={`Preview ${index}`}
+                height={100}
+                width={90}
+              />
+            ) : (
+              ""
+            )}
+            {url.type === "text/plain" ? (
+              <Image
+                src={"/Images/textFileImage.png"}
+                alt={`Preview ${index}`}
+                height={100}
+                width={100}
+              />
+            ) : (
+              ""
+            )}
+            {url.type ===
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ? (
+              <Image
+                src={"/Images/excelImage.jfif"}
+                alt={`Preview ${index}`}
+                height={100}
+                width={100}
+              />
+            ) : (
+              ""
+            )}
           </div>
         ))}
       </div>

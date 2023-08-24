@@ -17,8 +17,11 @@ const AssetMaster = () => {
     body: "",
   });
   const FIleApiHandler = async (dataFile: File) => {
+    const formData = new FormData();
+    formData.append("file", dataFile);
+    console.log(formData);
     try {
-      const response = await api.post("/uploadFile/52?action=u", dataFile, {
+      const response = await api.post("/uploadFile/10?action=u", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

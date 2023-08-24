@@ -57,3 +57,8 @@ export type LogicStateObjFld = {
   formulea: boolean;
   fieldName?: string;
 };
+export type PreviewFileUploadProps = {
+  type: string;
+  url: string;
+  name?: string;
+};

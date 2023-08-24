@@ -35,13 +35,19 @@ import {
   Radio,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { LogicStateObjFld, Option, PostCreateFieldData } from "@/MOCK_DATA";
+import {
+  LogicStateObjFld,
+  Option,
+  PostCreateFieldData,
+  PreviewFileUploadProps,
+} from "@/MOCK_DATA";
 import SnackBarSuccess from "../components/Snackbar/SnackBarSuccess";
 import ConfirmDialog from "../components/Dialog/ConfirmDialog";
 import LogicDialog from "../components/Dialog/LogicDialog";
 import api from "../components/api";
 import SingleFileUpload from "../components/SingleFileUpload/SingleFileUpload";
 import MultiFileUpload from "../components/MultipleFileUpload/MultipleFileUpload";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 export default function MaterialMaster() {
   const initialStateField = {
@@ -69,6 +75,7 @@ export default function MaterialMaster() {
   // });
 
   const [DynamicFieldData, setDynamicFieldData] = useState<any>({});
+
   const [FieldTypeSelect, setFieldTypeSelect] = useState("");
   const [MultiSelectedOptions, setMultiSelectedOptions] = useState<string[]>(
     []
@@ -319,6 +326,15 @@ export default function MaterialMaster() {
       };
     });
   };
+  const handlerMultiSelectInputTypeEdit = (e: SelectChangeEvent) => {
+    console.log(SelectedFieldSingle);
+    setSelectedFieldSingle((prev: PostCreateFieldData) => {
+      return {
+        ...prev,
+        pattern: Array.isArray(e.target.value) ? e.target.value : [],
+      };
+    });
+  };
   const handlerEditSelectInputType = (e: SelectChangeEvent) => {
     setSelectedFieldSingle((prev: PostCreateFieldData) => {
       return { ...prev, identity: e.target.value as string };
@@ -544,6 +560,7 @@ export default function MaterialMaster() {
     }
   };
   // const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const [previewURL, setPreviewURL] = useState<any>({});
   const convertBase64 = (file: any) => {
     return new Promise((resolve, reject) => {
@@ -573,6 +590,7 @@ export default function MaterialMaster() {
       console.log(file);
       // const base64 = await convertBase64(file);
       // console.log(base64);
+
       const reader = new FileReader();
       reader.onload = (e) => {
         const base64String = e.target?.result as string;
@@ -613,7 +631,7 @@ export default function MaterialMaster() {
       event.preventDefault();
       event.stopPropagation();
       // const divElement = event.currentTarget;
-      const { fieldName: name, pattern } = singleData;
+      const { fieldName: name, pattern, max } = singleData;
       console.log(name);
       console.log(pattern);
 
@@ -625,9 +643,15 @@ export default function MaterialMaster() {
         console.log(event.dataTransfer.files[0]);
         console.table(event.dataTransfer.files[0]);
         console.log(file.type.startsWith("image"));
+
         if (pattern?.includes(file.type) || file.type.startsWith("image")) {
           // return alert("please select the valid filetype");
-
+          const fileSizeMB = file?.size / (1024 * 1024); // Convert to MB
+          const maxSizeMB = max ? max : 10; // Set your desired max size in MB
+          console.log(fileSizeMB);
+          if (fileSizeMB > maxSizeMB) {
+            return alert(`File size exceeds ${maxSizeMB} MB`);
+          }
           setDynamicFieldData((prev: any) => {
             return { ...prev, [name]: file };
           });
@@ -644,12 +668,96 @@ export default function MaterialMaster() {
     },
     []
   );
+  // const [selectedMultipleFiles, setSelectedMultipleFiles] = useState<File[]>(
+  //   []
+  // );
+  const [previewURLsMultiple, setPreviewURLsMultiple] = useState<
+    PreviewFileUploadProps[]
+  >([]);
+
+  const handleMultiFileChange = (
+    singleData: PostCreateFieldData,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { fieldName: name, pattern } = singleData;
+    const files = event.target.files;
+    if (files) {
+      console.log(event.target.files);
+      console.table(event.target.files);
+
+      const filesArray = Array.from(files);
+      setDynamicFieldData((prev: any) => {
+        return { ...prev, [name]: filesArray };
+      });
+      // setSelectedMultipleFiles(filesArray);
+      console.log(filesArray);
+      // Create an array of preview URLs using FileReader
+      const previewURLsArray = filesArray.map((file) => {
+        console.log(URL.createObjectURL(file));
+        return {
+          type: file.type,
+          url: URL.createObjectURL(file),
+          name: file.name,
+        };
+      });
+      console.log(previewURLsArray);
+      setPreviewURLsMultiple(previewURLsArray);
+    }
+  };
+
+  const handleMultifileDrop = useCallback(
+    (
+      singleData: PostCreateFieldData,
+      event: React.DragEvent<HTMLDivElement>
+    ) => {
+      event.preventDefault();
+      const { fieldName: name, pattern } = singleData;
+      const files = event.dataTransfer.files;
+      if (files) {
+        console.log(event.dataTransfer.files);
+        console.table(event.dataTransfer.files);
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          if (pattern?.includes(file.type) || file.type.startsWith("image")) {
+            // Handle the accepted file
+          } else {
+            return alert(`File type not supported: ${file.type}`);
+          }
+        }
+
+        const filesArray = Array.from(files);
+        // const StfyTry = JSON.stringify(filesArray);
+        // console.log(StfyTry);
+        // const PrseTry = JSON.parse(StfyTry);
+        // console.log(PrseTry);
+
+        console.log(filesArray);
+        console.log(filesArray[0].type);
+        // setSelectedMultipleFiles(filesArray);
+        setDynamicFieldData((prev: any) => {
+          return { ...prev, [name]: filesArray };
+        });
+        // Create an array of preview URLs using FileReader
+        const previewURLsArray = filesArray.map((file) => {
+          return {
+            type: file.type,
+            url: URL.createObjectURL(file),
+            name: file.name,
+          };
+        });
+        console.log(previewURLsArray);
+        setPreviewURLsMultiple(previewURLsArray);
+      }
+    },
+    []
+  );
   const [FieldUpdateSuccess, setFieldUpdateSuccess] = useState<boolean>(false);
   const UpdateSuccessHandler = () => {
     setFieldUpdateSuccess(!FieldUpdateSuccess);
   };
   const EditSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     console.log(SelectedFieldSingle);
 
     try {
@@ -795,6 +903,16 @@ export default function MaterialMaster() {
     }
 
     setMainFormError(false);
+  };
+  const handleDragEnd = (result: any) => {
+    if (!result.destination) return;
+
+    const items = Array.from(InputData);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setInputData(items);
+    console.log(InputData);
   };
   return (
     <form
@@ -1728,6 +1846,93 @@ export default function MaterialMaster() {
             ) : (
               ""
             )}
+            {SelectedFieldSingle.dataType === "fileUpload" ? (
+              <div className="render-fields-namess">
+                <label htmlFor="DrawerInputFieldCrtId">Enter Name *</label>
+                <TextField
+                  size="small"
+                  id="DrawerInputFieldCrtId"
+                  name="fieldName"
+                  placeholder="Enter Name"
+                  autoComplete="off"
+                  value={SelectedFieldSingle?.fieldName}
+                  onChange={HandletInputEditFunc}
+                />
+                <label id="DrawerInputIdSelect">Filetype Accept *</label>
+                <Select
+                  id="DrawerCrtInputId"
+                  value={SelectedFieldSingle.pattern as any}
+                  onChange={handlerMultiSelectInputTypeEdit}
+                  multiple
+                  renderValue={(selected) => {
+                    if (SelectedFieldSingle?.pattern?.length === 0) {
+                      return "Select Filetype";
+                    }
+                    return Array.isArray(selected)
+                      ? (selected as string[]).join(", ")
+                      : [];
+                  }}
+                  sx={SelectStyle}
+                  displayEmpty
+                >
+                  <MenuItem sx={menuItemStyle} value="" disabled>
+                    Select Field
+                  </MenuItem>
+                  <MenuItem sx={menuItemStyle} value={"image/*"}>
+                    Image
+                  </MenuItem>
+                  <MenuItem sx={menuItemStyle} value={"application/pdf"}>
+                    PDF
+                  </MenuItem>
+                  <MenuItem sx={menuItemStyle} value={"text/csv"}>
+                    CSV
+                  </MenuItem>
+                  <MenuItem
+                    sx={menuItemStyle}
+                    value={
+                      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    }
+                  >
+                    Excel
+                  </MenuItem>
+                </Select>
+                <label id="DrawerInputIdSelect">Upload Type *</label>
+                <Select
+                  id="DrawerCrtInputId"
+                  value={SelectedFieldSingle.identity}
+                  onChange={handlerEditSelectInputType}
+                  sx={SelectStyle}
+                  displayEmpty
+                >
+                  <MenuItem sx={menuItemStyle} value="" disabled>
+                    Select Field
+                  </MenuItem>
+                  <MenuItem sx={menuItemStyle} value={"single"}>
+                    Single Upload
+                  </MenuItem>
+                  <MenuItem sx={menuItemStyle} value={"multiple"}>
+                    Multiple Upload
+                  </MenuItem>
+                </Select>
+                <label htmlFor="DrawerInputFieldCrtId">Enter Max size *</label>
+                <TextField
+                  size="small"
+                  id="DrawerInputFieldCrtId"
+                  name="max"
+                  placeholder="Enter Max size "
+                  autoComplete="off"
+                  inputProps={{
+                    autoComplete: "new-password",
+                    maxLength: 1,
+                  }}
+                  value={SelectedFieldSingle?.max}
+                  onChange={HandletInputEditFunc}
+                  helperText="maxium file size 5mb"
+                />
+              </div>
+            ) : (
+              ""
+            )}
           </section>
           <footer>
             <Button
@@ -1743,213 +1948,253 @@ export default function MaterialMaster() {
           </footer>
         </form>
       </Drawer>
-      <div className="inputs-form-group-div">
-        {InputData.length === 0 ? (
-          <h3 style={{ textAlign: "center" }}>No Data Fields</h3>
-        ) : (
-          ""
-        )}
-        {InputData?.map((data: PostCreateFieldData) => {
-          return (
-            <div className="singnle-form-input-div" key={data.fieldName}>
-              <InputLabel
-                title={data.fieldName}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  fontSize: "14px",
-                }}
-                id="select-field-label"
-              >
-                {data.fieldName} {data.required === true ? "*" : ""}
-                <IconButton
-                  sx={{ fontSize: "20px" }}
-                  onClick={(e) => {
-                    handleClickMenu(e, data);
-                  }}
-                >
-                  <MoreVertIcon sx={{ fontSize: "12px" }} />
-                </IconButton>
-              </InputLabel>
-              {data.dataType === "textField" ? (
-                <TextField
-                  id="input-sin-field"
-                  placeholder={`Enter ${data.fieldName}`}
-                  type={data.identity}
-                  name={data.fieldName}
-                  onChange={DynamicInputHandler}
-                  autoComplete="off"
-                  inputProps={{
-                    autoComplete: "new-password",
-                    maxLength: data.max,
-                    minLength: data.min,
-                  }}
-                  error={
-                    UsrIntraction &&
-                    !validateInput(data?.pattern, data?.fieldName)
-                    /* !calculation[data?.name] === true */
-                  }
-                  helperText={
-                    UsrIntraction &&
-                    !validateInput(data?.pattern, data?.fieldName)
-                      ? "Invalid input"
-                      : ""
-                  }
-                />
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="dropdowns">
+          {(provided) => (
+            <div
+              className="inputs-form-group-div"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {InputData.length === 0 ? (
+                <h3 style={{ textAlign: "center" }}>No Data Fields</h3>
               ) : (
                 ""
               )}
-              {data.dataType === "textArea" ? (
-                <TextField
-                  id="textarea-api"
-                  placeholder={`Enter ${data.fieldName}`}
-                  name={data.fieldName}
-                  onChange={DynamicInputHandler}
-                  autoComplete="off"
-                  inputProps={{
-                    autoComplete: "new-password",
-                    maxLength: data.max,
-                    minLength: data.min,
-                  }}
-                  rows={data.identity}
-                  multiline
-                />
-              ) : (
-                ""
-              )}
-              {data.dataType === "dropDown" && data.identity === "multiple" ? (
-                <Select
-                  labelId="DrawerInputIdSelect"
-                  id="DrawerInputIdSelect"
-                  value={MultiSelectedOptions as any}
-                  name={data.fieldName}
-                  placeholder="select"
-                  sx={{ fontSize: "12px", color: "brown" }}
-                  displayEmpty
-                  fullWidth
-                  multiple
-                  onChange={HandleChangeMultiSelection}
-                  style={{
-                    height: 40,
-
-                    alignSelf: "flex-start",
-                  }}
-                  renderValue={(selected) => {
-                    if (MultiSelectedOptions.length === 0) {
-                      return "Select an option";
-                    }
-                    return Array.isArray(selected)
-                      ? (selected as string[]).join(", ")
-                      : [];
-                  }}
-                >
-                  {data?.dropDownValues?.map((dta: Option) => {
-                    return (
-                      <MenuItem
-                        sx={{ fontSize: "12px", color: "#5E5873" }}
-                        value={dta.value}
-                        key={dta.value}
-                      >
-                        {dta.value}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              ) : (
-                ""
-              )}
-              {data.dataType === "dropDown" && data.identity === "single" ? (
-                <Select
-                  labelId="DrawerInputIdSelect"
-                  id="DrawerInputIdSelect"
-                  name={data.fieldName}
-                  placeholder="select"
-                  sx={{ fontSize: "12px", color: "brown" }}
-                  displayEmpty
-                  onChange={DynamicDropdownHandler}
-                  fullWidth
-                  style={{
-                    height: 40,
-
-                    alignSelf: "flex-start",
-                  }}
-                  renderValue={(value) =>
-                    value ? value.toString() : "Select Field"
-                  }
-                >
-                  {data?.dropDownValues?.map((dta: Option) => {
-                    return (
-                      <MenuItem
-                        sx={{ fontSize: "12px", color: "#5E5873" }}
-                        value={dta.value}
-                        key={dta.value}
-                      >
-                        {dta.value}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              ) : (
-                ""
-              )}
-              {data.dataType === "fileUpload" && data.identity === "single" ? (
-                <SingleFileUpload
-                  setPreviewURL={setPreviewURL}
-                  setSelectedFile={setDynamicFieldData}
-                  handleDropHandler={(e) => handleDrop(data, e)}
-                  handleFileChange={(e) => handleFileChange(data, e)}
-                  previewURL={previewURL}
-                  selectedFile={DynamicFieldData[data.fieldName]}
-                  DynamicFieldData={DynamicFieldData}
-                  singleData={data}
-                />
-              ) : (
-                ""
-              )}
-              {data.dataType === "fileUpload" &&
-              data.identity === "multiple" ? (
-                <MultiFileUpload />
-              ) : (
-                ""
-              )}
-              {data.dataType === "radioButton" ? (
-                <FormControl>
-                  <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    row
-                    onChange={DynamicInputHandler}
-                    name={data.fieldName}
+              {InputData?.map((data: PostCreateFieldData, index: number) => {
+                return (
+                  <Draggable
+                    draggableId={data.fieldName}
+                    index={index}
+                    key={data.fieldName}
                   >
-                    {data?.enums?.map((data: any) => {
-                      return (
-                        <FormControlLabel
-                          key={data}
-                          value={data}
-                          control={<Radio size="small" />}
-                          label={
-                            <Typography
-                              variant="body2"
-                              sx={{
-                                fontSize: "0.875rem",
-                                margin: "0 ",
-                              }}
+                    {(provided) => (
+                      <div
+                        className="singnle-form-input-div"
+                        key={data.fieldName}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <InputLabel
+                          title={data.fieldName}
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            fontSize: "14px",
+                          }}
+                          id="select-field-label"
+                        >
+                          {data.fieldName} {data.required === true ? "*" : ""}
+                          <IconButton
+                            sx={{ fontSize: "20px" }}
+                            onClick={(e) => {
+                              handleClickMenu(e, data);
+                            }}
+                          >
+                            <MoreVertIcon sx={{ fontSize: "12px" }} />
+                          </IconButton>
+                        </InputLabel>
+                        {data.dataType === "textField" ? (
+                          <TextField
+                            id="input-sin-field"
+                            placeholder={`Enter ${data.fieldName}`}
+                            type={data.identity}
+                            name={data.fieldName}
+                            onChange={DynamicInputHandler}
+                            autoComplete="off"
+                            inputProps={{
+                              autoComplete: "new-password",
+                              maxLength: data.max,
+                              minLength: data.min,
+                            }}
+                            error={
+                              UsrIntraction &&
+                              !validateInput(data?.pattern, data?.fieldName)
+                              /* !calculation[data?.name] === true */
+                            }
+                            helperText={
+                              UsrIntraction &&
+                              !validateInput(data?.pattern, data?.fieldName)
+                                ? "Invalid input"
+                                : ""
+                            }
+                          />
+                        ) : (
+                          ""
+                        )}
+                        {data.dataType === "textArea" ? (
+                          <TextField
+                            id="textarea-api"
+                            placeholder={`Enter ${data.fieldName}`}
+                            name={data.fieldName}
+                            onChange={DynamicInputHandler}
+                            autoComplete="off"
+                            inputProps={{
+                              autoComplete: "new-password",
+                              maxLength: data.max,
+                              minLength: data.min,
+                            }}
+                            rows={data.identity}
+                            multiline
+                          />
+                        ) : (
+                          ""
+                        )}
+                        {data.dataType === "dropDown" &&
+                        data.identity === "multiple" ? (
+                          <Select
+                            labelId="DrawerInputIdSelect"
+                            id="DrawerInputIdSelect"
+                            value={MultiSelectedOptions as any}
+                            name={data.fieldName}
+                            placeholder="select"
+                            sx={{ fontSize: "12px", color: "brown" }}
+                            displayEmpty
+                            fullWidth
+                            multiple
+                            onChange={HandleChangeMultiSelection}
+                            style={{
+                              height: 40,
+
+                              alignSelf: "flex-start",
+                            }}
+                            renderValue={(selected) => {
+                              if (MultiSelectedOptions.length === 0) {
+                                return "Select an option";
+                              }
+                              return Array.isArray(selected)
+                                ? (selected as string[]).join(", ")
+                                : [];
+                            }}
+                          >
+                            {data?.dropDownValues?.map((dta: Option) => {
+                              return (
+                                <MenuItem
+                                  sx={{ fontSize: "12px", color: "#5E5873" }}
+                                  value={dta.value}
+                                  key={dta.value}
+                                >
+                                  {dta.value}
+                                </MenuItem>
+                              );
+                            })}
+                          </Select>
+                        ) : (
+                          ""
+                        )}
+                        {data.dataType === "dropDown" &&
+                        data.identity === "single" ? (
+                          <Select
+                            labelId="DrawerInputIdSelect"
+                            id="DrawerInputIdSelect"
+                            name={data.fieldName}
+                            placeholder="select"
+                            sx={{ fontSize: "12px", color: "brown" }}
+                            displayEmpty
+                            onChange={DynamicDropdownHandler}
+                            fullWidth
+                            style={{
+                              height: 40,
+
+                              alignSelf: "flex-start",
+                            }}
+                            renderValue={(value) =>
+                              value ? value.toString() : "Select Field"
+                            }
+                          >
+                            {data?.dropDownValues?.map((dta: Option) => {
+                              return (
+                                <MenuItem
+                                  sx={{ fontSize: "12px", color: "#5E5873" }}
+                                  value={dta.value}
+                                  key={dta.value}
+                                >
+                                  {dta.value}
+                                </MenuItem>
+                              );
+                            })}
+                          </Select>
+                        ) : (
+                          ""
+                        )}
+                        {data.dataType === "fileUpload" &&
+                        data.identity === "single" ? (
+                          <SingleFileUpload
+                            setPreviewURL={setPreviewURL}
+                            setSelectedFile={setDynamicFieldData}
+                            handleDropHandler={(e) => handleDrop(data, e)}
+                            handleFileChange={(e) => handleFileChange(data, e)}
+                            previewURL={previewURL}
+                            selectedFile={DynamicFieldData[data.fieldName]}
+                            DynamicFieldData={DynamicFieldData}
+                            singleData={data}
+                          />
+                        ) : (
+                          ""
+                        )}
+                        {data.dataType === "fileUpload" &&
+                        data.identity === "multiple" ? (
+                          <MultiFileUpload
+                            setPreviewURLs={setPreviewURLsMultiple}
+                            previewURLs={previewURLsMultiple}
+                            setSelectedFiles={setDynamicFieldData}
+                            selectedFiles={DynamicFieldData[data.fieldName]}
+                            handleDropHandler={(e) =>
+                              handleMultifileDrop(data, e)
+                            }
+                            handleFileChange={(e) =>
+                              handleMultiFileChange(data, e)
+                            }
+                            singleData={data}
+                            DynamicFieldData={DynamicFieldData}
+                          />
+                        ) : (
+                          ""
+                        )}
+                        {data.dataType === "radioButton" ? (
+                          <FormControl>
+                            <RadioGroup
+                              aria-labelledby="demo-radio-buttons-group-label"
+                              row
+                              onChange={DynamicInputHandler}
+                              name={data.fieldName}
                             >
-                              {data}
-                            </Typography>
-                          }
-                        />
-                      );
-                    })}
-                  </RadioGroup>
-                </FormControl>
-              ) : (
-                ""
-              )}
+                              {data?.enums?.map((data: any) => {
+                                return (
+                                  <FormControlLabel
+                                    key={data}
+                                    value={data}
+                                    control={<Radio size="small" />}
+                                    label={
+                                      <Typography
+                                        variant="body2"
+                                        sx={{
+                                          fontSize: "0.875rem",
+                                          margin: "0 ",
+                                        }}
+                                      >
+                                        {data}
+                                      </Typography>
+                                    }
+                                  />
+                                );
+                              })}
+                            </RadioGroup>
+                          </FormControl>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              })}
             </div>
-          );
-        })}
-      </div>
+          )}
+        </Droppable>
+      </DragDropContext>
       {MainFormError && (
         <p style={{ color: "red", fontWeight: "600" }}>
           Please fill the mandatory fields

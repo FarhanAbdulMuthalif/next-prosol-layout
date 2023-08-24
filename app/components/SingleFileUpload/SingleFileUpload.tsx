@@ -63,7 +63,17 @@ const SingleFileUpload: React.FC<SingleFileUploadProps> = ({
       onDrop={handleDropHandler}
     >
       <label htmlFor={`${name}FileUploadSingleId`} className="upload-label">
-        {selectedFile ? selectedFile.name : "Choose a file or drag it here"}
+        {selectedFile
+          ? selectedFile.name
+          : `Choose only ${pattern?.includes("image/*") ? "Image ," : ""} ${
+              pattern?.includes("application/pdf") ? "PDF" : ""
+            } ${
+              pattern?.includes(
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              )
+                ? "Excel ,"
+                : ""
+            } file or drag it here`}
         {selectedFile ? "" : <UploadIcon />}
       </label>
       <input
