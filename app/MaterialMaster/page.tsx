@@ -75,6 +75,7 @@ export default function MaterialMaster() {
   // });
 
   const [DynamicFieldData, setDynamicFieldData] = useState<any>({});
+  const [DynamicFileFieldData, setDynamicFileFieldData] = useState<any>({});
 
   const [FieldTypeSelect, setFieldTypeSelect] = useState("");
   const [MultiSelectedOptions, setMultiSelectedOptions] = useState<string[]>(
@@ -611,7 +612,7 @@ export default function MaterialMaster() {
         return { ...prev, [name]: URL.createObjectURL(file) };
       });
       // setPreviewURL(URL.createObjectURL(file));
-      setDynamicFieldData((prev: any) => {
+      setDynamicFileFieldData((prev: any) => {
         return { ...prev, [name]: file };
       });
     }
@@ -652,7 +653,7 @@ export default function MaterialMaster() {
           if (fileSizeMB > maxSizeMB) {
             return alert(`File size exceeds ${maxSizeMB} MB`);
           }
-          setDynamicFieldData((prev: any) => {
+          setDynamicFileFieldData((prev: any) => {
             return { ...prev, [name]: file };
           });
           setPreviewURL((prev: any) => {
@@ -686,7 +687,7 @@ export default function MaterialMaster() {
       console.table(event.target.files);
 
       const filesArray = Array.from(files);
-      setDynamicFieldData((prev: any) => {
+      setDynamicFileFieldData((prev: any) => {
         return { ...prev, [name]: filesArray };
       });
       // setSelectedMultipleFiles(filesArray);
@@ -734,7 +735,7 @@ export default function MaterialMaster() {
         console.log(filesArray);
         console.log(filesArray[0].type);
         // setSelectedMultipleFiles(filesArray);
-        setDynamicFieldData((prev: any) => {
+        setDynamicFileFieldData((prev: any) => {
           return { ...prev, [name]: filesArray };
         });
         // Create an array of preview URLs using FileReader
@@ -800,10 +801,12 @@ export default function MaterialMaster() {
   const DynamicFormSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
     console.log(DynamicFieldData);
-    const ApiSubmitHandler = {
-      dynamicFields: DynamicFieldData,
-    };
-    console.log(ApiSubmitHandler);
+    console.log(DynamicFileFieldData);
+
+    // const ApiSubmitHandler = {
+    //   dynamicFields: DynamicFieldData,
+    // };
+    // console.log(ApiSubmitHandler);
     console.log(LogicFieldArray);
 
     // const checkObj = ObjArryKeys.includes("");
@@ -889,8 +892,24 @@ export default function MaterialMaster() {
         }
       }
     });
+    const formData = new FormData();
+    for (const fieldName in DynamicFieldData) {
+      formData.append(fieldName, DynamicFieldData[fieldName] as string);
+    }
+
+    for (const fieldName in DynamicFileFieldData) {
+      formData.append(fieldName, DynamicFileFieldData[fieldName]);
+    }
+    // formData.append("dynamicFields", DynamicFieldData);
+    // formData.append("file", DynamicFileFieldData);
+    // Object.entries(DynamicFieldData).forEach(([fieldName, value]) => {
+    //   formData.append(fieldName, value as string);
+    // });
+    // Object.entries(DynamicFileFieldData).forEach(([fieldName, file]) => {
+    //   formData.append(fieldName, file as File);
+    // });
     try {
-      const response = await api.post("/saveUser", ApiSubmitHandler);
+      const response = await api.post("/saveUser1", formData);
       const data = await response?.data;
       console.log(response);
       console.log(data);
@@ -2123,12 +2142,12 @@ export default function MaterialMaster() {
                         data.identity === "single" ? (
                           <SingleFileUpload
                             setPreviewURL={setPreviewURL}
-                            setSelectedFile={setDynamicFieldData}
+                            setSelectedFile={setDynamicFileFieldData}
                             handleDropHandler={(e) => handleDrop(data, e)}
                             handleFileChange={(e) => handleFileChange(data, e)}
                             previewURL={previewURL}
-                            selectedFile={DynamicFieldData[data.fieldName]}
-                            DynamicFieldData={DynamicFieldData}
+                            selectedFile={DynamicFileFieldData[data.fieldName]}
+                            DynamicFieldData={DynamicFileFieldData}
                             singleData={data}
                           />
                         ) : (
@@ -2139,8 +2158,8 @@ export default function MaterialMaster() {
                           <MultiFileUpload
                             setPreviewURLs={setPreviewURLsMultiple}
                             previewURLs={previewURLsMultiple}
-                            setSelectedFiles={setDynamicFieldData}
-                            selectedFiles={DynamicFieldData[data.fieldName]}
+                            setSelectedFiles={setDynamicFileFieldData}
+                            selectedFiles={DynamicFileFieldData[data.fieldName]}
                             handleDropHandler={(e) =>
                               handleMultifileDrop(data, e)
                             }
@@ -2148,7 +2167,7 @@ export default function MaterialMaster() {
                               handleMultiFileChange(data, e)
                             }
                             singleData={data}
-                            DynamicFieldData={DynamicFieldData}
+                            DynamicFieldData={DynamicFileFieldData}
                           />
                         ) : (
                           ""
