@@ -66,13 +66,19 @@
       box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
       border: 1px solid rgba(78, 77, 77, 0.139);
       border-radius: 5px;
-      .initial-txt-modules {
+      overflow: hidden;
+      .initial-txt-modules,
+      .end-txt-modules {
         position: absolute;
-        top: 5px;
-        left: 10px;
-        color: #0000ff;
+        top: 0;
+        left: 0;
+        color: #ffffff;
+        background-color: #0000ffc0;
         font-weight: 500;
+        padding: 3px;
+        border-radius: 0 0 3px 0;
       }
+
       span {
         color: #535353;
         font-weight: bold;

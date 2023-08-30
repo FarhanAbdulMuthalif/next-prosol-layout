@@ -49,7 +49,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
         multiple
       />
       <div className="preview-container">
-        {previewURLs.map((url, index) => (
+        {previewURLs?.map((url, index) => (
           <div key={index} className="preview-item">
             <IconButton
               sx={{

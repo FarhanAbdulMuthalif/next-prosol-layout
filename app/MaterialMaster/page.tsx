@@ -800,6 +800,8 @@ export default function MaterialMaster() {
   };
   const DynamicFormSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
+    const form = e.target as HTMLFormElement;
+
     console.log(DynamicFieldData);
     console.log(DynamicFileFieldData);
 
@@ -897,8 +899,17 @@ export default function MaterialMaster() {
       formData.append(fieldName, DynamicFieldData[fieldName] as string);
     }
 
+    // for (const fieldName in DynamicFileFieldData) {
+    //   formData.append(fieldName, DynamicFileFieldData[fieldName] as any);
+    // }
     for (const fieldName in DynamicFileFieldData) {
-      formData.append(fieldName, DynamicFileFieldData[fieldName]);
+      if (Array.isArray(DynamicFileFieldData[fieldName])) {
+        for (const file of DynamicFileFieldData[fieldName]) {
+          formData.append(fieldName, file);
+        }
+      } else {
+        formData.append(fieldName, DynamicFileFieldData[fieldName]);
+      }
     }
     // formData.append("dynamicFields", DynamicFieldData);
     // formData.append("file", DynamicFileFieldData);
@@ -909,12 +920,16 @@ export default function MaterialMaster() {
     //   formData.append(fieldName, file as File);
     // });
     try {
-      const response = await api.post("/saveUser1", formData);
+      const response = await api.post("/saveUser2", formData);
       const data = await response?.data;
       console.log(response);
       console.log(data);
       if (response.status === 200) {
         SnackBarHandler();
+        setDynamicFieldData({});
+        setDynamicFileFieldData({});
+        setPreviewURLsMultiple([]);
+        form.reset();
       }
     } catch (error) {
       console.log(error);

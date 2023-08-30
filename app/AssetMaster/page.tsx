@@ -1,14 +1,15 @@
 "use client";
-import React, { useState, FormEvent, ChangeEvent } from "react";
+import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import "./style.scss";
 import { Button } from "@mui/material";
 import EmailTemplateDialog from "../components/Dialog/EmailTemplateDialog";
 import { usestatemailTemplateProps } from "@/MOCK_DATA";
 import api from "../components/api";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 const AssetMaster = () => {
   const [emailDialog, setemailDialog] = useState(false);
-  const [jhhhh, setjhhhh] = useState<null | File>(null);
+
   const [usestatemailTemplate, usestatesetmailTemplate] = useState<any>({
     ccText: "",
     bccText: "",
@@ -16,34 +17,32 @@ const AssetMaster = () => {
     subject: "",
     body: "",
   });
-  const FIleApiHandler = async (dataFile: File) => {
-    const formData = new FormData();
-    formData.append("file", dataFile);
-    console.log(formData);
-    try {
-      const response = await api.post("/uploadFile/10?action=u", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      const data = response?.data;
-      console.log(response);
+  const [formHeadFields, setFormHeadFields] = useState([]);
+  const [formFields, setFormFields] = useState([]);
+  useEffect(() => {
+    const fetchHandlet = async () => {
+      const res = await api.get("/getAllFields");
+      const data = await res?.data;
+      setFormHeadFields(data);
       console.log(data);
-      if (response.status === 200) {
-        alert("sucessfully upload");
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
-  };
-  const UploadHandlerIMG = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
-
-    if (file) {
-      FIleApiHandler(file);
-    }
-  };
+    };
+    fetchHandlet();
+    const FetchDtaHandler = async () => {
+      const res = await api.get("/findAllUser");
+      const data = await res?.data;
+      setFormFields(data);
+      console.log(data);
+    };
+    FetchDtaHandler();
+  }, []);
+  const columns: GridColDef[] = formHeadFields.map((field: any) => ({
+    field: field.fieldName,
+    headerName: field.fieldName,
+    flex: 1,
+    // width: 150, // Set the column width as needed
+    // sortable: false, // Modify as needed
+    // editable: false, // Modify as needed
+  }));
   const FormHandler = (e: FormEvent) => {
     e.preventDefault();
     console.log(e);
@@ -62,13 +61,15 @@ const AssetMaster = () => {
     // };
     // console.log(data)
   };
+
   return (
-    <div>
+    <>
       <Button
         onClick={() => {
           setemailDialog(!emailDialog);
         }}
         variant="contained"
+        sx={{ alignSelf: "flex-end" }}
       >
         Email Template
       </Button>
@@ -84,9 +85,65 @@ const AssetMaster = () => {
           FormHandler(e);
         }}
       />
-      <input type="file" onChange={UploadHandlerIMG} />
-    </div>
+      <div style={{ height: 400, width: 1000, overflowX: "hidden" }}>
+        <DataGrid rows={formFields} columns={columns} />
+      </div>
+    </>
   );
 };
 
 export default AssetMaster;
+
+export const DynamicFormColumns: GridColDef[] = [
+  {
+    field: "item_code",
+    headerClassName: "super-app-theme--header",
+    flex: 1,
+    headerName: "Item Code",
+  },
+  {
+    field: "material_code",
+    headerClassName: "super-app-theme--header",
+    headerName: "Material Code",
+    /*  renderCell: (params) => {
+        return params.row.roles?.map((datarol: any) => datarol.name).join(", ");
+      }, */
+    flex: 1,
+  },
+  {
+    field: "legacy",
+    headerClassName: "super-app-theme--header",
+    headerName: "Legacy",
+    flex: 1.5,
+  },
+  {
+    field: "short_discription",
+    headerClassName: "super-app-theme--header",
+    headerName: "Short Discription",
+    flex: 1.5,
+  },
+  {
+    field: "long_discription",
+    headerClassName: "super-app-theme--header",
+    headerName: "Long Discription",
+    flex: 1.5,
+  },
+  {
+    field: "noun",
+    headerClassName: "super-app-theme--header",
+    headerName: "Noun",
+    flex: 1,
+  },
+  {
+    field: "modifier",
+    headerClassName: "super-app-theme--header",
+    headerName: "Modifier",
+    flex: 1,
+  },
+  {
+    field: "status",
+    headerClassName: "super-app-theme--header",
+    headerName: "status",
+    flex: 1,
+  },
+];

@@ -7,8 +7,10 @@ import {
   DropResult,
   Droppable,
 } from "react-beautiful-dnd";
-import { IconButton } from "@mui/material";
+import { IconButton, Button } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
+import FlowDialogComp from "../components/Dialog/FlowDialogComp";
+import AddIcon from "@mui/icons-material/Add";
 type moduleProps = {
   id: string;
   content: string;
@@ -37,7 +39,17 @@ const DataQuality = () => {
     );
     updateCharacters(updatedModules);
   }
-
+  const [FlowDialog, setFlowDialog] = useState({ display: false, content: "" });
+  const ToggleDialog = () => {
+    setFlowDialog((prev) => {
+      return { ...prev, display: prev.display === true ? false : true };
+    });
+  };
+  function DialogHandler(data: moduleProps) {
+    setFlowDialog((prev) => {
+      return { content: data.content, display: true };
+    });
+  }
   return (
     <div className="section-dtqty">
       <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -66,6 +78,9 @@ const DataQuality = () => {
                 );
               })}
               {provided?.placeholder}
+              <Button startIcon={<AddIcon />} sx={{ alignSelf: "flex-end" }}>
+                Add new
+              </Button>
             </div>
           )}
         </Droppable>
@@ -77,6 +92,7 @@ const DataQuality = () => {
         <div className="flow-card"></div>
         <div className="flow-card"></div>
       </div> */}
+
       <div className="flow-wrapper">
         {characters.map((data, index) => (
           <div
@@ -85,7 +101,12 @@ const DataQuality = () => {
             onDrop={() => handleModuleDrop(data.id)}
             onDragOver={(e) => e.preventDefault()}
           >
-            <IconButton className="setting-flow-icon">
+            <IconButton
+              className="setting-flow-icon"
+              onClick={() => {
+                DialogHandler(data);
+              }}
+            >
               <SettingsIcon sx={{ fontSize: "14px" }} />
             </IconButton>
             {index === 0 ? (
@@ -93,11 +114,20 @@ const DataQuality = () => {
             ) : (
               ""
             )}
+            {index === characters.length - 1 ? (
+              <p className="end-txt-modules">End module</p>
+            ) : null}
 
             <span>{data.content}</span>
           </div>
         ))}
       </div>
+      <FlowDialogComp
+        open={FlowDialog.display}
+        handleClose={ToggleDialog}
+        handleOk={ToggleDialog}
+        content={FlowDialog.content}
+      />
     </div>
   );
 };

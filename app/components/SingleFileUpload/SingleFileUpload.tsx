@@ -66,12 +66,12 @@ const SingleFileUpload: React.FC<SingleFileUploadProps> = ({
         {selectedFile
           ? selectedFile.name
           : `Choose only ${pattern?.includes("image/*") ? "Image ," : ""} ${
-              pattern?.includes("application/pdf") ? "PDF" : ""
+              pattern?.includes("application/pdf") ? "PDF ," : ""
             } ${
               pattern?.includes(
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
               )
-                ? "Excel ,"
+                ? "Excel "
                 : ""
             } file or drag it here`}
         {selectedFile ? "" : <UploadIcon />}
