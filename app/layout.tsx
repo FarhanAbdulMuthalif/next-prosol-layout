@@ -46,10 +46,22 @@ export default function RootLayout({
           },
         },
       },
+
       MuiInputLabel: {
         styleOverrides: {
           root: {
             color: "#8B4513", // Brown color
+          },
+        },
+      },
+      MuiBadge: {
+        styleOverrides: {
+          badge: {
+            fontSize: 12, // Adjust the font size as needed
+            width: "15px",
+            height: "15px",
+            padding: "0px",
+            borderRadius: "50%", // Make sure the badge retains a circular shape
           },
         },
       },

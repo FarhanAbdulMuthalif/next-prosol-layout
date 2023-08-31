@@ -1,0 +1,17 @@
+.Dialog-view {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  .image-preview {
+    height: 180px;
+    width: 180px;
+    position: relative;
+    img {
+      object-fit: contain;
+      box-shadow: rgba(78, 78, 78, 0.483) 0px 4px 12px;
+      background-color: white;
+    }
+  }
+}

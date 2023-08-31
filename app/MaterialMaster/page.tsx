@@ -920,7 +920,7 @@ export default function MaterialMaster() {
     //   formData.append(fieldName, file as File);
     // });
     try {
-      const response = await api.post("/saveUser2", formData);
+      const response = await api.post("/saveUser", formData);
       const data = await response?.data;
       console.log(response);
       console.log(data);
