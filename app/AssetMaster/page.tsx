@@ -22,26 +22,7 @@ type FileDetailProps = {
   fileType: string;
   size: number;
 };
-export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-  "& .MuiDataGrid-main": {
-    // remove overflow hidden overwise sticky does not work
-    overflow: "unset",
-  },
-  "& .MuiDataGrid-columnHeaders": {
-    position: "sticky",
 
-    zIndex: 1,
-    top: 0,
-  },
-  "& .MuiDataGrid-virtualScroller": {
-    // remove the space left for the header
-    marginTop: "0!important",
-  },
-  "& .super-app-theme--header": {
-    backgroundColor: "white",
-    color: "253858 ",
-  },
-}));
 const AssetMaster = () => {
   const [emailDialog, setemailDialog] = useState(false);
 
