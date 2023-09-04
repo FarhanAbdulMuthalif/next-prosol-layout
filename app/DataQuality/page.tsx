@@ -11,6 +11,9 @@ import { IconButton, Button } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FlowDialogComp from "../components/Dialog/FlowDialogComp";
 import AddIcon from "@mui/icons-material/Add";
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+import RoleCreationDialog from "../components/Dialog/RoleCreationDialog";
+import EditIcon from "@mui/icons-material/Edit";
 type moduleProps = {
   id: string;
   content: string;
@@ -40,8 +43,17 @@ const DataQuality = () => {
     updateCharacters(updatedModules);
   }
   const [FlowDialog, setFlowDialog] = useState({ display: false, content: "" });
+  const [RoleDialog, setRoleDialog] = useState({
+    display: false,
+    content: ["Requester", "Approver", "Cataloguer", "Reviewer", "Releaser"],
+  });
   const ToggleDialog = () => {
-    setFlowDialog((prev) => {
+    setRoleDialog((prev) => {
+      return { ...prev, display: prev.display === true ? false : true };
+    });
+  };
+  const ToggleRoleDialog = () => {
+    setRoleDialog((prev) => {
       return { ...prev, display: prev.display === true ? false : true };
     });
   };
@@ -52,39 +64,89 @@ const DataQuality = () => {
   }
   return (
     <div className="section-dtqty">
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="characters">
-          {(provided) => (
-            <div
-              className="modules-wrapper"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              <h2>PROSOL MODULES</h2>
-              {characters.map((data: moduleProps, index) => {
-                return (
-                  <Draggable draggableId={data.id} key={data.id} index={index}>
-                    {(provided) => (
-                      <div
-                        className="single-module-card"
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <span>{data.content}</span>
-                      </div>
-                    )}
-                  </Draggable>
-                );
-              })}
-              {provided?.placeholder}
-              <Button startIcon={<AddIcon />} sx={{ alignSelf: "flex-end" }}>
-                Add new
-              </Button>
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <section>
+        <div className="modules-wrapper-creation">
+          <h2>PROSOL MODULES</h2>
+          {characters.map((data: moduleProps, index) => {
+            return (
+              <div className="single-module-card" key={data.content}>
+                {/* <span className="span-index">{index + 1}</span> */}
+                <span className="span-text">{data.content}</span>
+                <EditIcon sx={{ fontSize: "16px", color: "#0000ff91" }} />
+              </div>
+            );
+          })}
+
+          <Button startIcon={<AddIcon />} sx={{ alignSelf: "flex-end" }}>
+            Add new
+          </Button>
+        </div>
+        <div className="role-wrapper">
+          <h2>PROSOL ROLES</h2>
+          <div className="display-role-chip">
+            {RoleDialog?.content.map((data: string) => {
+              return (
+                <p key={data}>
+                  {data}{" "}
+                  <EditIcon
+                    sx={{
+                      fontSize: "16px",
+                      color: "#0000ff91",
+                    }}
+                  />
+                </p>
+              );
+            })}
+          </div>
+          <Button
+            startIcon={<AddIcon />}
+            sx={{
+              alignSelf: "flex-end",
+            }}
+            onClick={ToggleRoleDialog}
+          >
+            Add new
+          </Button>
+        </div>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="characters">
+            {(provided) => (
+              <div
+                className="modules-wrapper"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                <h2>WORKFLOW SETUP</h2>
+                {characters.map((data: moduleProps, index) => {
+                  return (
+                    <Draggable
+                      draggableId={data.id}
+                      key={data.id}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <div
+                          className="single-module-card"
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          {/* <span className="span-index">{index + 1}</span> */}
+                          <span className="span-text">{data.content}</span>
+                          <DragIndicatorIcon
+                            sx={{ fontSize: "24px", color: "#0000ff91" }}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  );
+                })}
+                {provided?.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </section>
       {/* <div className="flow-wrapper">
         <div className="flow-card"> </div>
         <div className="flow-card"></div>
@@ -127,6 +189,12 @@ const DataQuality = () => {
         handleClose={ToggleDialog}
         handleOk={ToggleDialog}
         content={FlowDialog.content}
+      />
+      <RoleCreationDialog
+        content={RoleDialog.content}
+        open={RoleDialog.display}
+        handleClose={ToggleRoleDialog}
+        handleOk={ToggleRoleDialog}
       />
     </div>
   );

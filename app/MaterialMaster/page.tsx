@@ -13,6 +13,8 @@ import MergeTypeIcon from "@mui/icons-material/MergeType";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./style.scss";
 import CloseIcon from "@mui/icons-material/Close";
+import ViewWeekIcon from "@mui/icons-material/ViewWeek";
+import TableRowsIcon from "@mui/icons-material/TableRows";
 import {
   Button,
   Drawer,
@@ -73,7 +75,7 @@ export default function MaterialMaster() {
   // navigator.getBattery().then((battery) => {
   //   console.log(battery);
   // });
-
+  const [textFieldAlign, settextFieldAlign] = useState("column");
   const [DynamicFieldData, setDynamicFieldData] = useState<any>({});
   const [DynamicFileFieldData, setDynamicFileFieldData] = useState<any>({});
 
@@ -100,6 +102,11 @@ export default function MaterialMaster() {
   const [LogicFieldArray, setLogicFieldArray] = useState<LogicStateObjFld[]>(
     []
   );
+  const InputAlignHandler = () => {
+    settextFieldAlign((prev: string) => {
+      return prev === "row" ? "column" : "row";
+    });
+  };
   const LogicDialogOpenHandler = () => {
     setLogicDialogOpen(!LogicDialogOpen);
   };
@@ -1986,7 +1993,11 @@ export default function MaterialMaster() {
         <Droppable droppableId="dropdowns">
           {(provided) => (
             <div
-              className="inputs-form-group-div"
+              className={
+                textFieldAlign === "column"
+                  ? "inputs-form-group-div"
+                  : "inputs-form-group-div-row"
+              }
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
@@ -2004,7 +2015,11 @@ export default function MaterialMaster() {
                   >
                     {(provided) => (
                       <div
-                        className="singnle-form-input-div"
+                        className={
+                          textFieldAlign === "column"
+                            ? "singnle-form-input-div"
+                            : "singnle-form-input-div-row"
+                        }
                         key={data.fieldName}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
@@ -2038,6 +2053,7 @@ export default function MaterialMaster() {
                             name={data.fieldName}
                             onChange={DynamicInputHandler}
                             autoComplete="off"
+                            fullWidth={textFieldAlign === "row" ? true : false}
                             inputProps={{
                               autoComplete: "new-password",
                               maxLength: data.max,
@@ -2065,6 +2081,7 @@ export default function MaterialMaster() {
                             name={data.fieldName}
                             onChange={DynamicInputHandler}
                             autoComplete="off"
+                            fullWidth={textFieldAlign === "row" ? true : false}
                             inputProps={{
                               autoComplete: "new-password",
                               maxLength: data.max,
@@ -2194,6 +2211,11 @@ export default function MaterialMaster() {
                               row
                               onChange={DynamicInputHandler}
                               name={data.fieldName}
+                              sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                height: "100%",
+                              }}
                             >
                               {data?.enums?.map((data: any) => {
                                 return (
@@ -2285,6 +2307,14 @@ export default function MaterialMaster() {
           disabled={SelectedFieldSingle.dataType === "textField" ? false : true}
         >
           Logic <MergeTypeIcon sx={{ fontSize: "14px" }} />
+        </MenuItem>
+        <MenuItem sx={menuItemStyleTwo} onClick={InputAlignHandler}>
+          {textFieldAlign === "column" ? "Row Type" : "Column Type"}
+          {textFieldAlign === "column" ? (
+            <ViewWeekIcon sx={{ fontSize: "14px" }} />
+          ) : (
+            <TableRowsIcon sx={{ fontSize: "14px" }} />
+          )}
         </MenuItem>
       </Menu>
       <ConfirmDialog

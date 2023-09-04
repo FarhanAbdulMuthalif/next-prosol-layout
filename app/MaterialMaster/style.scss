@@ -17,6 +17,23 @@
     .singnle-form-input-div {
       display: flex;
       flex-direction: column;
+      // justify-content: center;
+      gap: 5px;
+      #input-sin-field {
+        padding: 8px;
+      }
+    }
+  }
+  .inputs-form-group-div-row {
+    width: 100%;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(30rem, 100%), 1fr));
+    overflow-y: scroll;
+
+    .singnle-form-input-div-row {
+      display: flex;
+      flex-direction: row;
       gap: 5px;
       #input-sin-field {
         padding: 8px;
