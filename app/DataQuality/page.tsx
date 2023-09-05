@@ -26,8 +26,16 @@ const DataQuality = () => {
     { id: "4", content: "Reviewer" },
     { id: "5", content: "Releaser" },
   ];
+  const formList: moduleProps[] = [
+    { id: "1", content: "Requester" },
+    { id: "2", content: "Approver" },
+    { id: "3", content: "Cataloguer" },
+    { id: "4", content: "PV" },
+    { id: "5", content: "MRP Data" },
+  ];
 
   const [characters, updateCharacters] = useState(modules);
+  const [DynamicFormList, updateDynamicFormList] = useState(formList);
   function handleOnDragEnd(result: DropResult) {
     if (!result.destination) return;
     const items = Array.from(characters);
@@ -45,10 +53,18 @@ const DataQuality = () => {
   const [FlowDialog, setFlowDialog] = useState({ display: false, content: "" });
   const [RoleDialog, setRoleDialog] = useState({
     display: false,
-    content: ["Requester", "Approver", "Cataloguer", "Reviewer", "Releaser"],
+    content: [
+      "Super admin",
+      "Admin",
+      "Requester",
+      "Approver",
+      "Cataloguer",
+      "Reviewer",
+      "Releaser",
+    ],
   });
   const ToggleDialog = () => {
-    setRoleDialog((prev) => {
+    setFlowDialog((prev) => {
       return { ...prev, display: prev.display === true ? false : true };
     });
   };
@@ -66,12 +82,12 @@ const DataQuality = () => {
     <div className="section-dtqty">
       <section>
         <div className="modules-wrapper-creation">
-          <h2>PROSOL MODULES</h2>
-          {characters.map((data: moduleProps, index) => {
+          <h3>DYNAMIC FORMS CREATION</h3>
+          {DynamicFormList.map((data: moduleProps, index) => {
             return (
               <div className="single-module-card" key={data.content}>
                 {/* <span className="span-index">{index + 1}</span> */}
-                <span className="span-text">{data.content}</span>
+                <span className="span-text">{data.content} Form</span>
                 <EditIcon sx={{ fontSize: "16px", color: "#0000ff91" }} />
               </div>
             );
@@ -142,6 +158,9 @@ const DataQuality = () => {
                   );
                 })}
                 {provided?.placeholder}
+                <Button startIcon={<AddIcon />} sx={{ alignSelf: "flex-end" }}>
+                  Add new
+                </Button>
               </div>
             )}
           </Droppable>

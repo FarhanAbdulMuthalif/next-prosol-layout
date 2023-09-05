@@ -7,6 +7,9 @@
   gap: 10px;
   .addNewMaterial-btn {
     align-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
   }
   .inputs-form-group-div {
     width: 100%;
@@ -35,6 +38,9 @@
       display: flex;
       flex-direction: row;
       gap: 5px;
+      #select-field-label {
+        width: 9rem;
+      }
       #input-sin-field {
         padding: 8px;
       }

@@ -61,4 +61,5 @@ export type PreviewFileUploadProps = {
   type: string;
   url: string;
   name?: string;
+  fieldName?: string;
 };

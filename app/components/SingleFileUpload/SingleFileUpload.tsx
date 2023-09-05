@@ -108,14 +108,12 @@ const SingleFileUpload: React.FC<SingleFileUploadProps> = ({
           {selectedFile.type === "application/pdf" ? (
             <Image
               className="sinImg"
-              src={"/Images/pdf-icon.webp"}
+              src={"/Images/pdf-icon.svg"}
               alt="Preview"
               height={100}
               width={100}
             />
-          ) : selectedFile.type === "image/jpeg" ||
-            selectedFile.type === "image/png" ||
-            selectedFile.type === "image/svg+xml" ? (
+          ) : selectedFile.type.startsWith("image/") ? (
             <Image
               className="sinImg"
               src={previewURL ? (previewURL[name] as string) : ""}
@@ -127,8 +125,23 @@ const SingleFileUpload: React.FC<SingleFileUploadProps> = ({
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ? (
             <Image
               className="sinImg"
-              src={"/Images/excelImage.jfif"}
+              src={"/Images/excelImage.svg"}
               alt="Preview"
+              height={100}
+              width={100}
+            />
+          ) : selectedFile.type === "text/csv" ? (
+            <Image
+              className="sinImg"
+              src={"/Images/csvImage.svg"}
+              alt="Preview"
+              height={100}
+              width={100}
+            />
+          ) : selectedFile.type === "text/plain" ? (
+            <Image
+              src={"/Images/textFileImage.svg"}
+              alt={`Preview`}
               height={100}
               width={100}
             />

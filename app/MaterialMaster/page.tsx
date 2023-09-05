@@ -15,6 +15,7 @@ import "./style.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import ViewWeekIcon from "@mui/icons-material/ViewWeek";
 import TableRowsIcon from "@mui/icons-material/TableRows";
+import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import {
   Button,
   Drawer,
@@ -106,6 +107,7 @@ export default function MaterialMaster() {
     settextFieldAlign((prev: string) => {
       return prev === "row" ? "column" : "row";
     });
+    handleCloseMenu();
   };
   const LogicDialogOpenHandler = () => {
     setLogicDialogOpen(!LogicDialogOpen);
@@ -706,10 +708,13 @@ export default function MaterialMaster() {
           type: file.type,
           url: URL.createObjectURL(file),
           name: file.name,
+          fieldName: name,
         };
       });
       console.log(previewURLsArray);
-      setPreviewURLsMultiple(previewURLsArray);
+      setPreviewURLsMultiple((prev) => {
+        return [...prev, ...previewURLsArray];
+      });
     }
   };
 
@@ -734,14 +739,9 @@ export default function MaterialMaster() {
         }
 
         const filesArray = Array.from(files);
-        // const StfyTry = JSON.stringify(filesArray);
-        // console.log(StfyTry);
-        // const PrseTry = JSON.parse(StfyTry);
-        // console.log(PrseTry);
 
         console.log(filesArray);
         console.log(filesArray[0].type);
-        // setSelectedMultipleFiles(filesArray);
         setDynamicFileFieldData((prev: any) => {
           return { ...prev, [name]: filesArray };
         });
@@ -751,10 +751,13 @@ export default function MaterialMaster() {
             type: file.type,
             url: URL.createObjectURL(file),
             name: file.name,
+            fieldName: name,
           };
         });
         console.log(previewURLsArray);
-        setPreviewURLsMultiple(previewURLsArray);
+        setPreviewURLsMultiple((prev) => {
+          return [...prev, ...previewURLsArray];
+        });
       }
     },
     []
@@ -955,18 +958,30 @@ export default function MaterialMaster() {
     setInputData(items);
     console.log(InputData);
   };
+  let maxFileSize = CreateFieldSetObj?.max;
   return (
     <form
       className="main-material-master-wrapper"
       onSubmit={DynamicFormSubmitHandler}
     >
-      <Button
-        className="addNewMaterial-btn"
-        variant="contained"
-        onClick={HandlerCreateToggleDrawer}
-      >
-        Add New
-      </Button>
+      <div className="addNewMaterial-btn">
+        <Button
+          onClick={InputAlignHandler}
+          variant="outlined"
+          startIcon={
+            textFieldAlign === "column" ? (
+              <ViewWeekIcon sx={{ fontSize: "14px" }} />
+            ) : (
+              <TableRowsIcon sx={{ fontSize: "14px" }} />
+            )
+          }
+        >
+          Field Align
+        </Button>
+        <Button variant="contained" onClick={HandlerCreateToggleDrawer}>
+          Add New
+        </Button>
+      </div>
       <Drawer
         anchor={"right"}
         variant="temporary"
@@ -1422,6 +1437,9 @@ export default function MaterialMaster() {
                   <MenuItem sx={menuItemStyle} value={"text/csv"}>
                     CSV
                   </MenuItem>
+                  <MenuItem sx={menuItemStyle} value={"text/plain"}>
+                    Text file
+                  </MenuItem>
                   <MenuItem
                     sx={menuItemStyle}
                     value={
@@ -1460,9 +1478,13 @@ export default function MaterialMaster() {
                     autoComplete: "new-password",
                     maxLength: 1,
                   }}
-                  value={CreateFieldSetObj?.max}
+                  value={
+                    Number(maxFileSize ? maxFileSize : 0) > 10
+                      ? 10
+                      : CreateFieldSetObj?.max
+                  }
                   onChange={HandletInputCreateName}
-                  helperText="maxium file size 5mb"
+                  helperText="maxium file size 10mb"
                 />
               </div>
             ) : (
@@ -2036,14 +2058,18 @@ export default function MaterialMaster() {
                           id="select-field-label"
                         >
                           {data.fieldName} {data.required === true ? "*" : ""}
-                          <IconButton
-                            sx={{ fontSize: "20px" }}
-                            onClick={(e) => {
-                              handleClickMenu(e, data);
-                            }}
-                          >
-                            <MoreVertIcon sx={{ fontSize: "12px" }} />
-                          </IconButton>
+                          {textFieldAlign === "column" ? (
+                            <IconButton
+                              sx={{ fontSize: "20px" }}
+                              onClick={(e) => {
+                                handleClickMenu(e, data);
+                              }}
+                            >
+                              <SettingsSuggestIcon sx={{ fontSize: "12px" }} />
+                            </IconButton>
+                          ) : (
+                            <span>:</span>
+                          )}
                         </InputLabel>
                         {data.dataType === "textField" ? (
                           <TextField

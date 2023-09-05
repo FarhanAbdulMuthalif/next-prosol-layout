@@ -173,7 +173,7 @@ const AssetMaster = () => {
 
   return (
     <>
-      <Button
+      {/* <Button
         onClick={() => {
           setemailDialog(!emailDialog);
         }}
@@ -181,7 +181,7 @@ const AssetMaster = () => {
         sx={{ alignSelf: "flex-end" }}
       >
         Email Template
-      </Button>
+      </Button> */}
       <EmailTemplateDialog
         open={emailDialog}
         handleClose={() => {
@@ -196,8 +196,8 @@ const AssetMaster = () => {
       />
       <Paper
         style={{
-          height: 400,
-          width: 950,
+          height: "95%",
+          width: "98%",
           overflowX: "hidden",
           marginTop: "10px",
         }}
@@ -246,6 +246,17 @@ const AssetMaster = () => {
           {Array.isArray(SelectFile) ? (
             SelectFile.map((data: FileDetailProps) => (
               <div key={data.fileName} className="image-preview">
+                <a href={data.fileDownloadUri} download={data.fileName}>
+                  <DownloadIcon
+                    sx={{
+                      fontSize: "14px",
+                      position: "absolute",
+                      top: 0,
+                      right: 0,
+                      zIndex: 1,
+                    }}
+                  />
+                </a>
                 {data.fileType.startsWith("image/") ? (
                   <Image
                     src={data.fileDownloadUri}
@@ -254,7 +265,7 @@ const AssetMaster = () => {
                   />
                 ) : data.fileType === "application/pdf" ? (
                   <Image
-                    src={"/Images/pdf-icon.webp"}
+                    src={"/Images/pdf-icon.svg"}
                     alt={`Preview ${data.fileName}`}
                     fill={true}
                   />
@@ -267,7 +278,7 @@ const AssetMaster = () => {
                 ) : data.fileType ===
                   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ? (
                   <Image
-                    src={"/Images/excelImage.jfif"}
+                    src={"/Images/excelImage.svg"}
                     alt={`Preview ${data.fileName}`}
                     fill={true}
                   />
@@ -285,7 +296,7 @@ const AssetMaster = () => {
                 />
               ) : SelectFile.fileType === "application/pdf" ? (
                 <Image
-                  src={"/Images/pdf-icon.webp"}
+                  src={"/Images/pdf-icon.svg"}
                   alt={`Preview ${SelectFile.fileName}`}
                   height={200}
                   width={200}
@@ -300,7 +311,7 @@ const AssetMaster = () => {
               ) : SelectFile.fileType ===
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ? (
                 <Image
-                  src={"/Images/excelImage.jfif"}
+                  src={"/Images/excelImage.svg"}
                   alt={`Preview ${SelectFile.fileName}`}
                   height={200}
                   width={200}

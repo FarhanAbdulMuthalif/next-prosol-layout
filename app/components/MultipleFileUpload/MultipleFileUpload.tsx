@@ -28,7 +28,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
   DynamicFieldData,
 }: MultiFileUploadProps) => {
   const { fieldName: name, pattern } = singleData;
-
+  const fltData = previewURLs.filter((data) => data.fieldName === name);
   return (
     <div
       className="file-upload"
@@ -36,10 +36,10 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
       onDrop={handleDropHandler}
     >
       <label htmlFor="file-input" className="upload-label">
-        {previewURLs.length > 0
-          ? `${previewURLs.length} files selected`
+        {fltData.length > 0
+          ? `${fltData.length} files selected`
           : "Choose Multiple files or drag here"}
-        {previewURLs.length === 0 ? <UploadIcon /> : ""}
+        {fltData.length === 0 ? <UploadIcon /> : ""}
       </label>
       <input
         accept="image/*"
@@ -49,7 +49,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
         multiple
       />
       <div className="preview-container">
-        {previewURLs?.map((url, index) => (
+        {fltData?.map((url, index) => (
           <div key={index} className="preview-item">
             <IconButton
               sx={{
@@ -94,7 +94,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
             )}
             {url.type === "application/pdf" ? (
               <Image
-                src={"/Images/pdf-icon.webp"}
+                src={"/Images/pdf-icon.svg"}
                 alt={`Preview ${index}`}
                 height={100}
                 width={90}
@@ -104,7 +104,7 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
             )}
             {url.type === "text/plain" ? (
               <Image
-                src={"/Images/textFileImage.png"}
+                src={"/Images/textFileImage.svg"}
                 alt={`Preview ${index}`}
                 height={100}
                 width={100}
@@ -115,8 +115,19 @@ const MultiFileUpload: React.FC<MultiFileUploadProps> = ({
             {url.type ===
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ? (
               <Image
-                src={"/Images/excelImage.jfif"}
+                src={"/Images/excelImage.svg"}
                 alt={`Preview ${index}`}
+                height={100}
+                width={100}
+              />
+            ) : (
+              ""
+            )}
+            {url.type === "text/csv" ? (
+              <Image
+                className="sinImg"
+                src={"/Images/csvImage.svg"}
+                alt="Preview"
                 height={100}
                 width={100}
               />
