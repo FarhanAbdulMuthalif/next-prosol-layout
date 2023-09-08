@@ -28,10 +28,8 @@ export interface PostCreateFieldData {
   writable?: boolean;
   showAsColumn?: boolean;
   enums?: string[];
-  fieldLabel?: FieldLabel;
   required: boolean;
   dropDownValues?: Option[];
-  value?: string;
 }
 
 export interface usestatemailTemplateProps {
@@ -62,4 +60,8 @@ export type PreviewFileUploadProps = {
   url: string;
   name?: string;
   fieldName?: string;
+};
+export type DynamicFormsProps = {
+  id: number;
+  formName: string;
 };

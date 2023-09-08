@@ -7,6 +7,7 @@ import React, {
   useEffect,
   useCallback,
   KeyboardEvent,
+  useRef,
 } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import MergeTypeIcon from "@mui/icons-material/MergeType";
@@ -36,9 +37,15 @@ import {
   FormControl,
   RadioGroup,
   Radio,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
+  DynamicFormsProps,
   LogicStateObjFld,
   Option,
   PostCreateFieldData,
@@ -69,17 +76,42 @@ export default function MaterialMaster() {
     writable: true,
     showAsColumn: true,
     enums: [],
-    fieldLabel: {},
+
     dropDownValues: [],
-    value: "",
   };
   // navigator.getBattery().then((battery) => {
   //   console.log(battery);
   // });
+  const [FormCreation, setFormCreation] = useState("");
+  const [FormCreationDialog, setFormCreationDialog] = useState(false);
+  const FormCreationHandler = async () => {
+    console.log(FormCreation);
+    try {
+      const res = await api.post("/createForm", { formName: FormCreation });
+      const data = await res.data;
+      console.log(data);
+      if (res.status === 201) {
+        alert("Form created sucessfully");
+        getForms();
+        setFormCreationDialog(false);
+        setFormCreation("");
+      }
+    } catch (e: any) {
+      if (e?.response && e?.response?.data) {
+        // Check if 'response' and 'data' properties exist
+        alert(e.response.data);
+      } else {
+        // Handle other types of errors
+        alert("An error occurred");
+      }
+    }
+  };
   const [textFieldAlign, settextFieldAlign] = useState("column");
   const [DynamicFieldData, setDynamicFieldData] = useState<any>({});
   const [DynamicFileFieldData, setDynamicFileFieldData] = useState<any>({});
-
+  const [DynamicSubmissionFormSelect, setDynamicSubmissionFormSelect] =
+    useState("");
+  const [FormTypeSelect, setFormTypeSelect] = useState(0);
   const [FieldTypeSelect, setFieldTypeSelect] = useState("");
   const [MultiSelectedOptions, setMultiSelectedOptions] = useState<string[]>(
     []
@@ -87,6 +119,7 @@ export default function MaterialMaster() {
   const [OpenSnackBar, setOpenSnackBar] = useState<boolean>(false);
   const [OpenDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
   const [InputData, setInputData] = useState<PostCreateFieldData[]>([]);
+  const [DynamicForms, setDynamicForms] = useState<DynamicFormsProps[]>([]);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [CreateFieldSetObj, setCreateFieldSetObj] =
     useState<PostCreateFieldData>(initialStateField);
@@ -200,6 +233,8 @@ export default function MaterialMaster() {
   };
   const DynamicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsrIntraction(true);
+    console.log(DynamicFieldData);
+    console.log(e.target.value);
     setDynamicFieldData((prev: any) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
@@ -293,6 +328,18 @@ export default function MaterialMaster() {
       console.log(e);
     }
   };
+  const getForms = async () => {
+    try {
+      const response = await api.get("/getAllForm");
+      const data = await response.data;
+      if (response.status === 200) {
+        console.log(data);
+        setDynamicForms(data);
+      }
+    } catch (e) {
+      alert(e);
+    }
+  };
   const getFields = async () => {
     try {
       const response = await api.get("/getAllFields");
@@ -306,8 +353,22 @@ export default function MaterialMaster() {
       alert(error);
     }
   };
+  const getDynamicFormData = async (val: string) => {
+    try {
+      const response = await api.get(`/getAllFieldsByForm?formName=${val}`);
+      const data = await response.data;
+      if (response.status === 200) {
+        setInputData(data);
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
   useEffect(() => {
     getFields();
+    getForms();
   }, []);
 
   const HandlerCreateToggleDrawer = () => {
@@ -323,6 +384,15 @@ export default function MaterialMaster() {
       return { ...prev, dataType: e.target.value as string };
     });
   };
+  const handleFormTypeChangeSelect = (e: SelectChangeEvent) => {
+    setFormTypeSelect(Number(e.target.value));
+  };
+  const handleDynamicFormTypeChangeSelect = (e: SelectChangeEvent) => {
+    const { value } = e.target;
+    setDynamicSubmissionFormSelect(value);
+    getDynamicFormData(value);
+  };
+
   const handlerSelectInputType = (e: SelectChangeEvent) => {
     setCreateFieldSetObj((prev: PostCreateFieldData) => {
       return { ...prev, identity: e.target.value as string };
@@ -435,9 +505,8 @@ export default function MaterialMaster() {
     writable: true,
     showAsColumn: true,
     enums: [],
-    fieldLabel: {},
+
     dropDownValues: [],
-    value: "",
   };
   const DrawerSubmitHandlet = async (e: FormEvent) => {
     e.preventDefault();
@@ -460,11 +529,14 @@ export default function MaterialMaster() {
       console.log(e);
       console.log(CreateFieldSetObj);
       try {
-        const response = await api.post("/saveField", CreateFieldSetObj);
+        const response = await api.post(
+          `/${FormTypeSelect}/fields`,
+          CreateFieldSetObj
+        );
         const data = response?.data;
         console.log(response);
         console.log(data);
-        if (response.status === 200) {
+        if (response.status === 201) {
           SnackBarHandler();
 
           getFields();
@@ -494,9 +566,8 @@ export default function MaterialMaster() {
         writable: true,
         showAsColumn: true,
         enums: [],
-        fieldLabel: {},
+
         dropDownValues: DropDownChipArrayList,
-        value: "",
       };
       console.log(dataSet);
       if (
@@ -507,11 +578,11 @@ export default function MaterialMaster() {
         return alert("required field should not be empty");
       }
       try {
-        const response = await api.post("/saveField", dataSet);
+        const response = await api.post(`/${FormTypeSelect}/fields`, dataSet);
         const data = await response?.data;
         console.log(response);
         console.log(data);
-        if (response.status === 200) {
+        if (response.status === 201) {
           SnackBarHandler();
           getFields();
           HandlerCreateToggleDrawer();
@@ -541,9 +612,8 @@ export default function MaterialMaster() {
         writable: true,
         showAsColumn: true,
         enums: ChipArrayList,
-        fieldLabel: {},
+
         dropDownValues: [],
-        value: "",
       };
       if (
         CreateFieldSetObj.fieldName.length < 1 ||
@@ -552,11 +622,11 @@ export default function MaterialMaster() {
         return alert("required field should not be empty");
       }
       try {
-        const response = await api.post("/saveField", dataSet);
+        const response = await api.post(`/${FormTypeSelect}/fields`, dataSet);
         const data = await response?.data;
         console.log(response);
         console.log(data);
-        if (response.status === 200) {
+        if (response.status === 201) {
           SnackBarHandler();
           getFields();
           HandlerCreateToggleDrawer();
@@ -966,6 +1036,30 @@ export default function MaterialMaster() {
     >
       <div className="addNewMaterial-btn">
         <Button
+          variant="contained"
+          onClick={() => {
+            setFormCreationDialog(!FormCreationDialog);
+          }}
+        >
+          Create Form
+        </Button>
+        <Select
+          id="DrawerCrtInputId"
+          value={DynamicSubmissionFormSelect}
+          onChange={handleDynamicFormTypeChangeSelect}
+          sx={SelectStyle}
+          displayEmpty
+        >
+          <MenuItem sx={menuItemStyle} value="" disabled>
+            Select Field
+          </MenuItem>
+          {DynamicForms.map((data) => (
+            <MenuItem sx={menuItemStyle} value={data.formName} key={data.id}>
+              {data.formName}
+            </MenuItem>
+          ))}
+        </Select>
+        <Button
           onClick={InputAlignHandler}
           variant="outlined"
           startIcon={
@@ -996,6 +1090,23 @@ export default function MaterialMaster() {
             </IconButton>
           </header>
           <section className="drawer-Center-Part">
+            <label htmlFor="DrawerCrtInputId">Select Form</label>
+            <Select
+              id="DrawerCrtInputId"
+              value={FormTypeSelect > 0 ? FormTypeSelect.toString() : ""}
+              onChange={handleFormTypeChangeSelect}
+              sx={SelectStyle}
+              displayEmpty
+            >
+              <MenuItem sx={menuItemStyle} value="" disabled>
+                Select Field
+              </MenuItem>
+              {DynamicForms.map((data) => (
+                <MenuItem sx={menuItemStyle} value={data.id} key={data.id}>
+                  {data.formName}
+                </MenuItem>
+              ))}
+            </Select>
             <label htmlFor="DrawerCrtInputId">Select Field Type</label>
             <Select
               id="DrawerCrtInputId"
@@ -2078,6 +2189,7 @@ export default function MaterialMaster() {
                             type={data.identity}
                             name={data.fieldName}
                             onChange={DynamicInputHandler}
+                            value={DynamicFieldData[data.fieldName]}
                             autoComplete="off"
                             fullWidth={textFieldAlign === "row" ? true : false}
                             inputProps={{
@@ -2356,6 +2468,43 @@ export default function MaterialMaster() {
         selectedData={SelectedFieldSingle}
         SubmitHandler={LogicDialogSubmitHandler}
       />
+      <Dialog
+        open={FormCreationDialog}
+        onClose={() => {
+          setFormCreationDialog(!FormCreationDialog);
+        }}
+      >
+        <DialogTitle>Form Creation</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Create a Form name for your preference
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            type="text"
+            placeholder="Enter FormName"
+            value={FormCreation}
+            onChange={(e) => {
+              setFormCreation(e.target.value);
+            }}
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setFormCreationDialog(!FormCreationDialog);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button onClick={FormCreationHandler} variant="contained">
+            Create
+          </Button>
+        </DialogActions>
+      </Dialog>
     </form>
   );
 }
