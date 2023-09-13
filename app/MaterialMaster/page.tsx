@@ -97,6 +97,7 @@ export default function MaterialMaster() {
         setFormCreation("");
       }
     } catch (e: any) {
+      setFormCreation("");
       if (e?.response && e?.response?.data) {
         // Check if 'response' and 'data' properties exist
         alert(e.response.data);
@@ -110,7 +111,7 @@ export default function MaterialMaster() {
   const [DynamicFieldData, setDynamicFieldData] = useState<any>({});
   const [DynamicFileFieldData, setDynamicFileFieldData] = useState<any>({});
   const [DynamicSubmissionFormSelect, setDynamicSubmissionFormSelect] =
-    useState("");
+    useState("all");
   const [FormTypeSelect, setFormTypeSelect] = useState(0);
   const [FieldTypeSelect, setFieldTypeSelect] = useState("");
   const [MultiSelectedOptions, setMultiSelectedOptions] = useState<string[]>(
@@ -314,13 +315,16 @@ export default function MaterialMaster() {
   const DeleteFieldHandler = async () => {
     try {
       const response = await api.delete(
-        `/removeField/${SelectedFieldSingle.id}`
+        `/${SelectedFieldSingle.id}/removeField`
       );
       const data = response.data;
-      if (response.status === 200) {
+      console.log(response);
+      console.log(response.status);
+      console.log(data);
+      if (response.status === 200 || response.status === 202) {
         console.log(response);
         console.log(data);
-        getFields();
+        getDynamicFormData(DynamicSubmissionFormSelect);
         DeleteDialogHandler();
       }
     } catch (e) {
@@ -353,23 +357,28 @@ export default function MaterialMaster() {
       alert(error);
     }
   };
-  const getDynamicFormData = async (val: string) => {
-    try {
-      const response = await api.get(`/getAllFieldsByForm?formName=${val}`);
-      const data = await response.data;
-      if (response.status === 200) {
-        setInputData(data);
-        console.log(data);
+
+  const getDynamicFormData = useCallback(async (val: string) => {
+    if (val === "all") {
+      getFields();
+    } else {
+      try {
+        const response = await api.get(`/getAllFieldsByForm?formName=${val}`);
+        const data = await response.data;
+        if (response.status === 200) {
+          setInputData(data);
+          console.log(data);
+        }
+      } catch (error) {
+        console.log(error);
+        alert(error);
       }
-    } catch (error) {
-      console.log(error);
-      alert(error);
     }
-  };
-  useEffect(() => {
-    getFields();
-    getForms();
   }, []);
+  useEffect(() => {
+    getDynamicFormData(DynamicSubmissionFormSelect);
+    getForms();
+  }, [DynamicSubmissionFormSelect, getDynamicFormData]);
 
   const HandlerCreateToggleDrawer = () => {
     setCrDrawerOpener(!CrDrawerOpener);
@@ -536,17 +545,21 @@ export default function MaterialMaster() {
         const data = response?.data;
         console.log(response);
         console.log(data);
-        if (response.status === 201) {
+        if (response.status === 201 || response.status === 200) {
           SnackBarHandler();
 
-          getFields();
+          getDynamicFormData(DynamicSubmissionFormSelect);
           HandlerCreateToggleDrawer();
 
           setCreateFieldSetObj(AnotherInitialState);
         }
-      } catch (error) {
-        console.log(error);
-        alert(error);
+      } catch (e: any) {
+        console.log(e.response);
+        if (e.response && e.response.data) {
+          alert(e.response.data);
+        } else {
+          alert("An error occurred");
+        }
       }
     }
     if (FieldTypeSelect === "dropDown") {
@@ -582,17 +595,21 @@ export default function MaterialMaster() {
         const data = await response?.data;
         console.log(response);
         console.log(data);
-        if (response.status === 201) {
+        if (response.status === 201 || response.status === 200) {
           SnackBarHandler();
-          getFields();
+          getDynamicFormData(DynamicSubmissionFormSelect);
           HandlerCreateToggleDrawer();
 
           setDropDownChipArrayList([]);
           setCreateFieldSetObj(AnotherInitialState);
         }
-      } catch (error) {
-        console.log(error);
-        alert(error);
+      } catch (e: any) {
+        console.log(e.response);
+        if (e.response && e.response.data) {
+          alert(e.response.data);
+        } else {
+          alert("An error occurred");
+        }
       }
     }
     if (FieldTypeSelect === "radioButton") {
@@ -626,16 +643,20 @@ export default function MaterialMaster() {
         const data = await response?.data;
         console.log(response);
         console.log(data);
-        if (response.status === 201) {
+        if (response.status === 201 || response.status === 200) {
           SnackBarHandler();
-          getFields();
+          getDynamicFormData(DynamicSubmissionFormSelect);
           HandlerCreateToggleDrawer();
           setChipArrayList([]);
           setCreateFieldSetObj(AnotherInitialState);
         }
-      } catch (error) {
-        console.log(error);
-        alert(error);
+      } catch (e: any) {
+        console.log(e.response);
+        if (e.response && e.response.data) {
+          alert(e.response.data);
+        } else {
+          alert("An error occurred");
+        }
       }
     }
   };
@@ -843,18 +864,23 @@ export default function MaterialMaster() {
 
     try {
       const response = await api.put(
-        `/updateFieldById/${SelectedFieldSingle.id}`,
+        `/${DynamicSubmissionFormSelect}/${SelectedFieldSingle.id}/UpdateFields`,
         SelectedFieldSingle
       );
       const data = response?.data;
       console.log(data);
-      if (response.status === 200) {
+      if (response.status === 201 || response.status === 200) {
         UpdateSuccessHandler();
         HandlerEditToggleDrawer();
-        getFields();
+        getDynamicFormData(DynamicSubmissionFormSelect);
       }
-    } catch (e) {
-      alert(e);
+    } catch (e: any) {
+      console.log(e.response);
+      if (e.response && e.response.data) {
+        alert(e.response.data);
+      } else {
+        alert("An error occurred");
+      }
     }
   };
   const [MainFormError, setMainFormError] = useState(false);
@@ -1000,11 +1026,14 @@ export default function MaterialMaster() {
     //   formData.append(fieldName, file as File);
     // });
     try {
-      const response = await api.post("/saveUser", formData);
+      const response = await api.post(
+        `/${DynamicSubmissionFormSelect}/submit`,
+        formData
+      );
       const data = await response?.data;
       console.log(response);
       console.log(data);
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 201) {
         SnackBarHandler();
         setDynamicFieldData({});
         setDynamicFileFieldData({});
@@ -1036,30 +1065,6 @@ export default function MaterialMaster() {
     >
       <div className="addNewMaterial-btn">
         <Button
-          variant="contained"
-          onClick={() => {
-            setFormCreationDialog(!FormCreationDialog);
-          }}
-        >
-          Create Form
-        </Button>
-        <Select
-          id="DrawerCrtInputId"
-          value={DynamicSubmissionFormSelect}
-          onChange={handleDynamicFormTypeChangeSelect}
-          sx={SelectStyle}
-          displayEmpty
-        >
-          <MenuItem sx={menuItemStyle} value="" disabled>
-            Select Field
-          </MenuItem>
-          {DynamicForms.map((data) => (
-            <MenuItem sx={menuItemStyle} value={data.formName} key={data.id}>
-              {data.formName}
-            </MenuItem>
-          ))}
-        </Select>
-        <Button
           onClick={InputAlignHandler}
           variant="outlined"
           startIcon={
@@ -1072,8 +1077,32 @@ export default function MaterialMaster() {
         >
           Field Align
         </Button>
+        <Select
+          id="DrawerCrtInputId"
+          value={DynamicSubmissionFormSelect}
+          onChange={handleDynamicFormTypeChangeSelect}
+          sx={SelectStyle}
+          displayEmpty
+        >
+          <MenuItem sx={menuItemStyle} value="all">
+            All Form Fields
+          </MenuItem>
+          {DynamicForms.map((data) => (
+            <MenuItem sx={menuItemStyle} value={data.formName} key={data.id}>
+              {data.formName}
+            </MenuItem>
+          ))}
+        </Select>
+        <Button
+          variant="contained"
+          onClick={() => {
+            setFormCreationDialog(!FormCreationDialog);
+          }}
+        >
+          Create Form
+        </Button>
         <Button variant="contained" onClick={HandlerCreateToggleDrawer}>
-          Add New
+          Add Fields
         </Button>
       </div>
       <Drawer
@@ -2169,7 +2198,8 @@ export default function MaterialMaster() {
                           id="select-field-label"
                         >
                           {data.fieldName} {data.required === true ? "*" : ""}
-                          {textFieldAlign === "column" ? (
+                          {textFieldAlign === "column" &&
+                          DynamicSubmissionFormSelect !== "all" ? (
                             <IconButton
                               sx={{ fontSize: "20px" }}
                               onClick={(e) => {
@@ -2189,7 +2219,11 @@ export default function MaterialMaster() {
                             type={data.identity}
                             name={data.fieldName}
                             onChange={DynamicInputHandler}
-                            value={DynamicFieldData[data.fieldName]}
+                            value={
+                              DynamicFieldData[data.fieldName]
+                                ? DynamicFieldData[data.fieldName]
+                                : ""
+                            }
                             autoComplete="off"
                             fullWidth={textFieldAlign === "row" ? true : false}
                             inputProps={{

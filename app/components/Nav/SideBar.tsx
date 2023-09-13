@@ -28,7 +28,7 @@ export default function SideBar({ OpenSideBar }: { OpenSideBar: boolean }) {
           <nav className="NavBar-links">
             <h2>User Management </h2>
             <ul>
-              <li>Create User</li>
+              <li className="active-ul-li">Create User</li>
               <li>Create Role</li>
               <li>Create Group</li>
             </ul>

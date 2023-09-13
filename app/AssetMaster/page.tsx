@@ -54,7 +54,7 @@ const AssetMaster = () => {
     };
     fetchHandlet();
     const FetchDtaHandler = async () => {
-      const res = await api.get("/findAllUser");
+      const res = await api.get("/getAllFormData?formName=User");
       const data = await res?.data;
       setFormFields(data);
       console.log(data);

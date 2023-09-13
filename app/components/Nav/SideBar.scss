@@ -71,18 +71,18 @@
         font-weight: 500;
         letter-spacing: 0.5px;
         transition: all 500ms ease;
-        &:hover {
-          color: #0000ff;
-          width: 180px;
-          background-color: #e6effc;
-          border-left: 5px solid #0000ff;
-          font-size: 14px;
-          padding: 8px 30px;
-          margin: 0;
-          font-weight: 600;
-          letter-spacing: 0.5px;
-          transition: all 500ms ease;
-        }
+      }
+      .active-ul-li {
+        color: #0000ff;
+        width: 180px;
+        background-color: #e6effc;
+        border-left: 5px solid #0000ff;
+        font-size: 14px;
+        padding: 8px 30px;
+        margin: 0;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 500ms ease;
       }
       // border: 2px solid black;
       /* li {
