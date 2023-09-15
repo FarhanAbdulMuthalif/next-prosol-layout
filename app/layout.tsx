@@ -59,6 +59,8 @@ export default function RootLayout({
           badge: {
             fontSize: 12, // Adjust the font size as needed
             width: "15px",
+            minWidth: "14px",
+            maxWidth: "16px",
             height: "15px",
             padding: "0px",
             borderRadius: "50%", // Make sure the badge retains a circular shape

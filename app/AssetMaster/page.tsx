@@ -1,5 +1,11 @@
 "use client";
-import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
+import React, {
+  useState,
+  FormEvent,
+  ChangeEvent,
+  useEffect,
+  useCallback,
+} from "react";
 import "./style.scss";
 import {
   Button,
@@ -8,6 +14,9 @@ import {
   Badge,
   styled,
   Paper,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
 } from "@mui/material";
 import EmailTemplateDialog from "../components/Dialog/EmailTemplateDialog";
 import api, { URL_FIX_BASE_PATH } from "../components/api";
@@ -15,6 +24,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Image from "next/image";
 import DownloadIcon from "@mui/icons-material/Download";
+import { DynamicFormsProps } from "@/MOCK_DATA";
 
 type FileDetailProps = {
   fileName: string;
@@ -42,25 +52,19 @@ const AssetMaster = () => {
     fileType: "",
     size: 0,
   });
+  const [UserId, setUserId] = useState(0);
   const DialogHandler = () => {
     setOpen(!Open);
   };
-  useEffect(() => {
-    const fetchHandlet = async () => {
-      const res = await api.get("/getAllFields");
-      const data = await res?.data;
-      setFormHeadFields(data);
-      console.log(data);
-    };
-    fetchHandlet();
-    const FetchDtaHandler = async () => {
-      const res = await api.get("/getAllFormData?formName=User");
-      const data = await res?.data;
-      setFormFields(data);
-      console.log(data);
-    };
-    FetchDtaHandler();
-  }, []);
+  // useEffect(() => {
+  //   const fetchHandlet = async () => {
+  //     const res = await api.get("/getAllFields");
+  //     const data = await res?.data;
+  //     setFormHeadFields(data);
+  //     console.log(data);
+  //   };
+  //   fetchHandlet();
+  // }, []);
   const FuncGetfileString = (data: any) => {
     // console.log(data);
     const getData = data.map((dta: any) => {
@@ -86,6 +90,7 @@ const AssetMaster = () => {
               // console.log(params.id);
               setOpen(true);
               setSelectFile(fieldData);
+              setUserId(params.id);
               // FuncGetfileString(fieldData);
             }}
           >
@@ -101,7 +106,7 @@ const AssetMaster = () => {
             }}
           >
             <a
-              href={`${URL_FIX_BASE_PATH}/downloadFiles/${
+              href={`${URL_FIX_BASE_PATH}/downloadFiles/${DynamicSubmissionFormSelect}/${
                 params.id
               }?${FuncGetfileString(fieldData)}`}
               download={"File.zip"}
@@ -117,7 +122,10 @@ const AssetMaster = () => {
           <IconButton
             className="setting-flow-icon"
             onClick={() => {
+              console.log(params);
               console.log(fieldData);
+              setUserId(params.id);
+
               setOpen(true);
               setSelectFile(fieldData);
             }}
@@ -131,7 +139,10 @@ const AssetMaster = () => {
               console.log(fieldData);
             }}
           >
-            <a href={fieldData.fileDownloadUri} download={fieldData.fileName}>
+            <a
+              href={`${URL_FIX_BASE_PATH}/downloadFile/${DynamicSubmissionFormSelect}/${params.id}/${fieldData.fileName}`}
+              download={fieldData.fileName}
+            >
               <DownloadIcon sx={{ fontSize: "14px" }} />
             </a>
           </IconButton>
@@ -170,7 +181,86 @@ const AssetMaster = () => {
     console.log(e.target);
     console.log(usestatemailTemplate);
   };
+  const menuItemStyle = {
+    fontSize: "12px",
+    color: "#5E5873",
+  };
+  const SelectStyle = {
+    fontSize: "12px",
+    color: "brown",
+    width: "19rem",
+    height: "2.4rem",
+  };
+  const getFields = async () => {
+    try {
+      const response = await api.get("/getAllFields");
+      const data = await response.data;
+      if (response.status === 200) {
+        setFormHeadFields(data);
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
 
+  const getDynamicFormData = useCallback(async (val: string) => {
+    if (val === "all") {
+      getFields();
+    } else {
+      try {
+        const response = await api.get(`/getAllFieldsByForm?formName=${val}`);
+        const data = await response.data;
+        if (response.status === 200) {
+          setFormHeadFields(data);
+          console.log(data);
+        }
+      } catch (error) {
+        console.log(error);
+        alert(error);
+      }
+    }
+  }, []);
+  const getForms = async () => {
+    try {
+      const response = await api.get("/getAllForm");
+      const data = await response.data;
+      if (response.status === 200) {
+        console.log(data);
+        setDynamicForms(data);
+      }
+    } catch (e) {
+      alert(e);
+    }
+  };
+  const [DynamicSubmissionFormSelect, setDynamicSubmissionFormSelect] =
+    useState("all");
+  const getTableData = useCallback(async () => {
+    try {
+      const res = await api.get(
+        `/getAllFormData?formName=${DynamicSubmissionFormSelect}`
+      );
+      const data = res.data;
+      if (res.status === 200) {
+        console.log(data);
+        setFormFields(data);
+      }
+    } catch (e) {
+      alert(e);
+    }
+  }, [DynamicSubmissionFormSelect]);
+  const [DynamicForms, setDynamicForms] = useState<DynamicFormsProps[]>([]);
+  useEffect(() => {
+    getDynamicFormData(DynamicSubmissionFormSelect);
+    getForms();
+    getTableData();
+  }, [DynamicSubmissionFormSelect, getDynamicFormData, getTableData]);
+  const handleDynamicFormTypeChangeSelect = (e: SelectChangeEvent) => {
+    const { value } = e.target;
+    setDynamicSubmissionFormSelect(value);
+    getDynamicFormData(value);
+  };
   return (
     <>
       {/* <Button
@@ -194,6 +284,19 @@ const AssetMaster = () => {
           FormHandler(e);
         }}
       />
+      <Select
+        id="DrawerCrtInputId"
+        value={DynamicSubmissionFormSelect}
+        onChange={handleDynamicFormTypeChangeSelect}
+        sx={SelectStyle}
+        displayEmpty
+      >
+        {DynamicForms.map((data) => (
+          <MenuItem sx={menuItemStyle} value={data.formName} key={data.id}>
+            {data.formName}
+          </MenuItem>
+        ))}
+      </Select>
       <Paper
         style={{
           height: "95%",
@@ -246,7 +349,10 @@ const AssetMaster = () => {
           {Array.isArray(SelectFile) ? (
             SelectFile.map((data: FileDetailProps) => (
               <div key={data.fileName} className="image-preview">
-                <a href={data.fileDownloadUri} download={data.fileName}>
+                <a
+                  href={`${URL_FIX_BASE_PATH}/downloadFile/${DynamicSubmissionFormSelect}/${UserId}/${data.fileName}`}
+                  download={data.fileName}
+                >
                   <DownloadIcon
                     sx={{
                       fontSize: "14px",
@@ -259,7 +365,7 @@ const AssetMaster = () => {
                 </a>
                 {data.fileType.startsWith("image/") ? (
                   <Image
-                    src={data.fileDownloadUri}
+                    src={`${URL_FIX_BASE_PATH}/downloadFile/${DynamicSubmissionFormSelect}/${UserId}/${data.fileName}`}
                     alt={`loading....`}
                     fill={true}
                   />
@@ -289,7 +395,7 @@ const AssetMaster = () => {
             <div className="image-preview-full">
               {SelectFile.fileType.startsWith("image/") ? (
                 <Image
-                  src={SelectFile.fileDownloadUri}
+                  src={`${URL_FIX_BASE_PATH}/downloadFile/${DynamicSubmissionFormSelect}/${UserId}/${SelectFile.fileName}`}
                   alt={`loading....`}
                   height={400}
                   width={400}
